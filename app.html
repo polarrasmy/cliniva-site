@@ -116,6 +116,8 @@
   .maprow:last-child{border-bottom:0}
   .prog{height:10px;border-radius:999px;background:#EDF3F3;overflow:hidden;margin:14px 0}
   .prog > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--teal));transition:width 2.1s linear}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
   @media(max-width:880px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap}
     .nav{flex-direction:row;flex-wrap:wrap}.kpis,.chan{grid-template-columns:1fr 1fr}.row.c2,.row.c2b{grid-template-columns:1fr}}
 </style>
@@ -126,14 +128,14 @@
   <aside class="side">
     <div class="brand"><svg width="24" height="24" viewBox="0 0 40 40" style="vertical-align:-4px;margin-left:7px"><rect width="40" height="40" rx="11" fill="#13A8A4"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg>Cliniva<span>.</span></div>
     <nav class="nav" id="nav">
-      <button class="on" data-tab="overview"><span class="dot"></span> لوحة التحكم</button>
-      <button data-tab="revenue"><span class="dot"></span> الإعلانات والإيرادات</button>
-      <button data-tab="appts"><span class="dot"></span> الحجوزات</button>
-      <button data-tab="ai"><span class="dot"></span> مركز الاتصال AI</button>
-      <button data-tab="wa"><span class="dot"></span> أتمتة واتساب</button>
-      <button data-tab="crm"><span class="dot"></span> المرضى (CRM)</button>
-      <button data-tab="reports"><span class="dot"></span> التقارير</button>
-      <button data-tab="import"><span class="dot"></span> استيراد البيانات</button>
+      <button class="on" data-tab="overview"><span class="dot"></span> <span data-en="Dashboard">لوحة التحكم</span></button>
+      <button data-tab="revenue"><span class="dot"></span> <span data-en="Ads & Revenue">الإعلانات والإيرادات</span></button>
+      <button data-tab="appts"><span class="dot"></span> <span data-en="Appointments">الحجوزات</span></button>
+      <button data-tab="ai"><span class="dot"></span> <span data-en="AI Call Center">مركز الاتصال AI</span></button>
+      <button data-tab="wa"><span class="dot"></span> <span data-en="WhatsApp Automation">أتمتة واتساب</span></button>
+      <button data-tab="crm"><span class="dot"></span> <span data-en="Patients (CRM)">المرضى (CRM)</span></button>
+      <button data-tab="reports"><span class="dot"></span> <span data-en="Reports">التقارير</span></button>
+      <button data-tab="import"><span class="dot"></span> <span data-en="Data Import">استيراد البيانات</span></button>
     </nav>
     <div class="who"><div class="av">م</div><div><b>د. منال الشامي</b><small>مدير المجموعة</small></div></div>
   </aside>
@@ -146,7 +148,11 @@
         <select id="branch" onchange="selectBranch(this.value)">
           <option>كل الفروع (3)</option><option>فرع جميرا</option><option>فرع مارينا</option><option>فرع دبي هيلز</option>
         </select>
-        <span class="pill p-done">● مباشر</span>
+        <select id="cur" onchange="applyCur(this.value)" style="border:1px solid #E2EAEA;border-radius:9px;padding:8px 10px;font-weight:800;font-size:13px">
+          <option value="SAR">﷼ SAR</option><option value="AED">د.إ AED</option><option value="USD">$ USD</option><option value="QAR">ر.ق QAR</option><option value="KWD">د.ك KWD</option><option value="BHD">د.ب BHD</option><option value="EGP">ج.م EGP</option>
+        </select>
+        <button id="lng" onclick="toggleLang()" style="border:1px solid #E2EAEA;border-radius:9px;background:#fff;font-weight:800;font-size:13px;cursor:pointer;padding:8px 10px">EN</button>
+        <span class="pill p-done" data-en="● Live">● مباشر</span>
       </div>
     </div>
 
@@ -154,18 +160,18 @@
 
       <!-- ========== OVERVIEW ========== -->
       <section class="tab on" id="overview">
-        <div style="background:linear-gradient(110deg,var(--teal-d),var(--teal));color:#fff;border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-          <div><div style="font-size:12.5px;opacity:.9;font-weight:700">أثر Cliniva على الإيراد</div><div style="font-size:23px;font-weight:900">إيرادك بيزيد 15–30% شهريًا</div></div>
-          <div style="font-size:12.5px;opacity:.93;max-width:360px;line-height:1.6">من <b>استرجاع المكالمات الفائتة</b> + <b>تقليل عدم الحضور</b> + <b>ربط كل ريال إعلان بالإيراد</b> — ونثبتها بأرقام عيادتك نفسها.</div>
+        <div class="reveal" style="background:linear-gradient(110deg,var(--teal-d),var(--teal));color:#fff;border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div><div style="font-size:12.5px;opacity:.9;font-weight:700" data-en="Cliniva's impact on revenue">أثر Cliniva على الإيراد</div><div style="font-size:23px;font-weight:900" data-en="Your revenue grows 15–30% monthly">إيرادك بيزيد 15–30% شهريًا</div></div>
+          <div style="font-size:12.5px;opacity:.93;max-width:360px;line-height:1.6" data-en="From recovering missed calls + cutting no-shows + tying every ad riyal to revenue — proven on your own clinic's numbers.">من <b>استرجاع المكالمات الفائتة</b> + <b>تقليل عدم الحضور</b> + <b>ربط كل ريال إعلان بالإيراد</b> — ونثبتها بأرقام عيادتك نفسها.</div>
         </div>
         <div class="kpis">
-          <div class="kpi"><div class="l">حجوزات النهاردة</div><div class="n teal" id="k_book">38</div><div class="d up">▲ 12% عن أمس</div></div>
-          <div class="kpi"><div class="l">مكالمات تم الرد عليها</div><div class="n" id="k_ans">100%</div><div class="d up">▲ كانت 71% قبل Cliniva</div></div>
-          <div class="kpi"><div class="l" id="k_revl">إيراد الأسبوع — كل الفروع</div><div class="n" id="k_rev">312,400﷼</div><div class="d up">▲ 18.6%</div></div>
-          <div class="kpi"><div class="l">نسبة عدم الحضور</div><div class="n" id="k_noshow">4.2%</div><div class="d up">▼ كانت 14%</div></div>
+          <div class="kpi"><div class="l" data-en="Bookings today">حجوزات النهاردة</div><div class="n teal" id="k_book">38</div><div class="d up" data-en="▲ 12% vs yesterday">▲ 12% عن أمس</div></div>
+          <div class="kpi"><div class="l" data-en="Calls answered">مكالمات تم الرد عليها</div><div class="n" id="k_ans">100%</div><div class="d up" data-en="▲ was 71% before Cliniva">▲ كانت 71% قبل Cliniva</div></div>
+          <div class="kpi"><div class="l" id="k_revl" data-en="Weekly revenue — all branches">إيراد الأسبوع — كل الفروع</div><div class="n" id="k_rev" data-price data-base="312400">﷼ 312,400</div><div class="d up">▲ 18.6%</div></div>
+          <div class="kpi"><div class="l" data-en="No-show rate">نسبة عدم الحضور</div><div class="n" id="k_noshow">4.2%</div><div class="d up" data-en="▼ was 14%">▼ كانت 14%</div></div>
         </div>
         <div class="row c2">
-          <div class="card">
+          <div class="card reveal">
             <h3>الإيراد — آخر 7 أيام</h3><div class="sub">حسب اليوم (ريال سعودي)</div>
             <svg class="chart" viewBox="0 0 640 150" preserveAspectRatio="none">
               <polyline fill="none" stroke="#13A8A4" stroke-width="3" points="0,110 100,95 200,100 300,70 400,78 500,45 620,30"/>
@@ -174,7 +180,7 @@
             </svg>
             <div class="legend" style="justify-content:space-between"><span>السبت</span><span>الأحد</span><span>الإثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span></div>
           </div>
-          <div class="card">
+          <div class="card reveal">
             <h3>مواعيد النهاردة — فرع جميرا</h3><div class="sub">0 تعارض ✓ عبر كل القنوات</div>
             <div class="appt"><span class="t">09:00</span><div class="who2"><b>سارة المنصوري</b><small>تنظيف وتلميع</small></div><span class="pill p-meta">Meta</span></div>
             <div class="appt"><span class="t">10:30</span><div class="who2"><b>خالد العتيبي</b><small>تقويم — متابعة</small></div><span class="pill p-wa">واتساب</span></div>
@@ -187,19 +193,19 @@
 
       <!-- ========== REVENUE / ATTRIBUTION (THE WOW PAGE) ========== -->
       <section class="tab" id="revenue">
-        <div class="eyebrow">الصفحة اللي تخلّي المدير يقول "واو"</div>
-        <div class="sec-t">مين جيه — من أنهي قناة — وحقّق كام إيراد</div>
-        <div class="sec-d">كل ريال إعلان مربوط بالمريض الحقيقي وبالإيراد الفعلي. مفيش تخمين.</div>
+        <div class="eyebrow" data-en="The page that makes the director say &quot;wow&quot;">الصفحة اللي تخلّي المدير يقول "واو"</div>
+        <div class="sec-t" data-en="Who came — from which channel — and how much revenue they drove">مين جيه — من أنهي قناة — وحقّق كام إيراد</div>
+        <div class="sec-d" data-en="Every ad riyal tied to a real patient and real revenue. No guesswork.">كل ريال إعلان مربوط بالمريض الحقيقي وبالإيراد الفعلي. مفيش تخمين.</div>
 
         <div class="chan">
-          <div class="chcard"><div class="h"><b>Meta</b><span class="pill p-meta">إعلانات</span></div><div class="roas">7.4×</div><div class="meta">صرف 9,800 ← إيراد 72,300﷼</div><div class="bar"><i style="width:90%"></i></div></div>
-          <div class="chcard"><div class="h"><b>Google</b><span class="pill p-google">إعلانات</span></div><div class="roas">5.1×</div><div class="meta">صرف 6,400 ← إيراد 32,600﷼</div><div class="bar"><i style="width:62%"></i></div></div>
-          <div class="chcard"><div class="h"><b>Snapchat</b><span class="pill p-snap">إعلانات</span></div><div class="roas">3.2×</div><div class="meta">صرف 4,100 ← إيراد 13,100﷼</div><div class="bar"><i style="width:39%"></i></div></div>
-          <div class="chcard"><div class="h"><b>واتساب</b><span class="pill p-wa">عضوي</span></div><div class="roas">∞</div><div class="meta">صرف 0 ← إيراد 41,500﷼</div><div class="bar"><i style="width:75%"></i></div></div>
-          <div class="chcard"><div class="h"><b>زيارة مباشرة</b><span class="pill p-walk">Walk-in</span></div><div class="roas">—</div><div class="meta">إيراد 28,900﷼</div><div class="bar"><i style="width:50%"></i></div></div>
+          <div class="chcard"><div class="h"><b>Meta</b><span class="pill p-meta" data-en="Ads">إعلانات</span></div><div class="roas">7.4×</div><div class="meta"><span data-en="Spend 9,800 → revenue">صرف 9,800 ← إيراد</span> <span data-price data-base="72300">﷼ 72,300</span></div><div class="bar"><i style="width:90%"></i></div></div>
+          <div class="chcard"><div class="h"><b>Google</b><span class="pill p-google" data-en="Ads">إعلانات</span></div><div class="roas">5.1×</div><div class="meta"><span data-en="Spend 6,400 → revenue">صرف 6,400 ← إيراد</span> <span data-price data-base="32600">﷼ 32,600</span></div><div class="bar"><i style="width:62%"></i></div></div>
+          <div class="chcard"><div class="h"><b>Snapchat</b><span class="pill p-snap" data-en="Ads">إعلانات</span></div><div class="roas">3.2×</div><div class="meta"><span data-en="Spend 4,100 → revenue">صرف 4,100 ← إيراد</span> <span data-price data-base="13100">﷼ 13,100</span></div><div class="bar"><i style="width:39%"></i></div></div>
+          <div class="chcard"><div class="h"><b>واتساب</b><span class="pill p-wa" data-en="Organic">عضوي</span></div><div class="roas">∞</div><div class="meta"><span data-en="Spend 0 → revenue">صرف 0 ← إيراد</span> <span data-price data-base="41500">﷼ 41,500</span></div><div class="bar"><i style="width:75%"></i></div></div>
+          <div class="chcard"><div class="h"><b data-en="Walk-in">زيارة مباشرة</b><span class="pill p-walk">Walk-in</span></div><div class="roas">—</div><div class="meta"><span data-en="Revenue">إيراد</span> <span data-price data-base="28900">﷼ 28,900</span></div><div class="bar"><i style="width:50%"></i></div></div>
         </div>
 
-        <div class="card">
+        <div class="card reveal">
           <h3>آخر المرضى — التتبّع الكامل</h3><div class="sub">من الإعلان → للحجز → للإيراد</div>
           <table>
             <thead><tr><th>المريض</th><th>القناة / الحملة</th><th>الخدمة</th><th>الفرع</th><th>الإيراد</th><th>الحالة</th></tr></thead>
@@ -218,14 +224,14 @@
 
       <!-- ========== APPOINTMENTS ========== -->
       <section class="tab" id="appts">
-        <div class="sec-t">الحجوزات</div><div class="sec-d">محرّك مركزي واحد عبر كل الفروع والقنوات — <b>صفر حجز مزدوج.</b></div>
+        <div class="sec-t" data-en="Appointments">الحجوزات</div><div class="sec-d" data-en="One central engine across all branches and channels — zero double-booking.">محرّك مركزي واحد عبر كل الفروع والقنوات — <b>صفر حجز مزدوج.</b></div>
         <div class="kpis">
           <div class="kpi"><div class="l">حجوزات اليوم</div><div class="n teal">38</div><div class="d up">3 فروع</div></div>
           <div class="kpi"><div class="l">تعارضات منعها النظام</div><div class="n">6</div><div class="d up">▲ النهاردة</div></div>
           <div class="kpi"><div class="l">من واتساب آليًا</div><div class="n">11</div><div class="d up">29%</div></div>
           <div class="kpi"><div class="l">من مركز الاتصال AI</div><div class="n">7</div><div class="d up">18%</div></div>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <h3>جدول اليوم — كل الفروع</h3><div class="sub">👩‍⚕️ موظفة الاستقبال بتأكد الحضور بضغطة — والنظام يحدّث الإيراد ونسبة الحضور فورًا</div>
           <table>
             <thead><tr><th>الوقت</th><th>المريض</th><th>الخدمة</th><th>الطبيب</th><th>الفرع</th><th>المصدر</th><th>تأكيد الحضور</th></tr></thead>
@@ -243,7 +249,7 @@
 
       <!-- ========== AI CALL CENTER ========== -->
       <section class="tab" id="ai">
-        <div class="sec-t">مركز الاتصال بالذكاء الاصطناعي</div>
+        <div class="sec-t" data-en="AI Call Center">مركز الاتصال بالذكاء الاصطناعي</div>
         <div class="sec-d">يرد على كل مكالمة 24/7 بالعربي والإنجليزي، ويحجز مباشرة في التقويم. <span class="demo-flag">⚙️ عرض المنتج — التشغيل الصوتي المباشر يتفعّل في الـ onboarding</span></div>
         <div style="margin-bottom:16px"><a href="./ai-agent.html" target="_blank" class="btn" style="text-decoration:none">🎙️ جرّب المساعد التفاعلي — كلّمه وهيرد عليك →</a></div>
         <div class="kpis">
@@ -253,7 +259,7 @@
           <div class="kpi"><div class="l">بعد ساعات العمل</div><div class="n">17</div><div class="d up">كانت تضيع كلها</div></div>
         </div>
         <div class="row c2">
-          <div class="card">
+          <div class="card reveal">
             <h3>سجل المكالمات</h3><div class="sub">لحظي</div>
             <div class="calllog">
               <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 21</b> — حجزت موعد تنظيف</div><small style="color:var(--muted)">22:14 · بعد العمل</small></div>
@@ -262,7 +268,7 @@
               <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 45</b> — أعادت جدولة موعدها</div><small style="color:var(--muted)">18:30</small></div>
             </div>
           </div>
-          <div class="card">
+          <div class="card reveal">
             <h3>عيّنة محادثة</h3><div class="sub">رد آلي بالعربي</div>
             <div class="transcript">
               <div class="bub pt">مساء الخير، عايزة أحجز تنظيف بكرة بعد الـ6؟</div>
@@ -276,9 +282,9 @@
 
       <!-- ========== WHATSAPP ========== -->
       <section class="tab" id="wa">
-        <div class="sec-t">أتمتة واتساب</div><div class="sec-d">تأكيد وتذكير ومتابعة آلية عبر الـ Cloud API الرسمي — مربوطة بالحجز.</div>
+        <div class="sec-t" data-en="WhatsApp Automation">أتمتة واتساب</div><div class="sec-d" data-en="Automated confirmations, reminders and follow-ups via the official Cloud API — tied to the booking.">تأكيد وتذكير ومتابعة آلية عبر الـ Cloud API الرسمي — مربوطة بالحجز.</div>
         <div class="row c2b">
-          <div class="card">
+          <div class="card reveal">
             <h3>تدفّق الأتمتة</h3><div class="sub">بيشتغل لوحده على كل حجز</div>
             <div class="flow">
               <div class="step"><div class="n">1</div><div><b>تأكيد فوري</b><small>أول ما يتحجز الموعد (أي قناة)</small></div></div>
@@ -287,7 +293,7 @@
               <div class="step"><div class="n">4</div><div><b>متابعة بعد الزيارة</b><small>تقييم + عرض المتابعة/الإحالة</small></div></div>
             </div>
           </div>
-          <div class="card" style="background:#0b141a;border-color:#0b141a">
+          <div class="card reveal" style="background:#0b141a;border-color:#0b141a">
             <div class="wa" style="max-width:none">
               <div class="msg">📅 تم تأكيد موعدك: تنظيف — بكرة 6:30 م، فرع جميرا. للتعديل اضغط هنا.</div>
               <div class="msg in">تمام شكرًا</div>
@@ -301,8 +307,8 @@
 
       <!-- ========== CRM ========== -->
       <section class="tab" id="crm">
-        <div class="sec-t">المرضى (CRM)</div><div class="sec-d">كل مريض، تاريخه، قيمته، ومصدره — في مكان واحد عبر الفروع.</div>
-        <div class="card">
+        <div class="sec-t" data-en="Patients (CRM)">المرضى (CRM)</div><div class="sec-d" data-en="Every patient, their history, value and source — in one place across branches.">كل مريض، تاريخه، قيمته، ومصدره — في مكان واحد عبر الفروع.</div>
+        <div class="card reveal">
           <h3>قاعدة المرضى</h3><div class="sub">12,480 مريض · بحث وفلترة</div>
           <table>
             <thead><tr><th>المريض</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>المصدر الأصلي</th><th>الولاء</th><th>الحالة</th></tr></thead>
@@ -319,26 +325,26 @@
 
       <!-- ========== REPORTS ========== -->
       <section class="tab" id="reports">
-        <div class="sec-t">التقارير</div><div class="sec-d">العائد على كل قناة، الأداء حسب الفرع والطبيب — تقرير جاهز لاجتماع الإدارة.</div>
+        <div class="sec-t" data-en="Reports">التقارير</div><div class="sec-d" data-en="Return per channel, performance by branch and doctor — a report ready for the management meeting.">العائد على كل قناة، الأداء حسب الفرع والطبيب — تقرير جاهز لاجتماع الإدارة.</div>
         <div class="row c2b">
-          <div class="card">
-            <h3>الأداء حسب الفرع</h3><div class="sub">الإيراد هذا الشهر</div>
+          <div class="card reveal">
+            <h3 data-en="Performance by branch">الأداء حسب الفرع</h3><div class="sub" data-en="Revenue this month">الإيراد هذا الشهر</div>
             <div style="margin-top:8px">
-              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:4px"><span>جميرا</span><span class="money">486,000﷼</span></div><div class="bar"><i style="width:100%"></i></div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:12px 0 4px"><span>مارينا</span><span class="money">351,000﷼</span></div><div class="bar"><i style="width:72%"></i></div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:12px 0 4px"><span>دبي هيلز</span><span class="money">298,000﷼</span></div><div class="bar"><i style="width:61%"></i></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:4px"><span data-en="Jumeirah">جميرا</span><span class="money" data-price data-base="486000">﷼ 486,000</span></div><div class="bar"><i style="width:100%"></i></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:12px 0 4px"><span data-en="Marina">مارينا</span><span class="money" data-price data-base="351000">﷼ 351,000</span></div><div class="bar"><i style="width:72%"></i></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:12px 0 4px"><span data-en="Dubai Hills">دبي هيلز</span><span class="money" data-price data-base="298000">﷼ 298,000</span></div><div class="bar"><i style="width:61%"></i></div>
             </div>
           </div>
-          <div class="card">
-            <h3>الخلاصة التنفيذية</h3><div class="sub">آخر 30 يوم</div>
+          <div class="card reveal">
+            <h3 data-en="Executive summary">الخلاصة التنفيذية</h3><div class="sub" data-en="Last 30 days">آخر 30 يوم</div>
             <table>
               <tbody>
-                <tr><td>إجمالي الإيراد</td><td class="money" style="text-align:left">1,135,000﷼</td></tr>
-                <tr><td>مرضى جدد</td><td class="money" style="text-align:left">486</td></tr>
-                <tr><td>مكالمات أُنقذت (AI)</td><td class="money" style="text-align:left">512</td></tr>
-                <tr><td>إيراد منسوب للإعلانات</td><td class="money" style="text-align:left">118,000﷼</td></tr>
-                <tr><td>متوسط ROAS</td><td class="money" style="text-align:left;color:var(--teal)">5.6×</td></tr>
-                <tr><td>تحسّن نسبة الحضور</td><td class="money" style="text-align:left;color:var(--good)">+9.8%</td></tr>
+                <tr><td data-en="Total revenue">إجمالي الإيراد</td><td class="money" style="text-align:left" data-price data-base="1135000">﷼ 1,135,000</td></tr>
+                <tr><td data-en="New patients">مرضى جدد</td><td class="money" style="text-align:left">486</td></tr>
+                <tr><td data-en="Calls saved (AI)">مكالمات أُنقذت (AI)</td><td class="money" style="text-align:left">512</td></tr>
+                <tr><td data-en="Ad-attributed revenue">إيراد منسوب للإعلانات</td><td class="money" style="text-align:left" data-price data-base="118000">﷼ 118,000</td></tr>
+                <tr><td data-en="Average ROAS">متوسط ROAS</td><td class="money" style="text-align:left;color:var(--teal)">5.6×</td></tr>
+                <tr><td data-en="Show-rate improvement">تحسّن نسبة الحضور</td><td class="money" style="text-align:left;color:var(--good)">+9.8%</td></tr>
               </tbody>
             </table>
           </div>
@@ -347,15 +353,15 @@
 
       <!-- ========== IMPORT ========== -->
       <section class="tab" id="import">
-        <div class="sec-t">استيراد بيانات العيادة — التشغيل في ساعات</div>
+        <div class="sec-t" data-en="Import clinic data — go live in hours">استيراد بيانات العيادة — التشغيل في ساعات</div>
         <div class="sec-d">ارفع ملف Excel/CSV لمرضاك ومواعيدك القديمة → النظام يربط الأعمدة تلقائيًا → معاينة → استيراد. <b>أي عيادة تبقى شغّالة في نفس اليوم — مفيش إعادة إدخال يدوي.</b></div>
         <div class="row c2">
-          <div class="card">
+          <div class="card reveal">
             <h3>1) ارفع ملفك</h3><div class="sub">CSV أو Excel — من أي نظام قديم</div>
             <div class="dropzone">📄 اسحب ملفك هنا، أو <label>اختر ملف<input type="file" accept=".csv,.xlsx,.xls" hidden onchange="onFile(this)"></label><div id="fname" style="margin-top:8px;font-size:12px;color:var(--teal-d)"></div></div>
             <div style="margin-top:12px"><button class="btn ghost" onclick="loadSample()">جرّب بملف تجريبي (12,480 مريض)</button></div>
           </div>
-          <div class="card">
+          <div class="card reveal">
             <h3>2) ربط الأعمدة — تلقائي ✓</h3><div class="sub">النظام عرف الأعمدة لوحده</div>
             <div class="maprow"><span>الاسم</span><b style="color:var(--teal)">→ Name ✓</b></div>
             <div class="maprow"><span>رقم الجوال</span><b style="color:var(--teal)">→ Phone ✓</b></div>
@@ -390,22 +396,30 @@
     document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on', x===b));
     document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('on', s.id===id));
     document.getElementById('topTitle').textContent = titles[id]||'';
+    // reveal any cards inside the freshly-shown tab (they were display:none so the observer skipped them)
+    var shown=document.getElementById(id);
+    if(shown) shown.querySelectorAll('.reveal:not(.in)').forEach(function(el){ el.classList.add('in'); });
     window.scrollTo({top:0,behavior:'smooth'});
   });
   // branch filter — كل عيادة بتطلع كام + الكل بيطلع كام
   var BRANCHES={
-    'كل الفروع (3)':{book:'38',ans:'100%',rev:'312,400﷼',noshow:'4.2%',l:'إيراد الأسبوع — كل الفروع (المجموع)'},
-    'فرع جميرا':{book:'16',ans:'100%',rev:'138,000﷼',noshow:'3.8%',l:'إيراد الأسبوع — فرع جميرا'},
-    'فرع مارينا':{book:'13',ans:'100%',rev:'102,000﷼',noshow:'4.5%',l:'إيراد الأسبوع — فرع مارينا'},
-    'فرع دبي هيلز':{book:'9',ans:'100%',rev:'72,400﷼',noshow:'4.6%',l:'إيراد الأسبوع — فرع دبي هيلز'}
+    'كل الفروع (3)':{book:'38',ans:'100%',rev:312400,noshow:'4.2%',l:'إيراد الأسبوع — كل الفروع (المجموع)',l_en:'Weekly revenue — all branches (total)'},
+    'فرع جميرا':{book:'16',ans:'100%',rev:138000,noshow:'3.8%',l:'إيراد الأسبوع — فرع جميرا',l_en:'Weekly revenue — Jumeirah branch'},
+    'فرع مارينا':{book:'13',ans:'100%',rev:102000,noshow:'4.5%',l:'إيراد الأسبوع — فرع مارينا',l_en:'Weekly revenue — Marina branch'},
+    'فرع دبي هيلز':{book:'9',ans:'100%',rev:72400,noshow:'4.6%',l:'إيراد الأسبوع — فرع دبي هيلز',l_en:'Weekly revenue — Dubai Hills branch'}
   };
   function selectBranch(name){
     var b=BRANCHES[name]||BRANCHES['كل الفروع (3)'];
     document.getElementById('k_book').textContent=b.book;
     document.getElementById('k_ans').textContent=b.ans;
-    document.getElementById('k_rev').textContent=b.rev;
+    var rev=document.getElementById('k_rev');
+    rev.setAttribute('data-base',b.rev);            // SAR base; applyCur renders in the active currency
+    var revl=document.getElementById('k_revl');
+    revl.setAttribute('data-en',b.l_en);            // keep both languages in sync with the branch
+    revl.dataset._ar=b.l;
+    revl.textContent=(LANG==='en')?b.l_en:b.l;
     document.getElementById('k_noshow').textContent=b.noshow;
-    document.getElementById('k_revl').textContent=b.l;
+    applyCur(document.getElementById('cur').value); // re-render the revenue figure in the chosen currency
   }
   function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
   // receptionist check-in (safe DOM)
@@ -451,6 +465,47 @@
     requestAnimationFrame(function(){ bar.style.width='100%'; });
     setTimeout(function(){ document.getElementById('doneCard').style.display='block'; document.getElementById('doneCard').scrollIntoView({behavior:'smooth'}); },2300);
   }
+
+  // ===== bilingual (Arabic default, English opt-in) =====
+  let LANG='ar';
+  function toggleLang(){ applyLang(LANG==='ar'?'en':'ar'); }
+  function applyLang(l){ LANG=l; var en=(l==='en');
+    document.documentElement.lang=l; document.documentElement.dir=en?'ltr':'rtl';
+    var b=document.getElementById('lng'); if(b) b.textContent=en?'ع':'EN';
+    document.querySelectorAll('[data-en]').forEach(function(el){ if(!el.dataset._ar) el.dataset._ar=el.textContent; el.textContent = en?el.getAttribute('data-en'):el.dataset._ar; });
+    document.querySelectorAll('[data-en-ph]').forEach(function(el){ if(!el.dataset._arPh) el.dataset._arPh=el.getAttribute('placeholder')||''; el.setAttribute('placeholder', en?el.getAttribute('data-en-ph'):el.dataset._arPh); });
+  }
+
+  // ===== currency (base amounts stored in SAR) =====
+  var RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
+  var SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
+  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');});}
+
+  // ===== smooth scroll reveal =====
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
+
+  // render prices once on load in the default currency (SAR)
+  applyCur(document.getElementById('cur').value);
+</script>
+<script src="./widget.js" defer></script>
+<script>
+/* live link: bookings made in the floating assistant appear here instantly */
+(function(){
+  function show(){
+    var a=[]; try{a=JSON.parse(localStorage.getItem("cliniva_bookings")||"[]");}catch(e){}
+    var o=document.getElementById("clw-newbk"); if(o&&o.parentNode)o.parentNode.removeChild(o);
+    if(!a.length)return;
+    var last=a[a.length-1];
+    var bar=document.createElement("div"); bar.id="clw-newbk";
+    bar.style.cssText="background:#E7F6EC;border-bottom:1px solid #Bfe6cd;color:#1A8A44;padding:11px 26px;font-weight:800;font-size:13.5px;font-family:'Tajawal',sans-serif";
+    bar.appendChild(document.createTextNode("🆕 "+a.length+" حجز جديد من المساعد الذكي — آخر واحد: "+last.name+" · "+last.service+" "+last.day+" "+last.time+" ("+last.id+")"));
+    var main=document.querySelector(".main")||document.body; main.insertBefore(bar, main.firstChild);
+  }
+  window.addEventListener("storage", show);
+  window.addEventListener("cliniva-booked", show);
+  if(document.readyState!=="loading") show(); else document.addEventListener("DOMContentLoaded", show);
+})();
 </script>
 </body>
 </html>
