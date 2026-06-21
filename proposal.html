@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cliniva — كيف نبنيها (العرض)</title>
+<meta name="description" content="عرض بناء المنصة الرقمية: منصة موحّدة للحجز والتسويق والعمليات — تبدأ بأعلى عائد وتنمو بالمراحل.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#14202E;--teal:#0E7C7B;--teal2:#13A8A4;--teal-d:#0A5D5C;--bg:#F4F8F8;--mint:#E8F3F2;--line:#E2EAEA;--muted:#5C6B72;--maxw:1080px;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{font-family:"Tajawal",system-ui,Tahoma,sans-serif;color:var(--ink);background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-weight:900;line-height:1.2}
+  .eyebrow{color:var(--teal);font-weight:800;font-size:12.5px;letter-spacing:.5px}
+  .btn{display:inline-block;background:var(--teal);color:#fff;border:0;border-radius:11px;padding:12px 22px;font-weight:800;font-size:14.5px;cursor:pointer;font-family:inherit}
+  .btn:hover{background:var(--teal-d)}.btn.ghost{background:transparent;color:var(--teal);border:1.5px solid #BFE0DE}
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:900}.logo span{color:var(--teal)}
+  .logo svg{vertical-align:middle}
+  .nav-cta{display:flex;gap:9px}
+  .hero{background:radial-gradient(800px 420px at 85% -10%,rgba(19,168,164,.13),transparent 60%),linear-gradient(180deg,var(--bg),#fff);padding:50px 0 30px}
+  .hero h1{font-size:36px}.hero h1 span{color:var(--teal)}
+  .hero .lede{font-size:17px;color:var(--muted);max-width:680px;margin:14px 0 18px}
+  .callout{background:var(--ink);color:#fff;border-radius:14px;padding:16px 20px;margin-top:18px;font-size:14.5px;max-width:760px}
+  .callout b{color:var(--teal2)}
+  section{padding:44px 0}
+  .sec-head{margin-bottom:24px}.sec-head h2{font-size:26px}.sec-head p{color:var(--muted);margin-top:8px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:820px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+  .pain{background:#FFF7F4;border:1px solid #F3D9CE;border-radius:13px;padding:15px 17px}
+  .pain b{display:block;font-size:15.5px;margin-bottom:3px}.pain span{font-size:13.5px;color:var(--muted)}
+  .solution{background:linear-gradient(160deg,var(--teal-d),var(--teal));color:#fff;border-radius:18px;padding:30px;text-align:center}
+  .solution h2{color:#fff;font-size:24px}.solution p{color:#cdeae9;max-width:640px;margin:12px auto 0;font-size:15.5px}
+  .solution .lock{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 18px;margin-top:16px;font-size:13.5px;font-weight:700}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  th,td{text-align:right;padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+  th{background:var(--mint);color:var(--teal-d);font-weight:900;font-size:13px}
+  tr:last-child td{border-bottom:0}
+  .ph{font-weight:900;color:var(--teal);white-space:nowrap}
+  .out{color:var(--teal-d);font-weight:700}
+  .vstack{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  .vrow{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+  .vrow b{color:var(--teal);font-size:13px}.vrow div{font-size:13.5px;margin-top:3px}
+  .price{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:760px}
+  .tier{border:1px solid var(--line);border-radius:16px;padding:20px;background:#fff}
+  .tier.hi{border:2px solid var(--teal)}
+  .tier h3{font-size:17px}.tier .amt{font-size:22px;font-weight:900;color:var(--teal);margin:8px 0 4px}.tier p{font-size:13px;color:var(--muted)}
+  .final{background:var(--ink);color:#fff;border-radius:20px;padding:34px;text-align:center;margin:14px 0}
+  .final h2{color:#fff;font-size:24px}.final p{color:#A9C2C1;margin:10px auto 18px;max-width:520px}
+  footer{padding:28px 0;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  @media(max-width:820px){.grid2,.grid4,.vstack,.price{grid-template-columns:1fr}.hero h1{font-size:28px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <div class="logo"><svg width="22" height="22" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#13A8A4"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg>Cliniva<span>.</span></div>
+  <div class="nav-cta"><a href="./app.html" class="btn ghost">الداشبورد</a><a href="./index.html#demo" class="btn">احجز عرض</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">عرض بناء المنصة الرقمية</div>
+  <h1>منصة موحّدة للحجز، التسويق، <span>والعمليات</span></h1>
+  <p class="lede">منصة رقمية متكاملة بيقدر المريض من خلالها يكتشف، يحجز، يدفع، ويرجع تاني — من أي قناة (موقع، واتساب، تليفون، تطبيق) — بينما الإدارة بتدير العيادات والتسويق من مكان واحد بمصدر بيانات موحّد.</p>
+  <div class="callout">الفلسفة بسيطة: نبدأ بالحاجات اللي <b>بتجيب فلوس فعلاً</b> (الإعلانات، الواتساب، الحجز)، ونبني <b>بالمراحل</b> عشان نثبت العائد قبل ما نوسّع — بدل ما نحرق الميزانية في كل حاجة مرة واحدة.</div>
+</div></header>
+
+<section><div class="wrap">
+  <div class="sec-head"><div class="eyebrow">التحدي الحالي</div><h2>فين بتروح الفلوس</h2></div>
+  <div class="grid4">
+    <div class="pain"><b>حجوزات مبعثرة</b><span>تليفون + واتساب + حضور → تعارض مواعيد، حجز مزدوج، ومرضى بيضيعوا.</span></div>
+    <div class="pain"><b>إعلانات بلا قياس</b><span>صرف على Meta/Google من غير معرفة أي حملة جابت مريض دافع فعلاً.</span></div>
+    <div class="pain"><b>متابعة ضعيفة</b><span>العملاء المحتملين بيبردوا، ومفيش نظام ولاء أو إحالة يرفع قيمة العميل.</span></div>
+    <div class="pain"><b>غياب الرؤية</b><span>صعب على الإدارة تشوف أداء العيادات والأطباء والإيرادات لحظياً.</span></div>
+  </div>
+</div></section>
+
+<section style="background:var(--bg)"><div class="wrap">
+  <div class="solution">
+    <div class="eyebrow" style="color:#bfeae9">الحل</div>
+    <h2>منصة موحّدة قلبها محرك حجز مركزي واحد</h2>
+    <p>كل القنوات (موقع، واتساب، استقبال، كول سنتر) بتكلّم محرك حجز واحد — بمصدر بيانات موحّد.</p>
+    <div class="lock">🔒 ضمان تقني صارم: يستحيل الحجز المزدوج — قفل لحظي + قيد فريد في قاعدة البيانات</div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><div class="eyebrow">خارطة الطريق</div><h2>المنصة بثلاث مراحل — تبدأ بأعلى عائد</h2></div>
+  <table>
+    <thead><tr><th style="width:90px">المرحلة</th><th>المحتوى</th><th style="width:34%">الناتج</th></tr></thead>
+    <tbody>
+      <tr><td class="ph">1</td><td>موقع إلكتروني + محرك حجز + CRM + لوحة تحكم + أتمتة واتساب + ربط إعلانات Meta</td><td class="out">حجوزات أونلاين مدفوعة + قياس عائد كل حملة</td></tr>
+      <tr><td class="ph">2</td><td>كول سنتر بالذكاء الاصطناعي + مساعد محادثة + نظام نقاط ولاء + نظام إحالة</td><td class="out">رد آلي على المكالمات والرسائل + رفع تكرار الزيارات</td></tr>
+      <tr><td class="ph">3</td><td>تطبيق موبايل (iOS + Android) + حسابات العائلة + المحفظة والتقارير</td><td class="out">تجربة مريض كاملة على الموبايل</td></tr>
+    </tbody>
+  </table>
+</div></section>
+
+<section style="background:var(--bg)"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow">طريقتنا في العمل</div><h2>اشترِ بذكاء، وابنِ ما يميّزك</h2>
+    <p>مش هنعيد اختراع العجلة. الحاجات الجاهزة (الدفع، الواتساب، الرسائل، الصوت) نستخدم فيها مزوّدين معتمدين — أأمن وأسرع وأوفر. والبناء المخصص بإيدينا للقطعة اللي بتفرق فعلاً: <b>محرك الحجز والبيانات الموحّدة.</b></p>
+  </div>
+  <div class="vstack">
+    <div class="vrow"><b>الدفع</b><div>Moyasar / Tap (مدى، أبل باي، بطاقات) + Tamara / Tabby للأقساط</div></div>
+    <div class="vrow"><b>الواتساب</b><div>واتساب بزنس الرسمي عبر مزوّد معتمد (Unifonic / 360dialog)</div></div>
+    <div class="vrow"><b>الرسائل والـ OTP</b><div>Unifonic / Taqnyat</div></div>
+    <div class="vrow"><b>البنية التحتية</b><div>AWS منطقة البحرين/الخليج — التزاماً بأنظمة حماية البيانات (PDPL)</div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><div class="eyebrow">الباقات</div><h2>طريقتين للبداية</h2></div>
+  <div class="price">
+    <div class="tier"><h3>تنفيذ كامل</h3><div class="amt">من 120,000 ريال</div><p>المرحلة 1 خلال ~8–10 أسابيع + تشغيل شهري. تملّك كامل.</p></div>
+    <div class="tier hi"><h3>اشتراك Cliniva (SaaS)</h3><div class="amt">رسوم تأسيس + شهري / فرع</div><p>نفس المنصة باشتراك — أخف على الكاش‑فلو، وتكبر مع عدد الفروع.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap"><div class="final">
+  <h2>نبدأ بمكالمة 20 دقيقة</h2>
+  <p>نشوف عيادتك، نحدّد المرحلة 1 بأعلى عائد، ونطلّع عرض سعر مفصّل.</p>
+  <a href="./index.html#demo" class="btn" style="background:var(--teal2)">احجز عرض</a>
+  <a href="./app.html" class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.3);margin-inline-start:8px">شوف الداشبورد</a>
+</div></div></section>
+
+<footer><div class="wrap">Cliniva — a RASMY venture · بقيادة Pola Rasmy · hello@cliniva.sa</div></footer>
+</body>
+</html>
