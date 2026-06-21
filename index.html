@@ -2,317 +2,361 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cliniva — منصة تشغيل عيادة الأسنان الكاملة</title>
-<meta name="description" content="نظام واحد يدير الحجز بلا تعارض، واتساب وإعلانات مربوطين بالحجز، وكول سنتر بالذكاء الاصطناعي — مبني لمجموعات عيادات الأسنان في الخليج.">
+<title>Cliniva — نظام تشغيل مجموعات عيادات الأسنان</title>
+<meta name="description" content="منصة تشغيل واحدة لمجموعات عيادات الأسنان: حجز مركزي، مركز اتصال بالذكاء الاصطناعي، أتمتة واتساب، وربط كل ريال إعلان بالمريض والإيراد. مبنية للسعودية والخليج.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Sora:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#14202E;--teal:#0E7C7B;--teal2:#13A8A4;--teal-d:#0A5D5C;--bg:#F4F8F8;--mint:#E8F3F2;--line:#E2EAEA;--muted:#5C6B72;--maxw:1120px;
-    --ar:"Tajawal";--en:"Sora";}
+  :root{
+    --em:#0F5F56;--em2:#16857A;--em3:#2BA89B;--em-bright:#34C7B5;
+    --ink:#111827;--ink2:#1F2937;--ink3:#374151;--bg:#FAFAF8;--white:#fff;
+    --muted:#6B7280;--muted2:#9AA3AF;--line:#E9EAE5;--mint:#EAF3F1;--maxw:1180px;
+    --ar:"Tajawal";--en:"Inter";
+  }
   *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
-  body{font-family:"Tajawal",system-ui,Tahoma,sans-serif;color:var(--ink);background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
-  html[lang="en"] body{font-family:"Sora",system-ui,sans-serif}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  a{color:inherit;text-decoration:none}h1,h2,h3{line-height:1.18;font-weight:800}
-  .btn{display:inline-block;background:var(--teal);color:#fff;border:0;border-radius:12px;padding:13px 24px;font-weight:700;font-size:15.5px;cursor:pointer;font-family:inherit;transition:.22s}
-  .btn:hover{background:var(--teal-d);transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(14,124,123,.6)}
-  .btn.ghost{background:transparent;color:var(--teal);border:1.5px solid #BFE0DE}
-  .btn.ghost:hover{border-color:var(--teal);background:var(--mint);box-shadow:none}
-  .eyebrow{color:var(--teal);font-weight:800;font-size:12.5px;letter-spacing:.5px}
-  /* nav */
-  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
-  .logo{display:flex;align-items:center;gap:8px;font-size:22px;font-weight:900}.logo span{color:var(--teal)}
-  .nav-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .nav-links{display:none;gap:4px}@media(min-width:920px){.nav-links{display:flex}}
-  .nav-links a{padding:8px 12px;border-radius:9px;font-weight:700;font-size:14px;color:var(--muted);transition:.2s}
-  .nav-links a:hover{color:var(--teal-d);background:var(--mint)}
-  .toggle{display:flex;align-items:center;gap:6px}
-  .lng,.cur{border:1px solid var(--line);border-radius:9px;background:#fff;font-family:inherit;font-weight:800;font-size:13px;color:var(--ink);cursor:pointer;padding:8px 10px}
-  .lng:hover,.cur:hover{border-color:var(--teal)}
-  /* reveal animation */
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  body{font-family:"Tajawal","Inter",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+  html[lang="en"] body{font-family:"Inter",system-ui,sans-serif}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{line-height:1.12;font-weight:800;letter-spacing:-.02em}
+  .num{font-family:"Inter",sans-serif;font-variant-numeric:tabular-nums}
+  .eyebrow{color:var(--em2);font-weight:800;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase}
+  .btn{display:inline-flex;align-items:center;gap:7px;background:var(--em);color:#fff;border:0;border-radius:11px;padding:13px 22px;font-weight:700;font-size:14.5px;cursor:pointer;font-family:inherit;transition:.2s}
+  .btn:hover{background:var(--em2);transform:translateY(-1px);box-shadow:0 12px 26px -12px rgba(15,95,86,.7)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--em);background:#fff;box-shadow:0 8px 20px -14px rgba(0,0,0,.3)}
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
   .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+  /* nav */
+  nav{position:sticky;top:0;z-index:60;background:rgba(250,250,248,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:12px}
+  .logo{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:900;letter-spacing:-.02em}.logo b span{color:var(--em)}
+  .nl{display:none;gap:2px}@media(min-width:960px){.nl{display:flex}}
+  .nl a{padding:8px 14px;border-radius:9px;font-weight:600;font-size:14px;color:var(--ink3);transition:.18s}
+  .nl a:hover{color:var(--em);background:var(--mint)}
+  .nr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .lng,.cur{border:1px solid var(--line);border-radius:9px;background:#fff;font-family:inherit;font-weight:700;font-size:12.5px;color:var(--ink);cursor:pointer;padding:8px 10px}
+  .lng:hover,.cur:hover{border-color:var(--em)}
   /* hero */
-  .hero{background:radial-gradient(900px 480px at 88% -10%,rgba(19,168,164,.16),transparent 60%),linear-gradient(180deg,var(--bg),#fff);padding:60px 0 34px;overflow:hidden}
-  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
-  .hero h1{font-size:42px;font-weight:900}.hero h1 .c{color:var(--teal)}
-  .hero p.lede{font-size:18px;color:var(--muted);margin:18px 0 24px;max-width:520px}
+  .hero{padding:64px 0 40px;position:relative;overflow:hidden;background:radial-gradient(900px 480px at 84% -6%,rgba(43,168,155,.13),transparent 60%)}
+  .hero .wrap{display:grid;grid-template-columns:.92fr 1.08fr;gap:46px;align-items:center}
+  .hero h1{font-size:clamp(34px,4.6vw,54px);font-weight:900}.hero h1 .g{color:var(--em)}
+  .hero .lede{font-size:18px;color:var(--ink3);margin:20px 0 26px;max-width:520px}
   .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
-  .hero .micro{margin-top:16px;color:var(--muted);font-size:13px}
-  /* mockup */
-  .mock{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 30px 60px -28px rgba(14,124,123,.45);overflow:hidden;animation:float 6s ease-in-out infinite}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-  .mock .bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#F0F5F5;border-bottom:1px solid var(--line)}
-  .mock .bar i{width:10px;height:10px;border-radius:50%;background:#D5DEDE}
-  .mock .bar .u{margin-inline-start:10px;font-size:11px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-family:"Sora"}
-  .mock .body{padding:14px;background:#FBFDFD}
-  .kx{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .kx .b{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}
-  .kx .n{font-size:18px;font-weight:900;color:var(--teal);font-family:"Sora"}.kx .l{font-size:10.5px;color:var(--muted)}
-  .pan{background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:9px;padding:11px}
-  .pan h4{font-size:11px;color:var(--muted);margin-bottom:7px}
-  .ap{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line);font-size:11.5px}
-  .ap:last-child{border:0}.ap .t{color:var(--teal);font-weight:800}
-  .tag{font-size:9.5px;background:var(--mint);color:var(--teal);border-radius:999px;padding:2px 8px;font-weight:700}
-  /* badges */
-  .badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:8px 0 4px}
-  .badge{font-size:12.5px;background:var(--mint);color:var(--teal-d);border:1px solid #CFE7E5;border-radius:999px;padding:5px 14px;font-weight:700}
-  section{padding:56px 0}
-  .sec-head{text-align:center;max-width:640px;margin:0 auto 30px}
-  .sec-head h2{font-size:29px}.sec-head p{color:var(--muted);margin-top:10px;font-size:15.5px}
-  .pains{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:780px;margin:0 auto}
-  .pain{background:#FFF7F4;border:1px solid #F3D9CE;border-radius:13px;padding:15px 17px}
-  .pain b{display:block;font-size:15.5px;margin-bottom:2px}.pain span{font-size:13.5px;color:var(--muted)}
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px;transition:.25s}
-  .card:hover{border-color:#BFE0DE;box-shadow:0 16px 34px -22px rgba(14,124,123,.5);transform:translateY(-3px)}
-  .card .ic{width:38px;height:38px;border-radius:10px;background:var(--mint);color:var(--teal);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;margin-bottom:11px}
-  .card h3{font-size:16.5px}.card p{font-size:13.5px;color:var(--muted);margin-top:5px}.card .ph{font-size:11px;color:var(--teal);font-weight:700;margin-top:8px}
-  .why{background:var(--ink);color:#fff;border-radius:22px;padding:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .why h3{color:#fff;font-size:18px;display:flex;gap:9px;align-items:center}.why h3 b{color:var(--teal2)}.why p{color:#A9C2C1;font-size:13.5px;margin-top:7px}
+  .hero .tl{display:flex;gap:18px;flex-wrap:wrap;margin-top:24px;color:var(--muted);font-size:13px;font-weight:600}
+  .hero .tl span{display:flex;align-items:center;gap:6px}
+  .hero .tl b{color:var(--em)}
+  /* dashboard mock */
+  .mock{background:var(--ink);border-radius:16px;box-shadow:0 50px 90px -40px rgba(17,24,39,.7);overflow:hidden;border:1px solid #1f2a37;animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .mock .bar{display:flex;align-items:center;gap:7px;padding:11px 15px;background:#0c1220;border-bottom:1px solid #1f2a37}
+  .mock .bar i{width:10px;height:10px;border-radius:50%;background:#2a3645}
+  .mock .bar .u{margin-inline-start:12px;font-size:11px;color:var(--muted2);font-family:"Inter"}
+  .mock .body{display:grid;grid-template-columns:128px 1fr}
+  .mside{background:#0c1220;padding:13px 9px;display:flex;flex-direction:column;gap:2px;border-inline-end:1px solid #1f2a37}
+  .mside .s{color:#8b97a6;font-size:11.5px;font-weight:600;padding:7px 9px;border-radius:7px;display:flex;gap:7px;align-items:center}
+  .mside .s.on{background:rgba(43,168,155,.16);color:#fff}
+  .mside .s::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--em3)}
+  .mmain{padding:13px;background:#0f1623}
+  .mk{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:9px}
+  .mk .b{background:#141d2c;border:1px solid #1f2a37;border-radius:9px;padding:9px 10px}
+  .mk .n{font-size:16px;font-weight:900;color:#fff;font-family:"Inter"}
+  .mk .n.em{color:var(--em-bright)}
+  .mk .l{font-size:9px;color:#8b97a6;margin-top:2px}
+  .mrow{display:grid;grid-template-columns:1.5fr 1fr;gap:8px}
+  .mpan{background:#141d2c;border:1px solid #1f2a37;border-radius:9px;padding:10px}
+  .mpan h5{font-size:10px;color:#8b97a6;font-weight:600;margin-bottom:8px}
+  .mappt{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:#cbd3dd;padding:4px 0;border-bottom:1px solid #1b2533}
+  .mappt:last-child{border:0}.mappt .t{color:var(--em-bright);font-weight:800;font-family:"Inter"}
+  .mtag{font-size:8.5px;background:rgba(43,168,155,.18);color:var(--em-bright);border-radius:20px;padding:2px 7px;font-weight:700}
+  .mchart{display:flex;align-items:flex-end;gap:5px;height:60px;margin-top:4px}
+  .mchart i{flex:1;background:linear-gradient(180deg,var(--em3),var(--em));border-radius:3px 3px 0 0;opacity:.9}
+  /* generic sections */
+  section{padding:64px 0}
+  .sec-head{max-width:660px;margin:0 auto 34px;text-align:center}
+  .sec-head h2{font-size:clamp(26px,3.3vw,38px);margin-top:10px}
+  .sec-head p{color:var(--ink3);margin-top:12px;font-size:16px}
+  .dark{background:var(--ink);color:#fff}
+  .dark h2{color:#fff}.dark .sec-head p{color:#9aa6b4}.dark .eyebrow{color:var(--em-bright)}
+  /* problem cards */
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .pcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:15px;padding:22px}
+  .pcard .ic{width:40px;height:40px;border-radius:10px;background:rgba(43,168,155,.14);color:var(--em-bright);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:13px}
+  .pcard h3{font-size:16px;color:#fff}.pcard p{font-size:13px;color:#9aa6b4;margin-top:6px}
+  /* architecture */
+  .arch{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;max-width:920px;margin:0 auto}
+  .acol{display:flex;flex-direction:column;gap:10px}
+  .anode{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 18px;font-weight:700;font-size:13.5px;text-align:center;box-shadow:0 8px 22px -16px rgba(0,0,0,.3)}
+  .anode small{display:block;color:var(--muted);font-size:11px;font-weight:500;margin-top:2px}
+  .acore{background:var(--em);color:#fff;border:0;padding:20px 22px;font-size:15px;border-radius:14px;box-shadow:0 16px 34px -16px rgba(15,95,86,.7)}
+  .aarrow{color:var(--em2);font-size:22px;font-weight:900}
+  /* feature split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;max-width:1000px;margin:0 auto}
+  .split h3{font-size:24px}.split .lead{color:var(--ink3);font-size:15.5px;margin:12px 0 16px}
+  .flist{list-style:none;display:grid;gap:10px}
+  .flist li{display:flex;gap:10px;font-size:14.5px;color:var(--ink2)}
+  .flist li::before{content:"✓";color:var(--em);font-weight:900}
+  .vcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 20px 50px -34px rgba(0,0,0,.4)}
+  .vcard.dk{background:var(--ink);color:#fff;border:0}
+  .branch{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .vcard.dk .branch{border-color:#1f2a37}
+  .branch:last-child{border:0}.branch .rev{font-weight:900;color:var(--em);font-family:"Inter"}.vcard.dk .branch .rev{color:var(--em-bright)}
+  .chan{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+  .chan .nm{width:88px;font-size:13px;font-weight:700}
+  .chbar{flex:1;height:8px;border-radius:99px;background:var(--mint);overflow:hidden}
+  .chbar i{display:block;height:100%;background:linear-gradient(90deg,var(--em3),var(--em))}
+  .chan .roas{font-weight:900;color:var(--em);font-size:13px;font-family:"Inter";width:42px;text-align:end}
   /* pricing */
-  .price{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:0 auto;align-items:stretch}
-  .tier{border:1px solid var(--line);border-radius:18px;padding:24px;background:#fff;display:flex;flex-direction:column;position:relative;transition:.25s}
-  .tier:hover{transform:translateY(-4px);box-shadow:0 20px 44px -26px rgba(14,124,123,.45)}
-  .tier.hi{border:2px solid var(--teal);box-shadow:0 20px 50px -28px rgba(14,124,123,.55)}
-  .tier .star{position:absolute;top:-12px;inset-inline-start:24px;background:var(--teal);color:#fff;font-size:11.5px;font-weight:800;border-radius:999px;padding:4px 13px}
-  .tier h3{font-size:19px}.tier .for{font-size:12.5px;color:var(--muted);margin-top:2px}
-  .tier .setup{font-size:25px;font-weight:900;color:var(--teal);margin:14px 0 2px;font-family:"Sora"}
-  .tier .setup small{font-size:13px;color:var(--muted);font-weight:700;font-family:inherit}
-  .tier .mo{font-size:14px;color:var(--ink);font-weight:700;border-top:1px dashed var(--line);padding-top:10px;margin-top:8px}
-  .tier .mo b{font-family:"Sora"}
-  .tier ul{list-style:none;margin:13px 0 18px;display:grid;gap:8px}
-  .tier li{font-size:13.5px;color:var(--muted);padding-inline-start:20px;position:relative}
-  .tier li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--teal);font-weight:900}
-  .tier .btn{margin-top:auto;text-align:center}
-  .price-note{text-align:center;color:var(--muted);font-size:13px;max-width:640px;margin:18px auto 0}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto}
-  .step{background:var(--bg);border:1px solid var(--line);border-radius:15px;padding:22px}
-  .step .n{width:34px;height:34px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;margin-bottom:10px;font-family:"Sora"}
-  .step h3{font-size:16px}.step p{font-size:13.5px;color:var(--muted);margin-top:5px}
-  .final{background:linear-gradient(160deg,var(--ink),var(--teal-d));color:#fff;border-radius:24px;padding:42px 34px;text-align:center}
-  .final h2{font-size:28px;color:#fff}.final p{color:#BfDAD9;max-width:520px;margin:12px auto 22px;font-size:15.5px}
+  .price{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto;align-items:stretch}
+  .tier{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column;position:relative;transition:.22s}
+  .tier:hover{transform:translateY(-4px);box-shadow:0 28px 60px -34px rgba(0,0,0,.4)}
+  .tier.hi{border:1.5px solid var(--em);box-shadow:0 28px 60px -32px rgba(15,95,86,.5)}
+  .tier .star{position:absolute;top:-12px;inset-inline-start:26px;background:var(--em);color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:4px 13px}
+  .tier h3{font-size:18px}.tier .for{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .tier .amt{font-size:28px;font-weight:900;color:var(--em);margin:16px 0 2px;font-family:"Inter"}
+  .tier .amt small{font-size:12.5px;color:var(--muted);font-weight:600}
+  .tier .mo{font-size:13.5px;color:var(--ink2);font-weight:600;border-top:1px solid var(--line);padding-top:11px;margin-top:9px}
+  .tier .mo b{font-family:"Inter"}
+  .tier ul{list-style:none;margin:14px 0 18px;display:grid;gap:9px}
+  .tier li{font-size:13.5px;color:var(--ink3);padding-inline-start:20px;position:relative}
+  .tier li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--em);font-weight:900}
+  .tier .btn{margin-top:auto;justify-content:center}
+  /* final */
+  .final{background:linear-gradient(150deg,var(--ink),var(--em));border-radius:24px;padding:48px 36px;text-align:center;color:#fff}
+  .final h2{font-size:30px;color:#fff}.final p{color:#cfe6e2;max-width:520px;margin:14px auto 24px;font-size:16px}
   .form{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;max-width:540px;margin:0 auto}
-  .form input{border:0;border-radius:11px;padding:13px 15px;font-size:15px;font-family:inherit;min-width:190px;flex:1}
-  .form .btn{background:var(--teal2)}.form .btn:hover{background:#0FBFBA}
-  footer{padding:30px 0;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line);margin-top:8px}
-  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero h1{font-size:33px}.grid3,.why,.price,.steps{grid-template-columns:1fr}.pains{grid-template-columns:1fr}.why{padding:26px}}
+  .form input{border:0;border-radius:11px;padding:14px 16px;font-size:15px;font-family:inherit;min-width:200px;flex:1}
+  .form .btn{background:#fff;color:var(--em)}.form .btn:hover{background:#f0faf8}
+  footer{padding:34px 0;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  @media(max-width:880px){.hero .wrap,.split{grid-template-columns:1fr}.grid4,.price{grid-template-columns:1fr}.mk{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
 <nav><div class="wrap">
-  <div class="logo"><svg width="24" height="24" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#13A8A4"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg>Cliniva<span>.</span></div>
-  <div class="nav-right">
-    <div class="nav-links">
-      <a href="./proposal.html" data-en="How we build it">كيف نبنيها</a>
-      <a href="./login.html" data-en="Dashboard">الداشبورد</a>
-      <a href="./mobile.html" data-en="App">التطبيق</a>
-      <a href="./ai-agent.html" data-en="AI agent">المساعد الذكي</a>
-    </div>
-    <div class="toggle">
-      <select class="cur" id="cur" onchange="applyCur(this.value)" aria-label="currency">
-        <option value="SAR">﷼ SAR</option><option value="AED">د.إ AED</option><option value="USD">$ USD</option>
-        <option value="QAR">ر.ق QAR</option><option value="KWD">د.ك KWD</option><option value="BHD">د.ب BHD</option><option value="EGP">ج.م EGP</option>
-      </select>
-      <button class="lng" id="lng" onclick="toggleLang()">EN</button>
-    </div>
-    <a href="#demo" class="btn" data-en="Book a demo">احجز عرض</a>
+  <div class="logo"><svg width="24" height="24" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#0F5F56"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg><b>Cliniva<span>.</span></b></div>
+  <div class="nl">
+    <a href="#platform" data-en="Product">المنتج</a>
+    <a href="#branches" data-en="Solutions">الحلول</a>
+    <a href="#pricing" data-en="Pricing">الأسعار</a>
+    <a href="./proposal.html" data-en="Resources">الموارد</a>
+  </div>
+  <div class="nr">
+    <select class="cur" id="cur" onchange="applyCur(this.value)" aria-label="currency">
+      <option value="SAR">﷼ SAR</option><option value="AED">د.إ AED</option><option value="USD">$ USD</option><option value="QAR">ر.ق QAR</option><option value="KWD">د.ك KWD</option><option value="BHD">د.ب BHD</option><option value="EGP">ج.م EGP</option>
+    </select>
+    <button class="lng" id="lng" onclick="toggleLang()">EN</button>
+    <a href="#demo" class="btn" data-en="Book Demo">احجز عرض</a>
   </div>
 </div></nav>
 
+<!-- 1 · HERO + DASHBOARD -->
 <header class="hero"><div class="wrap">
   <div class="reveal in">
-    <div class="eyebrow" data-en="Dental clinic operations · Built for the Gulf">منصة تشغيل عيادات الأسنان · مبنية للخليج</div>
-    <h1><span data-en="Run your whole clinic">كل عملية تشغيل العيادة</span> — <span class="c" data-en="in one system">في نظام واحد</span></h1>
-    <p class="lede" data-en="Conflict-free smart booking, WhatsApp & ads tied to bookings, and an AI call center. Know exactly which ad brought which patient — PDPL-ready.">حجز ذكي بلا تعارض، واتساب وإعلانات مربوطين بالحجز، وكول سنتر بالذكاء الاصطناعي. كل ريال إعلان تعرف جاب كام مريض — ومتوافق مع PDPL.</p>
+    <div class="eyebrow" data-en="The operating system for dental groups">نظام تشغيل مجموعات عيادات الأسنان</div>
+    <h1 data-en="Run every branch. Delight every patient."><span data-en="Run every branch.">شغّل كل فرع.</span> <span class="g" data-en="Delight every patient.">أبهر كل مريض.</span></h1>
+    <p class="lede" data-en="One operations platform for dental groups — centralized booking, AI call center, WhatsApp automation, and marketing that ties every riyal of ad spend to real patient revenue.">منصة تشغيل واحدة لمجموعات العيادات — حجز مركزي، مركز اتصال بالذكاء الاصطناعي، أتمتة واتساب، وتسويق بيربط كل ريال إعلان بإيراد مريض حقيقي.</p>
     <div class="cta">
       <a href="#demo" class="btn" data-en="Book a 20-min demo">احجز عرض 20 دقيقة</a>
-      <a href="./login.html" class="btn ghost" data-en="See the dashboard">شوف الداشبورد</a>
+      <a href="./login.html" class="btn ghost" data-en="Open the platform">ادخل النظام</a>
     </div>
-    <div class="micro" data-en="⚡ The full engineering blueprint is ready — faster and safer than building from scratch.">⚡ الـ blueprint الهندسي الكامل جاهز — تشغيل أسرع وأأمن من البناء من الصفر.</div>
+    <div class="tl">
+      <span data-en="✔ PDPL Ready">✔ متوافق PDPL</span><span data-en="✔ Secure & Encrypted">✔ آمن ومشفّر</span><span data-en="✔ 99.9% Uptime">✔ تشغيل 99.9%</span><span data-en="✔ Built for GCC">✔ مبني للخليج</span>
+    </div>
   </div>
   <div class="mock reveal in d1" aria-hidden="true">
-    <div class="bar"><i></i><i></i><i></i><span class="u">cliniva.app / dashboard</span></div>
+    <div class="bar"><i></i><i></i><i></i><span class="u">app.cliniva.sa / dashboard</span></div>
     <div class="body">
-      <div class="kx">
-        <div class="b"><div class="n">38</div><div class="l" data-en="bookings today">حجز النهارده</div></div>
-        <div class="b"><div class="n">100%</div><div class="l" data-en="calls answered">مكالمات تم الرد</div></div>
-        <div class="b"><div class="n">0</div><div class="l" data-en="conflicts">تعارض مواعيد</div></div>
+      <div class="mside">
+        <div class="s on" data-en="Overview">لوحة التحكم</div><div class="s" data-en="Appointments">الحجوزات</div><div class="s" data-en="Patients">المرضى</div><div class="s" data-en="Doctors">الأطباء</div><div class="s" data-en="Branches">الفروع</div><div class="s" data-en="Marketing">التسويق</div><div class="s" data-en="AI Call Center">مركز الاتصال AI</div><div class="s" data-en="Reports">التقارير</div>
       </div>
-      <div class="pan"><h4 data-en="Today — Jumeirah branch">مواعيد اليوم — فرع جميرا</h4>
-        <div class="ap"><span class="t">09:00</span><span data-en="Cleaning — Sara">تنظيف — سارة</span><span class="tag" data-en="Meta">Meta</span></div>
-        <div class="ap"><span class="t">10:30</span><span data-en="Ortho — Khaled">تقويم — خالد</span><span class="tag" data-en="WhatsApp">واتساب</span></div>
-        <div class="ap"><span class="t">12:00</span><span data-en="Implant — Layan">زرع — ليان</span><span class="tag" data-en="AI Call">كول سنتر</span></div>
-      </div>
-      <div class="pan"><h4 data-en="Ads → bookings (7 days)">الإعلانات → حجوزات (7 أيام)</h4>
-        <div class="ap"><span data-en="Meta — Smile campaign">Meta — حملة الابتسامة</span><span class="t" data-en="14 bookings">14 حجز</span></div>
+      <div class="mmain">
+        <div class="mk">
+          <div class="b"><div class="n em">38</div><div class="l" data-en="bookings today">حجز النهارده</div></div>
+          <div class="b"><div class="n">100%</div><div class="l" data-en="answered calls">مكالمات تم الرد</div></div>
+          <div class="b"><div class="n">0</div><div class="l" data-en="double bookings">حجز مزدوج</div></div>
+          <div class="b"><div class="n em"><span data-price data-base="128400">﷼128,400</span></div><div class="l" data-en="monthly revenue">إيراد الشهر</div></div>
+        </div>
+        <div class="mrow">
+          <div class="mpan"><h5 data-en="Revenue — last 7 days">الإيراد — آخر 7 أيام</h5><div class="mchart"><i style="height:48%"></i><i style="height:60%"></i><i style="height:52%"></i><i style="height:74%"></i><i style="height:66%"></i><i style="height:88%"></i><i style="height:100%"></i></div></div>
+          <div class="mpan"><h5 data-en="Today — Jumeirah">مواعيد اليوم — جميرا</h5>
+            <div class="mappt"><span class="t">09:00</span><span class="mtag">Meta</span></div>
+            <div class="mappt"><span class="t">10:30</span><span class="mtag">واتساب</span></div>
+            <div class="mappt"><span class="t">12:00</span><span class="mtag">AI Call</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div></header>
 
-<div class="badges wrap reveal" style="padding-bottom:8px">
-  <span class="badge">Mada + Apple Pay</span>
-  <span class="badge" data-en="Tamara / Tabby installments">أقساط Tamara / Tabby</span>
-  <span class="badge" data-en="Official WhatsApp Cloud API">واتساب Cloud API رسمي</span>
-  <span class="badge" data-en="In-region hosting · PDPL">استضافة داخل المنطقة · PDPL</span>
-  <span class="badge" data-en="Arabic / English RTL">عربي / إنجليزي RTL</span>
-</div>
-
-<section><div class="wrap">
+<!-- 2 · PROBLEM -->
+<section class="dark"><div class="wrap">
   <div class="sec-head reveal"><div class="eyebrow" data-en="The problem">المشكلة</div>
-    <h2 data-en="Your clinic leaks money every day">العيادة بتفقد فلوس كل يوم من تسريبات بسيطة</h2>
-    <p data-en="Four leaks turn ready patients into bookings at the clinic next door.">أربع تسريبات بتحوّل مرضى جاهزين لحجوزات عند العيادة اللي جنبك.</p>
+    <h2 data-en="Dental groups lose revenue every day.">مجموعات العيادات بتفقد إيراد كل يوم.</h2>
+    <p data-en="Four silent leaks turn ready patients into bookings at the clinic next door.">أربع تسريبات صامتة بتحوّل مرضى جاهزين لحجوزات عند العيادة اللي جنبك.</p>
   </div>
-  <div class="pains">
-    <div class="pain reveal"><b data-en="Unanswered calls">مكالمات مش مردود عليها</b><span data-en="Every call that rings out = a booking lost to a competitor.">كل مكالمة بترن وتقفل = حجز راح للمنافس.</span></div>
-    <div class="pain reveal d1"><b data-en="Double-booking">حجز مزدوج</b><span data-en="Two patients on the same chair = chaos.">موعدين على نفس الكرسي = زحمة وإحراج.</span></div>
-    <div class="pain reveal"><b data-en="Manual WhatsApp follow-up">متابعة واتساب يدوي</b><span data-en="Too slow — the lead goes cold before confirming.">بطيئة فبتبرّد العميل قبل ما يأكد.</span></div>
-    <div class="pain reveal d1"><b data-en="Untracked Meta ads">إعلانات Meta من غير تتبّع</b><span data-en="You spend but never know which ad brought a paying patient.">بتصرف وما تعرفش اللي جاب حجز فعلي.</span></div>
-  </div>
-</div></section>
-
-<section style="background:var(--bg)"><div class="wrap">
-  <div class="sec-head reveal"><div class="eyebrow" data-en="The solution">الحل</div>
-    <h2 data-en="One platform that closes those leaks">منصة واحدة بتقفل التسريبات دي</h2>
-    <p data-en="Every channel feeds one booking engine — no conflicts, no patient lost.">كل القنوات بتغذّي محرك حجز واحد — فمفيش ازدواج ومفيش مريض بيقع.</p>
-  </div>
-  <div class="grid3">
-    <div class="card reveal"><div class="ic">◎</div><h3 data-en="Central booking engine">محرك حجز مركزي</h3><p data-en="Eliminates double-booking across every channel — the technical core.">يمنع الحجز المزدوج عبر كل القنوات — القلب التقني للنظام.</p></div>
-    <div class="card reveal d1"><div class="ic">✆</div><h3 data-en="WhatsApp automation">أتمتة واتساب</h3><p data-en="Automatic confirm, remind and follow-up via the official Cloud API.">تأكيد وتذكير ومتابعة آلية عبر الـ Cloud API الرسمي.</p></div>
-    <div class="card reveal d2"><div class="ic">◔</div><h3 data-en="Ads tied to bookings">إعلانات مربوطة بالحجز</h3><p data-en="Know how many patients each riyal of ad spend actually brought.">تعرف كل ريال إعلان جاب كام مريض فعليًا.</p></div>
-    <div class="card reveal"><div class="ic">▤</div><h3 data-en="Dashboards">لوحات تحكم</h3><p data-en="Admin · doctor · reception — live and connected.">أدمن · دكتور · استقبال — لحظي ومترابط.</p></div>
-    <div class="card reveal d1"><div class="ic">🗣</div><h3 data-en="AI call center">كول سنتر ذكاء اصطناعي</h3><p data-en="Answers and books by voice 24/7 in Arabic.">رد آلي وحجز صوتي بالعربي 24/7.</p><div class="ph" data-en="Phase 2">مرحلة 2</div></div>
-    <div class="card reveal d2"><div class="ic">★</div><h3 data-en="Loyalty · Referral · App">ولاء · إحالة · تطبيق</h3><p data-en="Points, referrals, and an iOS/Android app.">نقاط، إحالات، وتطبيق iOS/Android.</p><div class="ph" data-en="Phase 2–3">مرحلة 2–3</div></div>
+  <div class="grid4">
+    <div class="pcard reveal"><div class="ic">✆</div><h3 data-en="Missed calls">مكالمات فائتة</h3><p data-en="Every unanswered call after hours is a booking lost to a competitor.">كل مكالمة بترن وتقفل = حجز راح للمنافس.</p></div>
+    <div class="pcard reveal d1"><div class="ic">◎</div><h3 data-en="Double bookings">حجز مزدوج</h3><p data-en="Conflicting appointments across channels and branches.">تعارض مواعيد عبر القنوات والفروع.</p></div>
+    <div class="pcard reveal d2"><div class="ic">↻</div><h3 data-en="Manual follow-ups">متابعة يدوية</h3><p data-en="Slow WhatsApp follow-up lets the lead go cold.">متابعة واتساب بطيئة بتبرّد العميل.</p></div>
+    <div class="pcard reveal d3"><div class="ic">◔</div><h3 data-en="Untracked ad spend">إعلانات بلا تتبّع</h3><p data-en="You spend on ads but never know which brought a paying patient.">بتصرف وما تعرفش اللي جاب حجز فعلي.</p></div>
   </div>
 </div></section>
 
-<section><div class="wrap">
-  <div class="why reveal">
-    <div><h3><b>✓</b> <span data-en="Blueprint fully ready">blueprint جاهز بالكامل</span></h3><p data-en="Architecture + database + API + delivery plan — ready. Less risk, less time for the clinic.">معمارية + قاعدة بيانات + API + خطة تنفيذ — جاهزين. خطر أقل ووقت أقصر للعيادة.</p></div>
-    <div><h3><b>✓</b> <span data-en="Zero double-booking — proven">صفر حجز مزدوج — مُثبت</span></h3><p data-en="The booking engine is covered by tests that prevent conflicts. Not a promise — verified code.">محرك الحجز متغطّى باختبارات تمنع الازدواج. مش وعد — كود متحقّق منه.</p></div>
-    <div><h3><b>✓</b> <span data-en="Gulf-native">KSA / Gulf-native</span></h3><p data-en="Mada/Apple Pay + Tamara/Tabby + local SMS + in-region, PDPL-compliant hosting.">Mada/Apple Pay + Tamara/Tabby + SMS محلي + استضافة داخل المنطقة ومتوافقة PDPL.</p></div>
+<!-- 3 · PLATFORM OVERVIEW (architecture) -->
+<section id="platform"><div class="wrap">
+  <div class="sec-head reveal"><div class="eyebrow" data-en="The platform">المنصة</div>
+    <h2 data-en="One platform to run every clinic.">منصة واحدة بتشغّل كل عيادة.</h2>
+    <p data-en="Every channel feeds one central booking engine — with a single source of truth.">كل القنوات بتغذّي محرك حجز مركزي واحد — بمصدر بيانات موحّد.</p>
+  </div>
+  <div class="arch reveal">
+    <div class="acol">
+      <div class="anode">Meta / Google Ads<small data-en="acquisition">اكتساب</small></div>
+      <div class="anode" data-en="WhatsApp">واتساب</div>
+      <div class="anode" data-en="AI Call Center">مركز اتصال AI</div>
+    </div>
+    <div class="aarrow">→</div>
+    <div class="acore"><b data-en="Central Booking Engine">محرك الحجز المركزي</b><div style="font-size:11px;opacity:.8;margin-top:4px" data-en="zero double-booking">صفر حجز مزدوج</div></div>
+    <div class="aarrow">→</div>
+    <div class="acol">
+      <div class="anode" data-en="Patients & CRM">المرضى و CRM</div>
+      <div class="anode" data-en="Live Dashboards">لوحات لحظية</div>
+      <div class="anode" data-en="Attribution & ROI">العائد والتتبّع</div>
+    </div>
   </div>
 </div></section>
 
-<section style="background:var(--bg)"><div class="wrap">
-  <div class="sec-head reveal"><div class="eyebrow" data-en="Plans">الباقات</div>
-    <h2 data-en="Pick what fits your group size">اختار اللي يناسب حجم المجموعة</h2>
-    <p data-en="One-time setup + monthly per branch. Prices are a starting point, anchored to clinic revenue.">رسوم تأسيس مرة واحدة + اشتراك شهري لكل فرع. الأرقام نقطة بداية وتُربط بإيراد العيادة.</p>
+<!-- 4 · AI CALL CENTER -->
+<section style="background:var(--mint)"><div class="wrap"><div class="split">
+  <div class="reveal">
+    <div class="eyebrow" data-en="AI Call Center">مركز الاتصال AI</div>
+    <h3 data-en="Never miss a call again.">مفيش مكالمة هتضيع تاني.</h3>
+    <p class="lead" data-en="An AI receptionist answers 24/7 in Arabic and English, books straight into the calendar, and follows up on WhatsApp.">مساعد آلي بيرد 24/7 بالعربي والإنجليزي، بيحجز مباشرة في التقويم، ويتابع على واتساب.</p>
+    <ul class="flist">
+      <li data-en="24/7 answering — even after hours">رد 24/7 — حتى بعد ساعات العمل</li>
+      <li data-en="Books directly into the central calendar">يحجز مباشرة في التقويم المركزي</li>
+      <li data-en="Call transcription & analytics">تفريغ المكالمات وتحليلها</li>
+      <li data-en="Seamless handoff to a human agent">تحويل سلس لموظف بشري</li>
+    </ul>
+  </div>
+  <div class="vcard dk reveal d1">
+    <div style="font-size:11px;color:#8b97a6;font-weight:600">📞 <span data-en="Incoming · Riyadh — Branch 1">مكالمة واردة · الرياض — فرع 1</span></div>
+    <div style="background:rgba(43,168,155,.12);border:1px solid rgba(43,168,155,.25);border-radius:12px;padding:11px 13px;margin:11px 0;font-size:13px">أهلاً بك في عيادات Cliniva، كيف أقدر أساعدك؟</div>
+    <div style="background:#141d2c;border:1px solid #1f2a37;border-radius:12px;padding:11px 13px;margin-bottom:11px;font-size:13px;color:#cbd3dd">عايز أحجز تنظيف بكرة بعد الـ6 المسا</div>
+    <div style="background:rgba(43,168,155,.12);border:1px solid rgba(43,168,155,.25);border-radius:12px;padding:11px 13px;font-size:13px">تمام ✅ حجزتلك بكرة 6:30 م — فرع جميرا. هتوصلك رسالة واتساب.</div>
+    <div style="margin-top:13px;display:flex;justify-content:space-between;font-size:11px;color:#8b97a6"><span data-en="✓ Appointment booked">✓ تم الحجز</span><span class="num">00:42</span></div>
+  </div>
+</div></div></section>
+
+<!-- 5 · MULTI-BRANCH -->
+<section id="branches"><div class="wrap"><div class="split">
+  <div class="vcard reveal">
+    <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px" data-en="All branches · this month">كل الفروع · هذا الشهر</div>
+    <div class="branch"><span>الرياض — فرع 1</span><span class="rev"><span data-price data-base="245000">﷼245,000</span></span></div>
+    <div class="branch"><span>جدة — فرع 2</span><span class="rev"><span data-price data-base="180000">﷼180,000</span></span></div>
+    <div class="branch"><span>الدمام — فرع 1</span><span class="rev"><span data-price data-base="150000">﷼150,000</span></span></div>
+    <div class="branch"><span>الخبر — فرع 2</span><span class="rev"><span data-price data-base="120000">﷼120,000</span></span></div>
+  </div>
+  <div class="reveal d1">
+    <div class="eyebrow" data-en="Multi-branch operations">تشغيل متعدد الفروع</div>
+    <h3 data-en="Run all branches from one command center.">شغّل كل الفروع من مركز قيادة واحد.</h3>
+    <p class="lead" data-en="Live performance across every location — revenue, bookings, doctors, and patients — with the control to drill into any single branch.">أداء لحظي لكل فرع — إيراد، حجوزات، أطباء، ومرضى — مع التحكّم في الغوص داخل أي فرع لوحده.</p>
+    <ul class="flist">
+      <li data-en="One dashboard across all branches">داشبورد واحد لكل الفروع</li>
+      <li data-en="Drill into a single branch's data">تفلتر على فرع واحد بداتاه</li>
+      <li data-en="Add new branches as you grow">تضيف فروع جديدة وانت بتكبر</li>
+    </ul>
+  </div>
+</div></div></section>
+
+<!-- 6 · MARKETING ATTRIBUTION -->
+<section style="background:var(--mint)"><div class="wrap"><div class="split">
+  <div class="reveal">
+    <div class="eyebrow" data-en="Marketing attribution">تتبّع التسويق</div>
+    <h3 data-en="Make every riyal count.">خلّي كل ريال يتحسب.</h3>
+    <p class="lead" data-en="Track every booking back to its source — and know your true cost per booking and ROI on every campaign.">اربط كل حجز بمصدره — واعرف تكلفة الحجز الحقيقية والعائد على كل حملة.</p>
+    <ul class="flist">
+      <li data-en="Cost per booking & patient acquisition cost">تكلفة الحجز واكتساب المريض</li>
+      <li data-en="Revenue & ROAS per campaign">الإيراد والعائد لكل حملة</li>
+      <li data-en="Meta · Google · TikTok · WhatsApp">Meta · Google · TikTok · واتساب</li>
+    </ul>
+  </div>
+  <div class="vcard reveal d1">
+    <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:12px" data-en="Booking sources · ROAS">مصادر الحجز · العائد</div>
+    <div class="chan"><span class="nm">Meta</span><span class="chbar"><i style="width:90%"></i></span><span class="roas">7.4×</span></div>
+    <div class="chan"><span class="nm">Google</span><span class="chbar"><i style="width:62%"></i></span><span class="roas">5.1×</span></div>
+    <div class="chan"><span class="nm">TikTok</span><span class="chbar"><i style="width:40%"></i></span><span class="roas">3.2×</span></div>
+    <div class="chan"><span class="nm" data-en="WhatsApp">واتساب</span><span class="chbar"><i style="width:78%"></i></span><span class="roas">∞</span></div>
+  </div>
+</div></div></section>
+
+<!-- 7 · PRICING -->
+<section id="pricing"><div class="wrap">
+  <div class="sec-head reveal"><div class="eyebrow" data-en="Pricing">الأسعار</div>
+    <h2 data-en="Plans that scale with your group.">باقات تكبر مع مجموعتك.</h2>
+    <p data-en="One-time setup + monthly per branch. Anchored to clinic revenue.">رسوم تأسيس + شهري لكل فرع. مربوطة بإيراد العيادة.</p>
   </div>
   <div class="price">
-    <div class="tier reveal"><h3 data-en="Starter">Starter</h3><div class="for" data-en="1–2 branches">1–2 فرع</div>
-      <div class="setup"><span data-price data-base="25000">~25k</span> <small data-en="setup">تأسيس</small></div>
-      <div class="mo">+ <b data-price data-base="2000">~2,000</b> <span data-en="/ branch monthly">/ فرع شهريًا</span></div>
-      <ul><li data-en="Central booking + website">حجز مركزي + موقع</li><li data-en="WhatsApp automation">أتمتة واتساب</li><li data-en="Ads tied to booking">إعلانات مربوطة بالحجز</li><li data-en="Dashboards">لوحات تحكم</li></ul>
-      <a href="#demo" class="btn ghost" data-en="Start with Starter">ابدأ بـ Starter</a></div>
-
-    <div class="tier hi reveal d1"><div class="star" data-en="⭐ Most popular">⭐ الأكثر طلبًا</div><h3 data-en="Growth">Growth</h3><div class="for" data-en="3–6 branches">3–6 فروع</div>
-      <div class="setup"><span data-price data-base="40000">~40k</span> <small data-en="setup">تأسيس</small></div>
-      <div class="mo">+ <b data-price data-base="1500">~1,500</b> <span data-en="/ branch monthly">/ فرع شهريًا</span></div>
-      <ul><li data-en="Everything in Starter">كل مميزات Starter</li><li data-en="+ Loyalty">+ نظام الولاء</li><li data-en="+ Referrals">+ نظام الإحالات</li><li data-en="+ Priority support">+ دعم أولوية</li></ul>
-      <a href="#demo" class="btn" data-en="Book a Growth demo">احجز عرض Growth</a></div>
-
-    <div class="tier reveal d2"><h3 data-en="Scale">Scale</h3><div class="for" data-en="7+ branches / group">7+ فروع / مجموعة</div>
-      <div class="setup"><span data-price data-base="60000" data-plus="1">+60k</span> <small data-en="setup">تأسيس</small></div>
-      <div class="mo">+ <b data-price data-base="1200">~1,200</b> <span data-en="/ branch monthly">/ فرع شهريًا</span></div>
-      <ul><li data-en="Everything in Growth">كل مميزات Growth</li><li data-en="+ AI call center">+ كول سنتر AI</li><li data-en="+ Full customization">+ تخصيص كامل</li><li data-en="+ SLA agreement">+ اتفاقية SLA</li></ul>
-      <a href="#demo" class="btn ghost" data-en="Talk to us about Scale">كلّمنا عن Scale</a></div>
-  </div>
-  <p class="price-note" data-en="A group doing ~$100k/month won't blink at a few thousand that makes them more. AI call center add-on billed per minute.">مجموعة بتعمل 400 ألف ريال شهريًا مش هتتردد في 6–9 آلاف بتزوّدها أكتر. الكول سنتر AI add-on بالدقيقة.</p>
-</div></section>
-
-<section><div class="wrap">
-  <div class="sec-head reveal"><div class="eyebrow" data-en="How it works">إزاي بيشتغل</div>
-    <h2 data-en="Live in days — not months">تشغيل خلال أيام — مش شهور</h2>
-  </div>
-  <div class="steps">
-    <div class="step reveal"><div class="n">١</div><h3 data-en="Call + quote">مكالمة + عرض</h3><p data-en="We see your clinic and tailor the plan and a detailed quote in 20 minutes.">نشوف عيادتك ونحدّد الباقة وعرض سعر مفصّل في 20 دقيقة.</p></div>
-    <div class="step reveal d1"><div class="n">٢</div><h3 data-en="Clinic setup">إعداد العيادة</h3><p data-en="Branches, doctors, WhatsApp number, ad accounts, and data import — within days.">فروع، أطباء، رقم واتساب، حسابات الإعلانات، واستيراد البيانات — خلال أيام.</p></div>
-    <div class="step reveal d2"><div class="n">٣</div><h3 data-en="Launch + measure">إطلاق + قياس</h3><p data-en="Go live + reports that show ROI from the first week.">تشغيل حي + تقارير تبيّن العائد من أول أسبوع.</p></div>
+    <div class="tier reveal"><h3>Starter</h3><div class="for" data-en="1–2 branches">1–2 فرع</div>
+      <div class="amt"><span data-price data-base="25000">﷼25,000</span> <small data-en="setup">تأسيس</small></div>
+      <div class="mo">+ <b data-price data-base="2000">﷼2,000</b> <span data-en="/ branch monthly">/ فرع شهريًا</span></div>
+      <ul><li data-en="Central booking + website">حجز مركزي + موقع</li><li data-en="WhatsApp automation">أتمتة واتساب</li><li data-en="Ad attribution">تتبّع الإعلانات</li><li data-en="Dashboards">لوحات تحكم</li></ul>
+      <a href="#demo" class="btn ghost" data-en="Get started">ابدأ</a></div>
+    <div class="tier hi reveal d1"><div class="star" data-en="Most popular">الأكثر طلبًا</div><h3>Growth</h3><div class="for" data-en="3–6 branches">3–6 فروع</div>
+      <div class="amt"><span data-price data-base="40000">﷼40,000</span> <small data-en="setup">تأسيس</small></div>
+      <div class="mo">+ <b data-price data-base="1500">﷼1,500</b> <span data-en="/ branch monthly">/ فرع شهريًا</span></div>
+      <ul><li data-en="Everything in Starter">كل مميزات Starter</li><li data-en="Loyalty + referrals">ولاء + إحالات</li><li data-en="AI call center">مركز اتصال AI</li><li data-en="Priority support">دعم أولوية</li></ul>
+      <a href="#demo" class="btn" data-en="Book a demo">احجز عرض</a></div>
+    <div class="tier reveal d2"><h3>Scale</h3><div class="for" data-en="7+ branches / group">7+ فروع / مجموعة</div>
+      <div class="amt"><span data-price data-base="60000" data-plus="1">﷼60,000+</span> <small data-en="setup">تأسيس</small></div>
+      <div class="mo">+ <b data-price data-base="1200">﷼1,200</b> <span data-en="/ branch monthly">/ فرع شهريًا</span></div>
+      <ul><li data-en="Everything in Growth">كل مميزات Growth</li><li data-en="Mobile app + custom">تطبيق + تخصيص</li><li data-en="Dedicated success manager">مدير نجاح مخصّص</li><li data-en="SLA">اتفاقية SLA</li></ul>
+      <a href="#demo" class="btn ghost" data-en="Talk to sales">كلّمنا</a></div>
   </div>
 </div></section>
 
+<!-- 8 · BOOK DEMO -->
 <section id="demo"><div class="wrap"><div class="final reveal">
-  <h2 data-en="See Cliniva live in 20 minutes">شوف Cliniva شغّالة في 20 دقيقة</h2>
-  <p data-en="Leave your clinic name and number — we'll arrange a live demo + a detailed quote.">سيب اسم العيادة ورقمك — نرتّب عرض حي + عرض سعر مفصّل لعيادتك.</p>
+  <h2 data-en="Ready to grow your dental group?">جاهز تكبّر مجموعة عياداتك؟</h2>
+  <p data-en="Leave your clinic name and number — see Cliniva live in 20 minutes with a quote tailored to your group.">سيب اسم العيادة ورقمك — شوف Cliniva شغّالة في 20 دقيقة بعرض سعر مفصّل لمجموعتك.</p>
   <form class="form" id="leadForm" onsubmit="return submitLead(event)">
-    <input id="lf_clinic" placeholder="اسم العيادة" data-en-ph="Clinic name" required>
+    <input id="lf_clinic" placeholder="اسم المجموعة / العيادة" data-en-ph="Clinic / group name" required>
     <input id="lf_phone" placeholder="رقم الجوال / واتساب" data-en-ph="Mobile / WhatsApp" required>
     <button class="btn" type="submit" data-en="Book the demo">احجز العرض</button>
   </form>
-  <div id="lf_ok" style="display:none;margin-top:14px;color:#BfDAD9;font-size:14px" data-en="Done ✅ WhatsApp will open with your message ready — send it and I'll arrange the demo.">تمام ✅ واتساب هيتفتح بالرسالة جاهزة — ابعتها وهرتّب العرض.</div>
+  <div id="lf_ok" style="display:none;margin-top:14px;color:#cfe6e2;font-size:14px" data-en="Done ✅ WhatsApp will open with your message ready.">تمام ✅ واتساب هيتفتح بالرسالة جاهزة.</div>
 </div></div></section>
 
-<footer><div class="wrap">Cliniva — <strong>a RASMY venture</strong> · <span data-en="led by Pola Rasmy">بقيادة Pola Rasmy</span> · hello@cliniva.sa</div></footer>
+<footer><div class="wrap">Cliniva — <strong>a RASMY venture</strong> · <span data-en="The operating system for dental groups">نظام تشغيل مجموعات عيادات الأسنان</span> · hello@cliniva.sa</div></footer>
 
 <script>
-  /* ⚙️ CONFIG */
-  const CLINIVA={ whatsapp:"8619859039183", formspree:"", calendly:"" };
-
-  /* ---------- lead form ---------- */
-  function submitLead(e){
-    e.preventDefault();
-    const clinic=(document.getElementById('lf_clinic').value||'').trim();
-    const phone=(document.getElementById('lf_phone').value||'').trim();
-    const msg=(LANG==='en')
-      ? `Hi, I'm from ${clinic||'a clinic'} — my number is ${phone}. I'd like to book a 20-min Cliniva demo.`
-      : `مرحبًا، أنا من ${clinic||'العيادة'} — رقمي ${phone}. حابب أحجز عرض Cliniva 20 دقيقة.`;
+  const CLINIVA={whatsapp:"8619859039183",formspree:"",calendly:""};
+  function submitLead(e){e.preventDefault();
+    var clinic=(document.getElementById('lf_clinic').value||'').trim(),phone=(document.getElementById('lf_phone').value||'').trim();
+    var msg=(LANG==='en')?("Hi, I'm from "+(clinic||'a dental group')+" — my number is "+phone+". I'd like a 20-min Cliniva demo."):("مرحبًا، أنا من "+(clinic||'المجموعة')+" — رقمي "+phone+". حابب أحجز عرض Cliniva 20 دقيقة.");
     if(CLINIVA.formspree){try{fetch(CLINIVA.formspree,{method:'POST',headers:{'Accept':'application/json'},body:new URLSearchParams({clinic,phone,message:msg})});}catch(_){}}
-    if(CLINIVA.whatsapp){window.open(`https://wa.me/${CLINIVA.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');document.getElementById('lf_ok').style.display='block';}
-    else{alert('⚙️ set WhatsApp in CONFIG');}
-    return false;
-  }
-
-  /* ---------- language ---------- */
+    if(CLINIVA.whatsapp){window.open("https://wa.me/"+CLINIVA.whatsapp+"?text="+encodeURIComponent(msg),'_blank');document.getElementById('lf_ok').style.display='block';}
+    return false;}
+  /* language */
   let LANG='ar';
-  function toggleLang(){ applyLang(LANG==='ar'?'en':'ar'); }
-  function applyLang(l){
-    LANG=l; const en=(l==='en');
-    document.documentElement.lang=l; document.documentElement.dir=en?'ltr':'rtl';
+  function toggleLang(){applyLang(LANG==='ar'?'en':'ar');}
+  function applyLang(l){LANG=l;var en=(l==='en');document.documentElement.lang=l;document.documentElement.dir=en?'ltr':'rtl';
     document.getElementById('lng').textContent=en?'ع':'EN';
-    document.querySelectorAll('[data-en]').forEach(function(el){
-      if(!el.dataset._ar) el.dataset._ar=el.textContent;
-      el.textContent = en ? el.getAttribute('data-en') : el.dataset._ar;
-    });
-    document.querySelectorAll('[data-en-ph]').forEach(function(el){
-      if(!el.dataset._arPh) el.dataset._arPh=el.getAttribute('placeholder')||'';
-      el.setAttribute('placeholder', en?el.getAttribute('data-en-ph'):el.dataset._arPh);
-    });
-    try{localStorage.setItem('cliniva_lang',l);}catch(_){}
-  }
-
-  /* ---------- currency ---------- */
-  const RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
-  const SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
-  let CUR='SAR';
-  function applyCur(c){
-    CUR=c; const r=RATE[c]||1, s=SYM[c]||'';
-    document.querySelectorAll('[data-price]').forEach(function(el){
-      let v=parseFloat(el.getAttribute('data-base'))*r;
-      v = v>=1000 ? Math.round(v/100)*100 : Math.round(v/5)*5;
-      const plus = el.getAttribute('data-plus') ? '+' : '~';
-      el.textContent = s+' '+plus+v.toLocaleString('en-US');
-    });
-    try{localStorage.setItem('cliniva_cur',c);}catch(_){}
-  }
-
-  /* ---------- scroll reveal ---------- */
-  const io=new IntersectionObserver(function(es){
-    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ io.observe(el); });
-
-  /* ---------- init (restore prefs) ---------- */
-  (function(){
-    let l='ar',c='SAR';
-    try{l=localStorage.getItem('cliniva_lang')||'ar';c=localStorage.getItem('cliniva_cur')||'SAR';}catch(_){}
-    document.getElementById('cur').value=c; applyCur(c);
-    if(l==='en') applyLang('en');
-  })();
+    document.querySelectorAll('[data-en]').forEach(function(el){if(!el.dataset._ar)el.dataset._ar=el.textContent;el.textContent=en?el.getAttribute('data-en'):el.dataset._ar;});
+    document.querySelectorAll('[data-en-ph]').forEach(function(el){if(!el.dataset._arPh)el.dataset._arPh=el.getAttribute('placeholder')||'';el.setAttribute('placeholder',en?el.getAttribute('data-en-ph'):el.dataset._arPh);});
+    try{localStorage.setItem('cliniva_lang',l);}catch(_){}}
+  /* currency */
+  var RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
+  var SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
+  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+v.toLocaleString('en-US')+(el.getAttribute('data-plus')?'+':'');});try{localStorage.setItem('cliniva_cur',c);}catch(_){}}
+  /* reveal */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
+  /* init */
+  (function(){var l='ar',c='SAR';try{l=localStorage.getItem('cliniva_lang')||'ar';c=localStorage.getItem('cliniva_cur')||'SAR';}catch(_){}document.getElementById('cur').value=c;applyCur(c);if(l==='en')applyLang('en');})();
 </script>
 <script src="./widget.js" defer></script>
 </body>
