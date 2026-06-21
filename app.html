@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cliniva — الداشبورد (ديمو)</title>
+<meta name="description" content="ديمو تفاعلي لمنصة Cliniva — حجوزات بلا تعارض، مركز اتصال AI، واتساب، وربط كل ريال إعلان بالمريض والإيراد.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#14202E;--ink2:#1E2E3D;--teal:#0E7C7B;--teal2:#13A8A4;--teal-d:#0A5D5C;
+    --bg:#EEF4F4;--panel:#fff;--mint:#E8F3F2;--line:#E2EAEA;--muted:#5C6B72;
+    --good:#1A8A44;--good-bg:#E7F6EC;--warn:#B26A00;--warn-bg:#FFF4E5;--bad:#C0392B;--bad-bg:#FDEDEC;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Tajawal",system-ui,Tahoma,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+  /* sidebar */
+  .side{background:var(--ink);color:#cfe0e0;display:flex;flex-direction:column;padding:18px 12px;position:sticky;top:0;height:100vh}
+  .brand{font-size:22px;font-weight:900;color:#fff;padding:6px 10px 16px}.brand span{color:var(--teal2)}
+  .nav{display:flex;flex-direction:column;gap:3px;flex:1}
+  .nav button{display:flex;align-items:center;gap:10px;background:none;border:0;color:#9fb6b6;font-family:inherit;font-size:14.5px;font-weight:700;text-align:right;padding:11px 12px;border-radius:10px;cursor:pointer;width:100%;transition:.15s}
+  .nav button:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav button.on{background:rgba(19,168,164,.18);color:#fff}
+  .nav button .dot{width:7px;height:7px;border-radius:50%;background:var(--teal2);flex:0 0 7px}
+  .nav button.on .dot{box-shadow:0 0 0 4px rgba(19,168,164,.25)}
+  .side .who{display:flex;align-items:center;gap:10px;padding:12px 10px;border-top:1px solid rgba(255,255,255,.1);margin-top:8px}
+  .side .who .av{width:34px;height:34px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff}
+  .side .who b{color:#fff;font-size:13.5px;display:block}.side .who small{color:#8aa3a3;font-size:11.5px}
+  /* main */
+  .main{padding:0 0 40px}
+  .top{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+  .top h1{font-size:20px;font-weight:900}
+  .top .right{display:flex;align-items:center;gap:12px}
+  select,.btn{font-family:inherit}
+  select{border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13.5px;font-weight:700;color:var(--ink);background:#fff;cursor:pointer}
+  .btn{background:var(--teal);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:800;font-size:13.5px;cursor:pointer}
+  .btn:hover{background:var(--teal-d)}
+  .btn.ghost{background:var(--mint);color:var(--teal-d)}
+  .wrap{padding:22px 26px}
+  .tab{display:none;animation:fade .25s}
+  .tab.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .eyebrow{color:var(--teal);font-weight:800;font-size:12px;letter-spacing:.4px;margin-bottom:3px}
+  .sec-t{font-size:18px;font-weight:900;margin-bottom:2px}
+  .sec-d{color:var(--muted);font-size:13.5px;margin-bottom:16px}
+  /* kpis */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 17px}
+  .kpi .l{font-size:12.5px;color:var(--muted);font-weight:700}
+  .kpi .n{font-size:27px;font-weight:900;color:var(--ink);margin:4px 0 2px}
+  .kpi .n.teal{color:var(--teal)}
+  .kpi .d{font-size:11.5px;font-weight:800}
+  .kpi .d.up{color:var(--good)}.kpi .d.down{color:var(--bad)}
+  /* layout */
+  .row{display:grid;gap:14px}
+  .row.c2{grid-template-columns:1.6fr 1fr}
+  .row.c2b{grid-template-columns:1fr 1fr}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h3{font-size:15px;font-weight:900;margin-bottom:2px}
+  .card .sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:right;color:var(--muted);font-weight:800;font-size:11.5px;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:10px;border-bottom:1px solid #F0F5F5;vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  tr:hover td{background:#FAFDFD}
+  .pill{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:3px 10px}
+  .p-meta{background:#E9F0FF;color:#2456C8}.p-google{background:#E9F7EF;color:#1A8A44}
+  .p-snap{background:#FFF6E0;color:#9A7400}.p-wa{background:#E7F6EC;color:#1A8A44}
+  .p-walk{background:#EFEFF2;color:#555}.p-tiktok{background:#F0E9FF;color:#6B33C8}
+  .p-done{background:var(--good-bg);color:var(--good)}.p-wait{background:var(--warn-bg);color:var(--warn)}.p-no{background:var(--bad-bg);color:var(--bad)}
+  .money{font-weight:900;font-variant-numeric:tabular-nums}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--mint);color:var(--teal-d);display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;margin-left:8px;vertical-align:middle}
+  /* attribution channel cards */
+  .chan{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+  .chcard{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px}
+  .chcard .h{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .chcard .h b{font-size:13px}
+  .chcard .roas{font-size:22px;font-weight:900;color:var(--teal)}
+  .chcard .meta{font-size:11px;color:var(--muted);margin-top:3px}
+  .bar{height:6px;border-radius:999px;background:#EDF3F3;overflow:hidden;margin-top:9px}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal2),var(--teal))}
+  /* appt list */
+  .appt{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line)}
+  .appt:last-child{border-bottom:0}
+  .appt .t{font-weight:900;color:var(--teal);font-variant-numeric:tabular-nums;width:62px}
+  .appt .who2{flex:1}.appt .who2 b{font-size:13.5px}.appt .who2 small{color:var(--muted);font-size:11.5px;display:block}
+  /* call center */
+  .calllog{font-size:13px}
+  .calllog .it{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+  .calllog .it:last-child{border-bottom:0}
+  .ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 30px}
+  .ic.g{background:var(--good-bg);color:var(--good)}.ic.b{background:var(--bad-bg);color:var(--bad)}.ic.t{background:var(--mint);color:var(--teal)}
+  .transcript{background:#FAFDFD;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:6px}
+  .bub{max-width:80%;padding:9px 13px;border-radius:14px;font-size:13px;margin-bottom:8px}
+  .bub.ai{background:var(--mint);color:var(--ink);border-bottom-right-radius:4px}
+  .bub.pt{background:#fff;border:1px solid var(--line);margin-right:auto;border-bottom-left-radius:4px}
+  /* wa */
+  .wa{background:#0b141a;border-radius:16px;padding:16px;max-width:380px}
+  .wa .msg{background:#005c4b;color:#e9edef;padding:8px 12px;border-radius:10px;font-size:13px;margin-bottom:8px;max-width:85%;margin-right:auto}
+  .wa .msg.in{background:#202c33}
+  .flow{display:flex;flex-direction:column;gap:0}
+  .flow .step{display:flex;gap:12px;align-items:flex-start;padding:10px 0}
+  .flow .n{width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex:0 0 26px}
+  .flow .step b{font-size:13.5px}.flow .step small{color:var(--muted);font-size:12px;display:block}
+  .demo-flag{background:var(--warn-bg);color:var(--warn);font-size:11.5px;font-weight:800;border:1px solid #F3E0C0;border-radius:999px;padding:4px 12px;display:inline-block}
+  /* simple svg chart container */
+  .chart{width:100%;height:150px}
+  .legend{display:flex;gap:16px;font-size:11.5px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-left:5px;vertical-align:middle}
+  @media(max-width:880px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap}
+    .nav{flex-direction:row;flex-wrap:wrap}.kpis,.chan{grid-template-columns:1fr 1fr}.row.c2,.row.c2b{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="brand">Cliniva<span>.</span></div>
+    <nav class="nav" id="nav">
+      <button class="on" data-tab="overview"><span class="dot"></span> لوحة التحكم</button>
+      <button data-tab="revenue"><span class="dot"></span> الإعلانات والإيرادات</button>
+      <button data-tab="appts"><span class="dot"></span> الحجوزات</button>
+      <button data-tab="ai"><span class="dot"></span> مركز الاتصال AI</button>
+      <button data-tab="wa"><span class="dot"></span> أتمتة واتساب</button>
+      <button data-tab="crm"><span class="dot"></span> المرضى (CRM)</button>
+      <button data-tab="reports"><span class="dot"></span> التقارير</button>
+    </nav>
+    <div class="who"><div class="av">م</div><div><b>د. منال الشامي</b><small>مدير المجموعة</small></div></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="top">
+      <h1 id="topTitle">لوحة التحكم</h1>
+      <div class="right">
+        <select id="branch" onchange="void 0">
+          <option>كل الفروع (3)</option><option>فرع جميرا</option><option>فرع مارينا</option><option>فرع دبي هيلز</option>
+        </select>
+        <span class="pill p-done">● مباشر</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+
+      <!-- ========== OVERVIEW ========== -->
+      <section class="tab on" id="overview">
+        <div class="kpis">
+          <div class="kpi"><div class="l">حجوزات النهاردة</div><div class="n teal">38</div><div class="d up">▲ 12% عن أمس</div></div>
+          <div class="kpi"><div class="l">مكالمات تم الرد عليها</div><div class="n">100%</div><div class="d up">▲ كانت 71% قبل Cliniva</div></div>
+          <div class="kpi"><div class="l">إيراد الأسبوع</div><div class="n">312,400﷼</div><div class="d up">▲ 18.6%</div></div>
+          <div class="kpi"><div class="l">نسبة عدم الحضور</div><div class="n">4.2%</div><div class="d up">▼ كانت 14%</div></div>
+        </div>
+        <div class="row c2">
+          <div class="card">
+            <h3>الإيراد — آخر 7 أيام</h3><div class="sub">حسب اليوم (ريال سعودي)</div>
+            <svg class="chart" viewBox="0 0 640 150" preserveAspectRatio="none">
+              <polyline fill="none" stroke="#13A8A4" stroke-width="3" points="0,110 100,95 200,100 300,70 400,78 500,45 620,30"/>
+              <polygon fill="rgba(19,168,164,.12)" points="0,110 100,95 200,100 300,70 400,78 500,45 620,30 620,150 0,150"/>
+              <g fill="#0E7C7B"><circle cx="0" cy="110" r="3.5"/><circle cx="100" cy="95" r="3.5"/><circle cx="200" cy="100" r="3.5"/><circle cx="300" cy="70" r="3.5"/><circle cx="400" cy="78" r="3.5"/><circle cx="500" cy="45" r="3.5"/><circle cx="620" cy="30" r="3.5"/></g>
+            </svg>
+            <div class="legend" style="justify-content:space-between"><span>السبت</span><span>الأحد</span><span>الإثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span></div>
+          </div>
+          <div class="card">
+            <h3>مواعيد النهاردة — فرع جميرا</h3><div class="sub">0 تعارض ✓ عبر كل القنوات</div>
+            <div class="appt"><span class="t">09:00</span><div class="who2"><b>سارة المنصوري</b><small>تنظيف وتلميع</small></div><span class="pill p-meta">Meta</span></div>
+            <div class="appt"><span class="t">10:30</span><div class="who2"><b>خالد العتيبي</b><small>تقويم — متابعة</small></div><span class="pill p-wa">واتساب</span></div>
+            <div class="appt"><span class="t">12:00</span><div class="who2"><b>ليان الدوسري</b><small>زراعة سن</small></div><span class="pill p-google">Google</span></div>
+            <div class="appt"><span class="t">13:45</span><div class="who2"><b>منى حسن</b><small>كشف أولي</small></div><span class="pill p-tiktok">مركز الاتصال AI</span></div>
+            <div class="appt"><span class="t">15:30</span><div class="who2"><b>عبدالله ناصر</b><small>تبييض</small></div><span class="pill p-meta">Meta</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== REVENUE / ATTRIBUTION (THE WOW PAGE) ========== -->
+      <section class="tab" id="revenue">
+        <div class="eyebrow">الصفحة اللي تخلّي المدير يقول "واو"</div>
+        <div class="sec-t">مين جيه — من أنهي قناة — وحقّق كام إيراد</div>
+        <div class="sec-d">كل ريال إعلان مربوط بالمريض الحقيقي وبالإيراد الفعلي. مفيش تخمين.</div>
+
+        <div class="chan">
+          <div class="chcard"><div class="h"><b>Meta</b><span class="pill p-meta">إعلانات</span></div><div class="roas">7.4×</div><div class="meta">صرف 9,800 ← إيراد 72,300﷼</div><div class="bar"><i style="width:90%"></i></div></div>
+          <div class="chcard"><div class="h"><b>Google</b><span class="pill p-google">إعلانات</span></div><div class="roas">5.1×</div><div class="meta">صرف 6,400 ← إيراد 32,600﷼</div><div class="bar"><i style="width:62%"></i></div></div>
+          <div class="chcard"><div class="h"><b>Snapchat</b><span class="pill p-snap">إعلانات</span></div><div class="roas">3.2×</div><div class="meta">صرف 4,100 ← إيراد 13,100﷼</div><div class="bar"><i style="width:39%"></i></div></div>
+          <div class="chcard"><div class="h"><b>واتساب</b><span class="pill p-wa">عضوي</span></div><div class="roas">∞</div><div class="meta">صرف 0 ← إيراد 41,500﷼</div><div class="bar"><i style="width:75%"></i></div></div>
+          <div class="chcard"><div class="h"><b>زيارة مباشرة</b><span class="pill p-walk">Walk-in</span></div><div class="roas">—</div><div class="meta">إيراد 28,900﷼</div><div class="bar"><i style="width:50%"></i></div></div>
+        </div>
+
+        <div class="card">
+          <h3>آخر المرضى — التتبّع الكامل</h3><div class="sub">من الإعلان → للحجز → للإيراد</div>
+          <table>
+            <thead><tr><th>المريض</th><th>القناة / الحملة</th><th>الخدمة</th><th>الفرع</th><th>الإيراد</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td><span class="avatar">س</span>سارة المنصوري</td><td><span class="pill p-meta">Meta</span> حملة الابتسامة</td><td>زراعة + تاج</td><td>جميرا</td><td class="money">14,500﷼</td><td><span class="pill p-done">حضر ودفع</span></td></tr>
+              <tr><td><span class="avatar">خ</span>خالد العتيبي</td><td><span class="pill p-google">Google</span> "تقويم دبي"</td><td>تقويم شفاف</td><td>مارينا</td><td class="money">18,000﷼</td><td><span class="pill p-done">حضر ودفع</span></td></tr>
+              <tr><td><span class="avatar">ل</span>ليان الدوسري</td><td><span class="pill p-wa">واتساب</span> إحالة</td><td>عدسات (6)</td><td>دبي هيلز</td><td class="money">21,000﷼</td><td><span class="pill p-done">حضر ودفع</span></td></tr>
+              <tr><td><span class="avatar">ع</span>عبدالله ناصر</td><td><span class="pill p-meta">Meta</span> حملة التبييض</td><td>تبييض بالليزر</td><td>جميرا</td><td class="money">2,400﷼</td><td><span class="pill p-done">حضر ودفع</span></td></tr>
+              <tr><td><span class="avatar">م</span>منى حسن</td><td><span class="pill p-snap">Snapchat</span> عروض</td><td>كشف + أشعة</td><td>مارينا</td><td class="money">600﷼</td><td><span class="pill p-wait">محجوز</span></td></tr>
+              <tr><td><span class="avatar">ف</span>فهد القحطاني</td><td><span class="pill p-google">Google</span> "زراعة أسنان"</td><td>زراعة (2)</td><td>دبي هيلز</td><td class="money">26,000﷼</td><td><span class="pill p-wait">محجوز</span></td></tr>
+              <tr><td><span class="avatar">ر</span>ريم السبيعي</td><td><span class="pill p-walk">زيارة مباشرة</span></td><td>حشو تجميلي</td><td>جميرا</td><td class="money">1,200﷼</td><td><span class="pill p-done">حضر ودفع</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========== APPOINTMENTS ========== -->
+      <section class="tab" id="appts">
+        <div class="sec-t">الحجوزات</div><div class="sec-d">محرّك مركزي واحد عبر كل الفروع والقنوات — <b>صفر حجز مزدوج.</b></div>
+        <div class="kpis">
+          <div class="kpi"><div class="l">حجوزات اليوم</div><div class="n teal">38</div><div class="d up">3 فروع</div></div>
+          <div class="kpi"><div class="l">تعارضات منعها النظام</div><div class="n">6</div><div class="d up">▲ النهاردة</div></div>
+          <div class="kpi"><div class="l">من واتساب آليًا</div><div class="n">11</div><div class="d up">29%</div></div>
+          <div class="kpi"><div class="l">من مركز الاتصال AI</div><div class="n">7</div><div class="d up">18%</div></div>
+        </div>
+        <div class="card">
+          <h3>جدول اليوم — كل الفروع</h3><div class="sub">القناة موضّحة لكل حجز</div>
+          <table>
+            <thead><tr><th>الوقت</th><th>المريض</th><th>الخدمة</th><th>الطبيب</th><th>الفرع</th><th>المصدر</th></tr></thead>
+            <tbody>
+              <tr><td class="money">09:00</td><td>سارة المنصوري</td><td>تنظيف</td><td>د. أحمد</td><td>جميرا</td><td><span class="pill p-meta">Meta</span></td></tr>
+              <tr><td class="money">09:30</td><td>طارق المهيري</td><td>كشف</td><td>د. ندى</td><td>مارينا</td><td><span class="pill p-wa">واتساب</span></td></tr>
+              <tr><td class="money">10:30</td><td>خالد العتيبي</td><td>تقويم</td><td>د. ندى</td><td>مارينا</td><td><span class="pill p-google">Google</span></td></tr>
+              <tr><td class="money">11:15</td><td>هند الكعبي</td><td>تبييض</td><td>د. أحمد</td><td>جميرا</td><td><span class="pill p-tiktok">AI Call</span></td></tr>
+              <tr><td class="money">12:00</td><td>ليان الدوسري</td><td>زراعة</td><td>د. سامي</td><td>دبي هيلز</td><td><span class="pill p-wa">واتساب</span></td></tr>
+              <tr><td class="money">13:45</td><td>منى حسن</td><td>كشف أولي</td><td>د. سامي</td><td>دبي هيلز</td><td><span class="pill p-snap">Snapchat</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========== AI CALL CENTER ========== -->
+      <section class="tab" id="ai">
+        <div class="sec-t">مركز الاتصال بالذكاء الاصطناعي</div>
+        <div class="sec-d">يرد على كل مكالمة 24/7 بالعربي والإنجليزي، ويحجز مباشرة في التقويم. <span class="demo-flag">⚙️ عرض المنتج — التشغيل الصوتي المباشر يتفعّل في الـ onboarding</span></div>
+        <div class="kpis">
+          <div class="kpi"><div class="l">مكالمات اليوم</div><div class="n teal">64</div><div class="d up">▲ 9%</div></div>
+          <div class="kpi"><div class="l">تم الرد (آلي)</div><div class="n">100%</div><div class="d up">0 فائتة</div></div>
+          <div class="kpi"><div class="l">حجوزات من المكالمات</div><div class="n">21</div><div class="d up">33% تحويل</div></div>
+          <div class="kpi"><div class="l">بعد ساعات العمل</div><div class="n">17</div><div class="d up">كانت تضيع كلها</div></div>
+        </div>
+        <div class="row c2">
+          <div class="card">
+            <h3>سجل المكالمات</h3><div class="sub">لحظي</div>
+            <div class="calllog">
+              <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 21</b> — حجزت موعد تنظيف</div><small style="color:var(--muted)">22:14 · بعد العمل</small></div>
+              <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 88</b> — استفسار أسعار تقويم → حجز</div><small style="color:var(--muted)">21:02</small></div>
+              <div class="it"><div class="ic t">↻</div><div style="flex:1"><b>+971 5• ••• 03</b> — حوّلها لموظف (حالة طارئة)</div><small style="color:var(--muted)">19:47</small></div>
+              <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 45</b> — أعادت جدولة موعدها</div><small style="color:var(--muted)">18:30</small></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>عيّنة محادثة</h3><div class="sub">رد آلي بالعربي</div>
+            <div class="transcript">
+              <div class="bub pt">مساء الخير، عايزة أحجز تنظيف بكرة بعد الـ6؟</div>
+              <div class="bub ai">أهلًا! عندنا 6:30 و 7:15 مساءً في فرع جميرا. أنهي أنسب لحضرتك؟</div>
+              <div class="bub pt">6:30 تمام</div>
+              <div class="bub ai">تمام ✅ حجزتلك تنظيف بكرة 6:30 م — فرع جميرا مع د. أحمد. هتوصلك رسالة تأكيد على واتساب.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== WHATSAPP ========== -->
+      <section class="tab" id="wa">
+        <div class="sec-t">أتمتة واتساب</div><div class="sec-d">تأكيد وتذكير ومتابعة آلية عبر الـ Cloud API الرسمي — مربوطة بالحجز.</div>
+        <div class="row c2b">
+          <div class="card">
+            <h3>تدفّق الأتمتة</h3><div class="sub">بيشتغل لوحده على كل حجز</div>
+            <div class="flow">
+              <div class="step"><div class="n">1</div><div><b>تأكيد فوري</b><small>أول ما يتحجز الموعد (أي قناة)</small></div></div>
+              <div class="step"><div class="n">2</div><div><b>تذكير قبل 24 ساعة</b><small>+ زر تأكيد/إعادة جدولة → يقلّل عدم الحضور</small></div></div>
+              <div class="step"><div class="n">3</div><div><b>تذكير قبل ساعتين</b><small>مع موقع الفرع</small></div></div>
+              <div class="step"><div class="n">4</div><div><b>متابعة بعد الزيارة</b><small>تقييم + عرض المتابعة/الإحالة</small></div></div>
+            </div>
+          </div>
+          <div class="card" style="background:#0b141a;border-color:#0b141a">
+            <div class="wa" style="max-width:none">
+              <div class="msg">📅 تم تأكيد موعدك: تنظيف — بكرة 6:30 م، فرع جميرا. للتعديل اضغط هنا.</div>
+              <div class="msg in">تمام شكرًا</div>
+              <div class="msg">⏰ تذكير: موعدك بعد ساعتين 🦷 موقع الفرع: 📍 جميرا</div>
+              <div class="msg in">جاية في الطريق</div>
+              <div class="msg">🌟 شكرًا لزيارتك! قيّم تجربتك، ولو عجبتك رشّح صديق واحصلوا الاتنين على خصم.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CRM ========== -->
+      <section class="tab" id="crm">
+        <div class="sec-t">المرضى (CRM)</div><div class="sec-d">كل مريض، تاريخه، قيمته، ومصدره — في مكان واحد عبر الفروع.</div>
+        <div class="card">
+          <h3>قاعدة المرضى</h3><div class="sub">12,480 مريض · بحث وفلترة</div>
+          <table>
+            <thead><tr><th>المريض</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>المصدر الأصلي</th><th>الولاء</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td><span class="avatar">س</span>سارة المنصوري</td><td>اليوم</td><td class="money">31,200﷼</td><td><span class="pill p-meta">Meta</span></td><td>🥇 ذهبي</td><td><span class="pill p-done">نشط</span></td></tr>
+              <tr><td><span class="avatar">خ</span>خالد العتيبي</td><td>قبل 3 أيام</td><td class="money">22,500﷼</td><td><span class="pill p-google">Google</span></td><td>🥈 فضي</td><td><span class="pill p-done">نشط</span></td></tr>
+              <tr><td><span class="avatar">ل</span>ليان الدوسري</td><td>اليوم</td><td class="money">48,000﷼</td><td><span class="pill p-wa">إحالة</span></td><td>🥇 ذهبي</td><td><span class="pill p-done">نشط</span></td></tr>
+              <tr><td><span class="avatar">ن</span>نورة الشهري</td><td>قبل شهر</td><td class="money">3,400﷼</td><td><span class="pill p-snap">Snapchat</span></td><td>🥉 برونزي</td><td><span class="pill p-wait">متابعة</span></td></tr>
+              <tr><td><span class="avatar">ف</span>فهد القحطاني</td><td>غدًا (محجوز)</td><td class="money">0﷼</td><td><span class="pill p-google">Google</span></td><td>جديد</td><td><span class="pill p-wait">أول زيارة</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========== REPORTS ========== -->
+      <section class="tab" id="reports">
+        <div class="sec-t">التقارير</div><div class="sec-d">العائد على كل قناة، الأداء حسب الفرع والطبيب — تقرير جاهز لاجتماع الإدارة.</div>
+        <div class="row c2b">
+          <div class="card">
+            <h3>الأداء حسب الفرع</h3><div class="sub">الإيراد هذا الشهر</div>
+            <div style="margin-top:8px">
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:4px"><span>جميرا</span><span class="money">486,000﷼</span></div><div class="bar"><i style="width:100%"></i></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:12px 0 4px"><span>مارينا</span><span class="money">351,000﷼</span></div><div class="bar"><i style="width:72%"></i></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:12px 0 4px"><span>دبي هيلز</span><span class="money">298,000﷼</span></div><div class="bar"><i style="width:61%"></i></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>الخلاصة التنفيذية</h3><div class="sub">آخر 30 يوم</div>
+            <table>
+              <tbody>
+                <tr><td>إجمالي الإيراد</td><td class="money" style="text-align:left">1,135,000﷼</td></tr>
+                <tr><td>مرضى جدد</td><td class="money" style="text-align:left">486</td></tr>
+                <tr><td>مكالمات أُنقذت (AI)</td><td class="money" style="text-align:left">512</td></tr>
+                <tr><td>إيراد منسوب للإعلانات</td><td class="money" style="text-align:left">118,000﷼</td></tr>
+                <tr><td>متوسط ROAS</td><td class="money" style="text-align:left;color:var(--teal)">5.6×</td></tr>
+                <tr><td>تحسّن نسبة الحضور</td><td class="money" style="text-align:left;color:var(--good)">+9.8%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <div style="text-align:center;color:var(--muted);font-size:12px;padding:10px">Cliniva — a RASMY venture · ديمو ببيانات توضيحية · <a href="./index.html" style="color:var(--teal)">‹ رجوع للموقع</a></div>
+  </main>
+</div>
+
+<script>
+  // tab navigation — every sidebar button works
+  const titles = {overview:"لوحة التحكم",revenue:"الإعلانات والإيرادات",appts:"الحجوزات",ai:"مركز الاتصال AI",wa:"أتمتة واتساب",crm:"المرضى (CRM)",reports:"التقارير"};
+  document.getElementById('nav').addEventListener('click',function(e){
+    const b = e.target.closest('button'); if(!b) return;
+    const id = b.dataset.tab;
+    document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on', x===b));
+    document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('on', s.id===id));
+    document.getElementById('topTitle').textContent = titles[id]||'';
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+</script>
+</body>
+</html>
