@@ -107,6 +107,15 @@
   .chart{width:100%;height:150px}
   .legend{display:flex;gap:16px;font-size:11.5px;color:var(--muted);margin-top:8px}
   .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-left:5px;vertical-align:middle}
+  .cibtn{border:0;border-radius:7px;padding:5px 10px;font-family:inherit;font-weight:800;font-size:11.5px;cursor:pointer;margin-left:4px}
+  .cibtn.yes{background:var(--good-bg);color:var(--good)}.cibtn.no{background:var(--bad-bg);color:var(--bad)}
+  .cibtn:hover{filter:brightness(.95)}
+  .dropzone{border:2px dashed #BFE0DE;border-radius:14px;padding:24px;text-align:center;color:var(--muted);background:var(--mint);font-weight:700}
+  .dropzone label{color:var(--teal-d);text-decoration:underline;cursor:pointer}
+  .maprow{display:flex;align-items:center;justify-content:space-between;padding:8px 2px;border-bottom:1px dashed var(--line);font-size:13px}
+  .maprow:last-child{border-bottom:0}
+  .prog{height:10px;border-radius:999px;background:#EDF3F3;overflow:hidden;margin:14px 0}
+  .prog > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--teal));transition:width 2.1s linear}
   @media(max-width:880px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap}
     .nav{flex-direction:row;flex-wrap:wrap}.kpis,.chan{grid-template-columns:1fr 1fr}.row.c2,.row.c2b{grid-template-columns:1fr}}
 </style>
@@ -115,7 +124,7 @@
 <div class="app">
   <!-- SIDEBAR -->
   <aside class="side">
-    <div class="brand">Cliniva<span>.</span></div>
+    <div class="brand"><svg width="24" height="24" viewBox="0 0 40 40" style="vertical-align:-4px;margin-left:7px"><rect width="40" height="40" rx="11" fill="#13A8A4"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg>Cliniva<span>.</span></div>
     <nav class="nav" id="nav">
       <button class="on" data-tab="overview"><span class="dot"></span> لوحة التحكم</button>
       <button data-tab="revenue"><span class="dot"></span> الإعلانات والإيرادات</button>
@@ -124,6 +133,7 @@
       <button data-tab="wa"><span class="dot"></span> أتمتة واتساب</button>
       <button data-tab="crm"><span class="dot"></span> المرضى (CRM)</button>
       <button data-tab="reports"><span class="dot"></span> التقارير</button>
+      <button data-tab="import"><span class="dot"></span> استيراد البيانات</button>
     </nav>
     <div class="who"><div class="av">م</div><div><b>د. منال الشامي</b><small>مدير المجموعة</small></div></div>
   </aside>
@@ -144,6 +154,10 @@
 
       <!-- ========== OVERVIEW ========== -->
       <section class="tab on" id="overview">
+        <div style="background:linear-gradient(110deg,var(--teal-d),var(--teal));color:#fff;border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div><div style="font-size:12.5px;opacity:.9;font-weight:700">أثر Cliniva على الإيراد</div><div style="font-size:23px;font-weight:900">إيرادك بيزيد 15–30% شهريًا</div></div>
+          <div style="font-size:12.5px;opacity:.93;max-width:360px;line-height:1.6">من <b>استرجاع المكالمات الفائتة</b> + <b>تقليل عدم الحضور</b> + <b>ربط كل ريال إعلان بالإيراد</b> — ونثبتها بأرقام عيادتك نفسها.</div>
+        </div>
         <div class="kpis">
           <div class="kpi"><div class="l">حجوزات النهاردة</div><div class="n teal">38</div><div class="d up">▲ 12% عن أمس</div></div>
           <div class="kpi"><div class="l">مكالمات تم الرد عليها</div><div class="n">100%</div><div class="d up">▲ كانت 71% قبل Cliniva</div></div>
@@ -212,16 +226,16 @@
           <div class="kpi"><div class="l">من مركز الاتصال AI</div><div class="n">7</div><div class="d up">18%</div></div>
         </div>
         <div class="card">
-          <h3>جدول اليوم — كل الفروع</h3><div class="sub">القناة موضّحة لكل حجز</div>
+          <h3>جدول اليوم — كل الفروع</h3><div class="sub">👩‍⚕️ موظفة الاستقبال بتأكد الحضور بضغطة — والنظام يحدّث الإيراد ونسبة الحضور فورًا</div>
           <table>
-            <thead><tr><th>الوقت</th><th>المريض</th><th>الخدمة</th><th>الطبيب</th><th>الفرع</th><th>المصدر</th></tr></thead>
+            <thead><tr><th>الوقت</th><th>المريض</th><th>الخدمة</th><th>الطبيب</th><th>الفرع</th><th>المصدر</th><th>تأكيد الحضور</th></tr></thead>
             <tbody>
-              <tr><td class="money">09:00</td><td>سارة المنصوري</td><td>تنظيف</td><td>د. أحمد</td><td>جميرا</td><td><span class="pill p-meta">Meta</span></td></tr>
-              <tr><td class="money">09:30</td><td>طارق المهيري</td><td>كشف</td><td>د. ندى</td><td>مارينا</td><td><span class="pill p-wa">واتساب</span></td></tr>
-              <tr><td class="money">10:30</td><td>خالد العتيبي</td><td>تقويم</td><td>د. ندى</td><td>مارينا</td><td><span class="pill p-google">Google</span></td></tr>
-              <tr><td class="money">11:15</td><td>هند الكعبي</td><td>تبييض</td><td>د. أحمد</td><td>جميرا</td><td><span class="pill p-tiktok">AI Call</span></td></tr>
-              <tr><td class="money">12:00</td><td>ليان الدوسري</td><td>زراعة</td><td>د. سامي</td><td>دبي هيلز</td><td><span class="pill p-wa">واتساب</span></td></tr>
-              <tr><td class="money">13:45</td><td>منى حسن</td><td>كشف أولي</td><td>د. سامي</td><td>دبي هيلز</td><td><span class="pill p-snap">Snapchat</span></td></tr>
+              <tr><td class="money">09:00</td><td>سارة المنصوري</td><td>تنظيف</td><td>د. أحمد</td><td>جميرا</td><td><span class="pill p-meta">Meta</span></td><td><button class="cibtn yes" onclick="checkIn(this,1)">✓ حضر</button><button class="cibtn no" onclick="checkIn(this,0)">✗</button></td></tr>
+              <tr><td class="money">09:30</td><td>طارق المهيري</td><td>كشف</td><td>د. ندى</td><td>مارينا</td><td><span class="pill p-wa">واتساب</span></td><td><button class="cibtn yes" onclick="checkIn(this,1)">✓ حضر</button><button class="cibtn no" onclick="checkIn(this,0)">✗</button></td></tr>
+              <tr><td class="money">10:30</td><td>خالد العتيبي</td><td>تقويم</td><td>د. ندى</td><td>مارينا</td><td><span class="pill p-google">Google</span></td><td><button class="cibtn yes" onclick="checkIn(this,1)">✓ حضر</button><button class="cibtn no" onclick="checkIn(this,0)">✗</button></td></tr>
+              <tr><td class="money">11:15</td><td>هند الكعبي</td><td>تبييض</td><td>د. أحمد</td><td>جميرا</td><td><span class="pill p-tiktok">AI Call</span></td><td><button class="cibtn yes" onclick="checkIn(this,1)">✓ حضر</button><button class="cibtn no" onclick="checkIn(this,0)">✗</button></td></tr>
+              <tr><td class="money">12:00</td><td>ليان الدوسري</td><td>زراعة</td><td>د. سامي</td><td>دبي هيلز</td><td><span class="pill p-wa">واتساب</span></td><td><button class="cibtn yes" onclick="checkIn(this,1)">✓ حضر</button><button class="cibtn no" onclick="checkIn(this,0)">✗</button></td></tr>
+              <tr><td class="money">13:45</td><td>منى حسن</td><td>كشف أولي</td><td>د. سامي</td><td>دبي هيلز</td><td><span class="pill p-snap">Snapchat</span></td><td><button class="cibtn yes" onclick="checkIn(this,1)">✓ حضر</button><button class="cibtn no" onclick="checkIn(this,0)">✗</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -330,6 +344,37 @@
         </div>
       </section>
 
+      <!-- ========== IMPORT ========== -->
+      <section class="tab" id="import">
+        <div class="sec-t">استيراد بيانات العيادة — التشغيل في ساعات</div>
+        <div class="sec-d">ارفع ملف Excel/CSV لمرضاك ومواعيدك القديمة → النظام يربط الأعمدة تلقائيًا → معاينة → استيراد. <b>أي عيادة تبقى شغّالة في نفس اليوم — مفيش إعادة إدخال يدوي.</b></div>
+        <div class="row c2">
+          <div class="card">
+            <h3>1) ارفع ملفك</h3><div class="sub">CSV أو Excel — من أي نظام قديم</div>
+            <div class="dropzone">📄 اسحب ملفك هنا، أو <label>اختر ملف<input type="file" accept=".csv,.xlsx,.xls" hidden onchange="onFile(this)"></label><div id="fname" style="margin-top:8px;font-size:12px;color:var(--teal-d)"></div></div>
+            <div style="margin-top:12px"><button class="btn ghost" onclick="loadSample()">جرّب بملف تجريبي (12,480 مريض)</button></div>
+          </div>
+          <div class="card">
+            <h3>2) ربط الأعمدة — تلقائي ✓</h3><div class="sub">النظام عرف الأعمدة لوحده</div>
+            <div class="maprow"><span>الاسم</span><b style="color:var(--teal)">→ Name ✓</b></div>
+            <div class="maprow"><span>رقم الجوال</span><b style="color:var(--teal)">→ Phone ✓</b></div>
+            <div class="maprow"><span>آخر زيارة</span><b style="color:var(--teal)">→ LastVisit ✓</b></div>
+            <div class="maprow"><span>الخدمة</span><b style="color:var(--teal)">→ Treatment ✓</b></div>
+            <div class="maprow"><span>المبلغ</span><b style="color:var(--teal)">→ Amount ✓</b></div>
+          </div>
+        </div>
+        <div class="card" id="previewCard" style="display:none;margin-top:14px">
+          <h3>3) معاينة قبل الاستيراد</h3><div class="sub" id="previewSub">أول صفوف من ملفك</div>
+          <table id="previewTable"></table>
+          <div class="prog" id="prog"><i id="progBar"></i></div>
+          <button class="btn" id="importBtn" onclick="runImport()">ابدأ الاستيراد</button>
+        </div>
+        <div class="card" id="doneCard" style="display:none;margin-top:14px;border:1px solid var(--teal);background:var(--mint)">
+          <h3 style="color:var(--teal-d)">✅ تم الاستيراد بنجاح</h3>
+          <div style="font-size:14px;color:var(--ink);margin-top:6px"><b id="doneCount">12,480</b> مريض + 38,200 موعد اتسجّلوا في <b>4 دقائق</b>. العيادة جاهزة للتشغيل النهاردة.</div>
+        </div>
+      </section>
+
     </div>
     <div style="text-align:center;color:var(--muted);font-size:12px;padding:10px">Cliniva — a RASMY venture · ديمو ببيانات توضيحية · <a href="./index.html" style="color:var(--teal)">‹ رجوع للموقع</a></div>
   </main>
@@ -337,7 +382,7 @@
 
 <script>
   // tab navigation — every sidebar button works
-  const titles = {overview:"لوحة التحكم",revenue:"الإعلانات والإيرادات",appts:"الحجوزات",ai:"مركز الاتصال AI",wa:"أتمتة واتساب",crm:"المرضى (CRM)",reports:"التقارير"};
+  const titles = {overview:"لوحة التحكم",revenue:"الإعلانات والإيرادات",appts:"الحجوزات",ai:"مركز الاتصال AI",wa:"أتمتة واتساب",crm:"المرضى (CRM)",reports:"التقارير",import:"استيراد البيانات"};
   document.getElementById('nav').addEventListener('click',function(e){
     const b = e.target.closest('button'); if(!b) return;
     const id = b.dataset.tab;
@@ -346,6 +391,50 @@
     document.getElementById('topTitle').textContent = titles[id]||'';
     window.scrollTo({top:0,behavior:'smooth'});
   });
+  function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
+  // receptionist check-in (safe DOM)
+  function checkIn(btn,present){
+    var td=btn.parentNode; clear(td);
+    var s=document.createElement('span');
+    s.className='pill '+(present?'p-done':'p-no');
+    s.textContent=present?'✓ حضر':'لم يحضر';
+    td.appendChild(s);
+  }
+  // Excel/CSV import demo (safe DOM — no innerHTML)
+  var SAMPLE=[['الاسم','رقم الجوال','آخر زيارة','الخدمة','المبلغ'],['سارة المنصوري','+9715•••2210','2026-06-18','تنظيف','450'],['خالد العتيبي','+9715•••8841','2026-06-15','تقويم','18000'],['ليان الدوسري','+9715•••0934','2026-06-20','عدسات','21000'],['فهد القحطاني','+9715•••5503','2026-05-30','زراعة','26000'],['نورة الشهري','+9715•••7712','2026-04-22','حشو','1200']];
+  function cell(tag,text){ var e=document.createElement(tag); e.textContent=text; return e; }
+  function renderPreview(rows,total){
+    var t=document.getElementById('previewTable'); clear(t);
+    var thead=document.createElement('thead'), htr=document.createElement('tr');
+    rows[0].forEach(function(c){ htr.appendChild(cell('th',c)); });
+    thead.appendChild(htr); t.appendChild(thead);
+    var tb=document.createElement('tbody');
+    rows.slice(1,6).forEach(function(r){ var tr=document.createElement('tr'); r.forEach(function(c){ tr.appendChild(cell('td',c)); }); tb.appendChild(tr); });
+    t.appendChild(tb);
+    document.getElementById('previewSub').textContent='معاينة — إجمالي '+total+' صف';
+    document.getElementById('doneCount').textContent=total;
+    document.getElementById('previewCard').style.display='block';
+    document.getElementById('doneCard').style.display='none';
+    document.getElementById('progBar').style.width='0';
+    document.getElementById('importBtn').style.display='inline-block';
+  }
+  function loadSample(){ renderPreview(SAMPLE,'12,480'); document.getElementById('previewCard').scrollIntoView({behavior:'smooth'}); }
+  function onFile(input){
+    var f=input.files&&input.files[0]; if(!f)return;
+    document.getElementById('fname').textContent='✓ '+f.name;
+    if(/\.csv$/i.test(f.name)){
+      var r=new FileReader();
+      r.onload=function(e){ var rows=(e.target.result||'').split(/\r?\n/).filter(Boolean).map(function(l){return l.split(',');}); if(!rows||rows.length<2)rows=SAMPLE; renderPreview(rows,String(rows.length-1)); };
+      r.onerror=function(){ renderPreview(SAMPLE,'12,480'); };
+      r.readAsText(f);
+    } else { renderPreview(SAMPLE,'12,480'); }
+  }
+  function runImport(){
+    document.getElementById('importBtn').style.display='none';
+    var bar=document.getElementById('progBar'); bar.style.width='0';
+    requestAnimationFrame(function(){ bar.style.width='100%'; });
+    setTimeout(function(){ document.getElementById('doneCard').style.display='block'; document.getElementById('doneCard').scrollIntoView({behavior:'smooth'}); },2300);
+  }
 </script>
 </body>
 </html>
