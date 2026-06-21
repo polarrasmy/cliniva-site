@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cliniva — ملف المريض</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--em:#0F5F56;--em2:#16857A;--em3:#2BA89B;--em-bright:#34C7B5;
+    --ink:#111827;--ink3:#27313f;--bg:#FAFAF8;--white:#fff;--muted:#6B7280;--line:#E9EAE5;--mint:#EAF3F1;--gold:#C99A2E;--red:#D9534F;--green:#1A8A44;--green-bg:#E7F6EC;--warn-bg:#FFF4E5;--warn:#B26A00;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Tajawal","Inter",system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.6}
+  .num{font-family:"Inter";font-variant-numeric:tabular-nums}
+  .topbar{background:var(--white);border-bottom:1px solid var(--line);padding:13px 26px;display:flex;align-items:center;justify-content:space-between}
+  .topbar .logo{font-weight:900;font-size:19px}.topbar .logo span{color:var(--em)}
+  .topbar a{color:var(--muted);font-size:13px;font-weight:700;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:22px 26px 50px;display:grid;grid-template-columns:330px 1fr;gap:18px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:18px}
+  /* summary */
+  .phead{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .pav{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--em3),var(--em));color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;margin:0 auto 10px}
+  .phead h2{font-size:18px;font-weight:900}.phead .pid{color:var(--muted);font-size:12px;font-family:"Inter"}
+  .pstatus{display:inline-block;margin-top:8px;font-size:11.5px;background:var(--green-bg);color:var(--green);border-radius:99px;padding:4px 13px;font-weight:800}
+  .crow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .crow:last-child{border:0}.crow .ic{width:30px;height:30px;border-radius:8px;background:var(--mint);color:var(--em);display:flex;align-items:center;justify-content:center}
+  .crow .v{font-weight:700}.crow .v small{display:block;color:var(--muted);font-size:11px;font-weight:500}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px}
+  .stat .n{font-size:18px;font-weight:900;color:var(--em);font-family:"Inter"}.stat .l{font-size:11px;color:var(--muted)}
+  .loyal{background:linear-gradient(135deg,var(--ink),#22303f);color:#fff;border-radius:14px;padding:15px;margin-top:14px}
+  .loyal .h{display:flex;justify-content:space-between;align-items:center}
+  .loyal .pts{font-size:24px;font-weight:900;color:var(--em-bright);font-family:"Inter"}
+  .loyal .tier{font-size:11px;background:rgba(201,154,46,.25);color:#e8c878;border:1px solid rgba(201,154,46,.4);border-radius:99px;padding:3px 11px;font-weight:800}
+  .loyal .pbar{height:6px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:11px;overflow:hidden}
+  .loyal .pbar i{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--em3),var(--em-bright))}
+  .loyal small{font-size:11px;color:#9fb6c4;display:block;margin-top:7px}
+  .ref{background:var(--mint);border:1px solid #cfe6e2;border-radius:12px;padding:12px 14px;margin-top:12px;font-size:12.5px}
+  .ref b{color:var(--em)}
+  /* main tabs */
+  .tabs{display:flex;gap:4px;background:var(--white);border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:14px}
+  .tabs button{flex:1;border:0;background:none;padding:10px;border-radius:9px;font-family:inherit;font-weight:800;font-size:13.5px;color:var(--muted);cursor:pointer;transition:.15s}
+  .tabs button.on{background:var(--em);color:#fff}
+  .pane{display:none}.pane.on{display:block;animation:fd .25s}
+  @keyframes fd{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h3.t{font-size:15px;font-weight:900;margin-bottom:3px}.cap{font-size:12px;color:var(--muted);margin-bottom:13px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:right;color:var(--muted);font-weight:800;font-size:11.5px;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:10px;border-bottom:1px solid #F2F3EF}tr:last-child td{border:0}
+  .money{font-weight:900;color:var(--em);font-family:"Inter"}
+  .pill{display:inline-block;font-size:10.5px;font-weight:800;border-radius:99px;padding:3px 10px}
+  .p-done{background:var(--green-bg);color:var(--green)}.p-up{background:var(--warn-bg);color:var(--warn)}
+  .up-card{background:linear-gradient(135deg,#fff,var(--mint));border:1px solid #cfe6e2;border-radius:14px;padding:16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+  .up-card .svc{font-size:16px;font-weight:900}.up-card .meta{font-size:12.5px;color:var(--muted)}
+  .up-card .btn{background:var(--em);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:800;font-size:13px;font-family:inherit;cursor:pointer}
+  .note{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:10px;font-size:13px}
+  .note .meta{font-size:11px;color:var(--muted);margin-bottom:4px}
+  .wa{background:#0b141a;border-radius:14px;padding:14px;max-width:420px}
+  .wa .m{background:#005c4b;color:#e9edef;padding:8px 12px;border-radius:10px;font-size:12.5px;margin-bottom:7px;max-width:80%;margin-right:auto}
+  .wa .m.in{background:#202c33}
+  @media(max-width:860px){.wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">Cliniva<span>.</span> · ملف المريض</div>
+  <a href="./app.html">‹ رجوع لقائمة المرضى</a>
+</div>
+<div class="wrap">
+  <!-- summary -->
+  <aside>
+    <div class="card">
+      <div class="phead">
+        <div class="pav">س</div>
+        <h2>سارة المنصوري</h2>
+        <div class="pid">ID · P-10023</div>
+        <span class="pstatus">● مريضة نشطة</span>
+      </div>
+      <div class="crow"><div class="ic">📞</div><div class="v num">+971 55 123 4567<small>اتصال</small></div></div>
+      <div class="crow"><div class="ic">💬</div><div class="v num">+971 55 123 4567<small>واتساب</small></div></div>
+      <div class="crow"><div class="ic">✉️</div><div class="v">sara@example.com<small>البريد</small></div></div>
+      <div class="stats">
+        <div class="stat"><div class="n num">8</div><div class="l">عدد الزيارات</div></div>
+        <div class="stat"><div class="n num">﷼31,200</div><div class="l">إجمالي الإنفاق</div></div>
+        <div class="stat"><div class="n">12 يونيو</div><div class="l">آخر زيارة</div></div>
+        <div class="stat"><div class="n">34</div><div class="l">العمر</div></div>
+      </div>
+      <div class="loyal">
+        <div class="h"><div><div style="font-size:11px;color:#9fb6c4;font-weight:700">نقاط الولاء</div><div class="pts num">1,250</div></div><span class="tier">🥇 ذهبي</span></div>
+        <div class="pbar"><i></i></div>
+        <small>ناقصها 250 نقطة للبلاتيني — تنظيف مجاني 🎁</small>
+      </div>
+      <div class="ref">🎁 <b>سفيرة:</b> أحالت 3 أصدقاء · كسبت <b>300 نقطة</b> + خصم على آخر زيارة.</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:12px">المصدر الأصلي: <b style="color:var(--ink)">إعلان Meta — حملة الابتسامة</b></div>
+    </div>
+  </aside>
+
+  <!-- main -->
+  <main>
+    <div class="tabs">
+      <button class="on" onclick="pTab(this,'ov')">نظرة عامة</button>
+      <button onclick="pTab(this,'ap')">المواعيد</button>
+      <button onclick="pTab(this,'pay')">المدفوعات</button>
+      <button onclick="pTab(this,'note')">الملاحظات والمحادثات</button>
+    </div>
+
+    <div class="pane on" id="ov">
+      <div class="up-card">
+        <div><div style="font-size:11px;color:var(--em);font-weight:800">الموعد القادم</div><div class="svc">تنظيف وتلميع</div><div class="meta">الأحد 7:00 م · د. أحمد — فرع جميرا</div></div>
+        <button class="btn">تفاصيل الموعد</button>
+      </div>
+      <div class="card">
+        <h3 class="t">تاريخ العلاج</h3><div class="cap">كل الزيارات السابقة</div>
+        <table>
+          <thead><tr><th>التاريخ</th><th>العلاج</th><th>الطبيب</th><th>الفرع</th><th>المبلغ</th></tr></thead>
+          <tbody>
+            <tr><td>12 يونيو 2026</td><td>زراعة + تاج</td><td>د. طارق</td><td>جميرا</td><td class="money">﷼14,500</td></tr>
+            <tr><td>02 مايو 2026</td><td>تبييض بالليزر</td><td>د. سارة</td><td>جميرا</td><td class="money">﷼2,400</td></tr>
+            <tr><td>18 مارس 2026</td><td>تنظيف وتلميع</td><td>د. أحمد</td><td>جميرا</td><td class="money">﷼450</td></tr>
+            <tr><td>04 يناير 2026</td><td>حشو تجميلي (2)</td><td>د. وليد</td><td>مارينا</td><td class="money">﷼2,400</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pane" id="ap">
+      <div class="card">
+        <h3 class="t">كل المواعيد</h3><div class="cap">القادمة والسابقة</div>
+        <table>
+          <thead><tr><th>التاريخ</th><th>الخدمة</th><th>الطبيب</th><th>الحالة</th></tr></thead>
+          <tbody>
+            <tr><td>الأحد · 7:00 م</td><td>تنظيف وتلميع</td><td>د. أحمد</td><td><span class="pill p-up">قادم</span></td></tr>
+            <tr><td>12 يونيو</td><td>زراعة + تاج</td><td>د. طارق</td><td><span class="pill p-done">تم</span></td></tr>
+            <tr><td>02 مايو</td><td>تبييض</td><td>د. سارة</td><td><span class="pill p-done">تم</span></td></tr>
+            <tr><td>18 مارس</td><td>تنظيف</td><td>د. أحمد</td><td><span class="pill p-done">تم</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pane" id="pay">
+      <div class="card">
+        <h3 class="t">سجل المدفوعات</h3><div class="cap">الفواتير والمعاملات · Mada · Apple Pay · Tamara</div>
+        <table>
+          <thead><tr><th>التاريخ</th><th>الفاتورة</th><th>طريقة الدفع</th><th>المبلغ</th><th>الحالة</th></tr></thead>
+          <tbody>
+            <tr><td>12 يونيو</td><td>INV-3041</td><td>Tamara (أقساط)</td><td class="money">﷼14,500</td><td><span class="pill p-done">مدفوع</span></td></tr>
+            <tr><td>02 مايو</td><td>INV-2884</td><td>Mada</td><td class="money">﷼2,400</td><td><span class="pill p-done">مدفوع</span></td></tr>
+            <tr><td>18 مارس</td><td>INV-2671</td><td>Apple Pay</td><td class="money">﷼450</td><td><span class="pill p-done">مدفوع</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pane" id="note">
+      <div class="card" style="margin-bottom:14px">
+        <h3 class="t">ملاحظات سريرية</h3><div class="cap">من الأطباء</div>
+        <div class="note"><div class="meta">د. طارق · 12 يونيو</div>زراعة ناجحة في موضع 36. مراجعة بعد أسبوعين لمتابعة الالتئام. حساسية خفيفة من البنسلين — مدوّنة.</div>
+        <div class="note"><div class="meta">د. أحمد · 18 مارس</div>صحة لثة جيدة. نُصحت بتنظيف كل 6 شهور. مرشّحة لتبييض.</div>
+      </div>
+      <div class="card">
+        <h3 class="t">سجل محادثات واتساب</h3><div class="cap">تلقائي عبر المنصة</div>
+        <div class="wa">
+          <div class="m">📅 تم تأكيد موعدك: تنظيف — الأحد 7:00 م، فرع جميرا.</div>
+          <div class="m in">تمام شكرًا</div>
+          <div class="m">🌟 شكرًا لزيارتك! قيّمي تجربتك، ورشّحي صديقة واكسبي نقاط.</div>
+          <div class="m in">رشّحت أختي 👍</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div style="text-align:center;color:var(--muted);font-size:12px;padding:16px">Cliniva — a RASMY venture · ملف المريض (ديمو) · <a href="./app.html" style="color:var(--em)">الداشبورد</a></div>
+<script>
+  function pTab(btn,id){
+    document.querySelectorAll('.tabs button').forEach(function(b){b.classList.toggle('on',b===btn);});
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id===id);});
+  }
+</script>
+</body>
+</html>
