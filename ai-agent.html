@@ -116,7 +116,7 @@ function handle(raw){
   if(step==="name"){bk.name=t;step="done";bk.id=genId();bk.via="مساعد AI";saveBooking(bk);
     return botSay("تمام يا "+bk.name+"! بأكّد الحجز...",[]),setTimeout(function(){
       okBox("✅ تم الحجز\nرقم: "+bk.id+"\n"+bk.service+" — "+bk.day+" "+bk.time+"\nباسم: "+bk.name);
-      addMsg("ai","📲 اتبعت رسالة تأكيد واتساب + تذكير قبل الموعد بـ24 ساعة.\n👀 والموعد ظهر في داشبورد العيادة دلوقتي — افتح الداشبورد وشوف!");
+      addMsg("ai","📲 اتبعت رسالة تأكيد واتساب + تذكير قبل الموعد بـ24 ساعة. في انتظارك يا "+bk.name+"! 🦷");
       setChips(["حجز تاني","شكرًا"]);},950);}
   // ----- intents -----
   if(has(low,["حجز","موعد","احجز","أحجز","حجز تاني","ميعاد"])){step="service";bk={};return botSay("يسعدني أحجزلك 🦷 أنهي خدمة؟",SERVICES);}
