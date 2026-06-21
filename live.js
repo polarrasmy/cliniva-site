@@ -96,6 +96,40 @@
     el.classList.remove("clv-flash");void el.offsetWidth;el.classList.add("clv-flash");
   }
 
+  /* ---------- REAL booking → real notification + live automation ---------- */
+  var seenBk={};
+  try{(JSON.parse(localStorage.getItem("cliniva_bookings")||"[]")).forEach(function(b){if(b&&b.id)seenBk[b.id]=1;});}catch(e){}
+  document.addEventListener("click",function(){ try{ if("Notification" in window && Notification.permission==="default") Notification.requestPermission(); }catch(e){} },{once:true});
+  function sp(s,sz,col){ var e=document.createElement("span"); e.textContent=s; if(sz)e.style.fontSize=sz+"px"; if(col)e.style.color=col; return e; }
+  function onRealBooking(){
+    var b; try{ var a=JSON.parse(localStorage.getItem("cliniva_bookings")||"[]"); b=a[a.length-1]; }catch(e){ return; }
+    if(!b||!b.id||seenBk[b.id]) return; seenBk[b.id]=1;
+    ding(true); setTimeout(function(){ding(true);},150);
+    try{ if("Notification" in window && Notification.permission==="granted") new Notification("Cliniva — حجز جديد ✅",{body:(b.name||"مريض")+" · "+(b.service||"")+" "+(b.day||"")+" "+(b.time||"")}); }catch(e){}
+    var t=document.createElement("div");
+    t.style.cssText="position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-16px);opacity:0;z-index:100000;background:"+INK+";color:#fff;border:1px solid #34C7B5;border-radius:14px;width:344px;max-width:92vw;box-shadow:0 26px 60px -18px rgba(0,0,0,.6);font-family:'Tajawal',sans-serif;overflow:hidden;transition:.35s cubic-bezier(.2,.8,.2,1)";
+    var head=document.createElement("div");head.style.cssText="display:flex;align-items:center;gap:10px;padding:13px 15px;background:rgba(52,199,181,.14);border-bottom:1px solid #243042";
+    head.appendChild(sp("🔔",19));
+    var ht=document.createElement("div");ht.style.flex="1";
+    var hb=document.createElement("div");hb.style.cssText="font-weight:900;font-size:14px";hb.textContent="حجز حقيقي جديد!";
+    var hs=document.createElement("div");hs.style.cssText="font-size:11.5px;color:#9fb6c4;margin-top:1px";hs.textContent=(b.name||"مريض")+" · "+(b.service||"")+" · "+(b.day||"")+" "+(b.time||"");
+    ht.appendChild(hb);ht.appendChild(hs);head.appendChild(ht);t.appendChild(head);
+    var steps=document.createElement("div");steps.style.cssText="padding:10px 15px 13px";
+    var cap=document.createElement("div");cap.style.cssText="font-size:10.5px;color:#6b7785;font-weight:700;margin-bottom:7px";cap.textContent="⚡ الأوتوميشن بيشتغل...";steps.appendChild(cap);
+    t.appendChild(steps);document.body.appendChild(t);
+    requestAnimationFrame(function(){t.style.opacity="1";t.style.transform="translateX(-50%) translateY(0)";});
+    var seq=["📲 تأكيد واتساب اتبعت","⏰ تذكير قبل 24 ساعة اتجدول","🗓️ اتسجّل في التقويم المركزي","📊 الإيراد والتقارير اتحدّثوا"];
+    seq.forEach(function(s,i){ setTimeout(function(){
+      var r=document.createElement("div");r.style.cssText="display:flex;align-items:center;gap:8px;font-size:12px;color:#cbd3dd;padding:4px 0;opacity:0;transition:.3s";
+      var ck=sp("⏳",13);r.appendChild(ck);r.appendChild(document.createTextNode(s));steps.appendChild(r);
+      requestAnimationFrame(function(){r.style.opacity="1";});
+      setTimeout(function(){ck.textContent="✅";ck.style.color="#5ecf8f";ding(true);},520);
+    }, 350+i*780); });
+    setTimeout(function(){t.style.opacity="0";t.style.transform="translateX(-50%) translateY(-16px)";setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},400);}, 350+seq.length*780+2800);
+  }
+  window.addEventListener("cliniva-booked",onRealBooking);
+  window.addEventListener("storage",function(e){ if(!e||e.key===null||e.key==="cliniva_bookings") onRealBooking(); });
+
   /* ---------- run loop ---------- */
   function loop(){ pushEvent(); setTimeout(loop, 3500+Math.random()*4500); }
   // seed a couple instantly so it looks alive on open
