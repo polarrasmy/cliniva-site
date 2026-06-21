@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cliniva — تطبيق المريض (ديمو)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#14202E;--teal:#0E7C7B;--teal2:#13A8A4;--teal-d:#0A5D5C;--mint:#E8F3F2;--line:#EAF0F0;--muted:#5C6B72;--gold:#C97D2E}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Tajawal",system-ui,Tahoma,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;
+    background:radial-gradient(900px 500px at 80% -10%,rgba(19,168,164,.2),transparent 60%),linear-gradient(160deg,#0c1a22,#103e3b);color:#fff}
+  .phone{width:330px;max-width:92vw;height:690px;max-height:86vh;background:#000;border-radius:42px;padding:11px;box-shadow:0 40px 90px -30px rgba(0,0,0,.7);position:relative}
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:130px;height:26px;background:#000;border-radius:0 0 16px 16px;z-index:5}
+  .screen{width:100%;height:100%;background:#F4F8F8;border-radius:32px;overflow-y:auto;position:relative}
+  .screen::-webkit-scrollbar{display:none}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:13px 22px 4px;font-size:12px;font-weight:800;color:var(--ink)}
+  .apphead{background:linear-gradient(160deg,var(--teal-d),var(--teal));color:#fff;padding:14px 18px 20px;border-radius:0 0 22px 22px}
+  .apphead .top{display:flex;align-items:center;justify-content:space-between}
+  .apphead .logo{font-weight:900;font-size:17px}.apphead .logo span{color:#bff0ee}
+  .apphead .av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:900}
+  .apphead h2{font-size:19px;margin-top:14px;font-weight:900}
+  .apphead p{font-size:12.5px;color:#cdeae9;margin-top:2px}
+  .body{padding:14px 16px 80px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:13px;box-shadow:0 8px 20px -14px rgba(14,124,123,.4)}
+  .next{background:linear-gradient(135deg,#fff,#F2FBFA);border:1px solid #CFE7E5}
+  .next .lbl{font-size:11px;color:var(--teal);font-weight:800}
+  .next .svc{font-size:16px;font-weight:900;margin:4px 0}
+  .next .meta{font-size:12.5px;color:var(--muted)}
+  .next .row{display:flex;gap:8px;margin-top:11px}
+  .mini{flex:1;background:var(--mint);color:var(--teal-d);border:0;border-radius:10px;padding:9px;font-weight:800;font-size:12.5px;font-family:inherit;cursor:pointer}
+  .mini.solid{background:var(--teal);color:#fff}
+  .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:13px}
+  .q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 8px;text-align:center;cursor:pointer}
+  .q .ic{font-size:22px}.q .t{font-size:11.5px;font-weight:800;margin-top:5px;color:var(--ink)}
+  .sect{font-size:13px;font-weight:900;color:var(--ink);margin:4px 2px 9px}
+  .loyal{background:linear-gradient(135deg,var(--ink),#243a4f);color:#fff}
+  .loyal .h{display:flex;justify-content:space-between;align-items:center}
+  .loyal .pts{font-size:26px;font-weight:900;color:#7fe0db}
+  .loyal .tier{font-size:11.5px;background:rgba(201,125,46,.25);color:#f0b97a;border:1px solid rgba(201,125,46,.4);border-radius:999px;padding:3px 11px;font-weight:800}
+  .pbar{height:7px;background:rgba(255,255,255,.15);border-radius:999px;margin-top:11px;overflow:hidden}
+  .pbar i{display:block;height:100%;width:72%;background:linear-gradient(90deg,var(--teal2),#7fe0db)}
+  .loyal small{font-size:11px;color:#a9c2c1;display:block;margin-top:7px}
+  .ref{background:linear-gradient(135deg,#FFF7EE,#FFEFD9);border:1px solid #F1D9B6}
+  .ref .t{font-size:14.5px;font-weight:900;color:#8a5316}
+  .ref p{font-size:12px;color:#9a6a33;margin:5px 0 11px}
+  .code{display:flex;align-items:center;gap:8px}
+  .code .c{flex:1;background:#fff;border:1.5px dashed var(--gold);border-radius:10px;padding:10px;text-align:center;font-weight:900;letter-spacing:2px;color:var(--gold);font-size:15px}
+  .code button{background:var(--gold);color:#fff;border:0;border-radius:10px;padding:10px 14px;font-weight:800;font-size:12.5px;font-family:inherit;cursor:pointer}
+  .tabbar{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 0 18px;border-radius:0 0 32px 32px}
+  .tb{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:800;color:#9fb1b1}
+  .tb.on{color:var(--teal)}.tb .ic{font-size:18px}
+  .foot{color:#9fc2c0;font-size:12px;text-align:center;line-height:1.9}
+  .foot a{color:#bff0ee}
+  .badges{display:flex;gap:8px;justify-content:center}
+  .store{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:7px 14px;font-size:12px;font-weight:700;color:#fff}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="apphead">
+        <div class="top"><div class="logo">Cliniva<span>.</span></div><div class="av">س</div></div>
+        <h2>أهلاً سارة 👋</h2>
+        <p>عيادة المنال للأسنان — تطبيق المريض</p>
+      </div>
+      <div class="body">
+        <div class="card next">
+          <div class="lbl">موعدك الجاي</div>
+          <div class="svc" id="nxSvc">تنظيف وتلميع</div>
+          <div class="meta" id="nxMeta">الأحد · 7:00 م · د. أحمد — فرع جميرا</div>
+          <div class="row"><button class="mini solid">تفاصيل الموعد</button><button class="mini">إعادة جدولة</button></div>
+        </div>
+        <div class="quick">
+          <div class="q"><div class="ic">📅</div><div class="t">احجز موعد</div></div>
+          <div class="q"><div class="ic">🗂️</div><div class="t">مواعيدي</div></div>
+          <div class="q"><div class="ic">🧾</div><div class="t">الفواتير</div></div>
+        </div>
+        <div class="sect">المكافآت والولاء</div>
+        <div class="card loyal">
+          <div class="h"><div><div style="font-size:11.5px;color:#a9c2c1;font-weight:700">نقاط الولاء</div><div class="pts">1,250</div></div><span class="tier">🥇 المستوى الذهبي</span></div>
+          <div class="pbar"><i></i></div>
+          <small>ناقصك 250 نقطة للمستوى البلاتيني — تنظيف مجاني 🎁</small>
+        </div>
+        <div class="card ref">
+          <div class="t">🎁 ادعُ صديق واكسب</div>
+          <p>صديقك ياخد خصم 50 درهم على أول زيارة، وإنت تاخد <b>100 نقطة</b> أول ما يحجز.</p>
+          <div class="code"><div class="c">SARA50</div><button onclick="share()">شارك الكود</button></div>
+        </div>
+        <div class="badges">
+          <span class="store"> App Store</span><span class="store">▶ Google Play</span>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tb on"><div class="ic">🏠</div>الرئيسية</div>
+        <div class="tb"><div class="ic">📅</div>الحجوزات</div>
+        <div class="tb"><div class="ic">🎁</div>المكافآت</div>
+        <div class="tb"><div class="ic">👤</div>حسابي</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    تطبيق مرضى <b>Cliniva</b> — iOS + Android · حجز، مواعيد، محفظة، ولاء وإحالات<br>
+    <span style="color:#e0a05a">ديمو</span> · Cliniva — a RASMY venture · <a href="./index.html">‹ رجوع للموقع</a>
+  </div>
+<script>
+  // tie-in: if a booking was made in the assistant/booking demo, show it as the next appointment
+  try{
+    var a=JSON.parse(localStorage.getItem("cliniva_bookings")||"[]");
+    if(a.length){ var b=a[a.length-1];
+      document.getElementById("nxSvc").textContent = b.service||"موعد";
+      document.getElementById("nxMeta").textContent = (b.day||"")+" · "+(b.time||"")+" — Cliniva ("+(b.id||"")+")";
+    }
+  }catch(e){}
+  function share(){ alert("📲 تم نسخ كود الإحالة SARA50 — شاركه مع أصدقائك!"); }
+</script>
+</body>
+</html>
