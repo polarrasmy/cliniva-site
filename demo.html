@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cliniva — حجز موعد (نموذج تجريبي)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0D9488; --teal-press:#0F766E; --teal-tint:#CCFBF1;
+    --gold:#D97706; --gold-tint:#FEF3C7;
+    --bg:#0A0F1D; --bg2:#0B131F; --surface:#1E293B; --surface2:#162032;
+    --line:#26344b; --txt:#F8FAFC; --muted:#94A3B8; --danger:#EF4444;
+    --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Tajawal',system-ui,'Segoe UI',sans-serif;background:
+       radial-gradient(1200px 600px at 80% -10%, #11233a 0%, transparent 60%),
+       radial-gradient(900px 500px at -10% 10%, #0d2b28 0%, transparent 55%), var(--bg);
+       color:var(--txt);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  .brand{display:flex;align-items:center;gap:12px;justify-content:center;padding:18px 0 6px}
+  .logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--teal),#0e766e);
+        display:grid;place-items:center;box-shadow:0 6px 18px rgba(13,148,136,.45);font-size:24px}
+  .brand h1{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .brand .sub{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:-2px}
+  .tagline{text-align:center;color:var(--muted);font-size:13px;margin-bottom:18px}
+  .steps{display:flex;justify-content:space-between;gap:6px;margin:8px 0 22px;position:relative}
+  .step{flex:1;text-align:center;font-size:12px;color:var(--muted);position:relative}
+  .step .dot{width:30px;height:30px;border-radius:50%;background:var(--surface);border:2px solid var(--line);
+        display:grid;place-items:center;margin:0 auto 6px;font-weight:700;transition:.3s;font-size:13px}
+  .step.active .dot{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 0 0 5px rgba(13,148,136,.18)}
+  .step.done .dot{background:var(--teal-press);border-color:var(--teal-press);color:#fff}
+  .step.active span,.step.done span{color:var(--txt);font-weight:700}
+  .steps::before{content:"";position:absolute;top:15px;right:12%;left:12%;height:2px;background:var(--line);z-index:-1}
+  .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--line);
+        border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);animation:rise .35s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .card h2{font-size:18px;margin-bottom:4px}
+  .card .hint{color:var(--muted);font-size:13px;margin-bottom:16px}
+  .grid{display:grid;gap:12px}
+  .opt{background:var(--surface2);border:1.5px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;
+       transition:.2s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--teal);transform:translateY(-2px)}
+  .opt.sel{border-color:var(--teal);background:rgba(13,148,136,.12);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
+  .opt .ic{width:44px;height:44px;border-radius:12px;background:rgba(13,148,136,.15);display:grid;place-items:center;font-size:22px;flex:none}
+  .opt .av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#13324a,#0e766e);
+       display:grid;place-items:center;font-weight:800;color:#fff;flex:none;font-size:16px}
+  .opt .t{font-weight:700;font-size:15px}
+  .opt .d{color:var(--muted);font-size:12px}
+  .opt .meta{margin-inline-start:auto;text-align:left;font-size:12px;color:var(--gold);font-weight:700;white-space:nowrap}
+  .price{color:var(--teal-tint);font-weight:700;font-size:13px}
+  .pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px}
+  .pill{flex:none;min-width:62px;text-align:center;background:var(--surface2);border:1.5px solid var(--line);
+        border-radius:14px;padding:10px 8px;cursor:pointer;transition:.2s}
+  .pill:hover{border-color:var(--teal)}
+  .pill.sel{background:var(--teal);border-color:var(--teal);color:#fff}
+  .pill .wd{font-size:11px;color:var(--muted)}.pill.sel .wd{color:#d7fff8}
+  .pill .dn{font-size:18px;font-weight:800}
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+  @media(max-width:420px){.slots{grid-template-columns:repeat(2,1fr)}}
+  .slot{background:var(--surface2);border:1.5px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;
+        cursor:pointer;transition:.2s;font-weight:700;font-size:14px;position:relative}
+  .slot:hover:not(.taken){border-color:var(--teal)}
+  .slot.sel{background:var(--teal);border-color:var(--teal);color:#fff}
+  .slot.taken{opacity:.45;cursor:not-allowed;border-style:dashed}
+  .slot.taken::after{content:"محجوز";position:absolute;inset-inline-start:6px;top:4px;font-size:9px;color:var(--danger);font-weight:700}
+  .hold{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(217,119,6,.18),rgba(217,119,6,.05));
+        border:1px solid rgba(217,119,6,.4);border-radius:12px;padding:10px 14px;margin-top:14px;font-size:13px;font-weight:700;color:var(--gold-tint)}
+  .hold .timer{margin-inline-start:auto;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.3);padding:3px 10px;border-radius:8px;color:#fff}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:13px;margin-bottom:6px;color:var(--muted);font-weight:500}
+  .field input{width:100%;background:var(--bg2);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;
+       color:var(--txt);font-family:inherit;font-size:15px;transition:.2s}
+  .field input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
+  .summary{background:var(--bg2);border:1px dashed var(--line);border-radius:14px;padding:14px;margin-bottom:16px;font-size:14px}
+  .summary .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .summary .row:last-child{border:0}.summary .row b{color:var(--teal-tint)}
+  .btn{width:100%;background:linear-gradient(135deg,var(--teal),var(--teal-press));color:#fff;border:0;border-radius:14px;
+       padding:15px;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;transition:.2s;box-shadow:0 8px 20px rgba(13,148,136,.35)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(13,148,136,.45)}
+  .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+  .btn.ghost{background:transparent;border:1.5px solid var(--line);box-shadow:none;color:var(--txt)}
+  .nav{display:flex;gap:10px;margin-top:18px}
+  .nav .btn{flex:1}
+  .success{text-align:center;padding:8px 0}
+  .check{width:84px;height:84px;border-radius:50%;background:rgba(13,148,136,.15);border:2px solid var(--teal);
+        display:grid;place-items:center;margin:6px auto 14px;font-size:42px;animation:pop .5s ease}
+  @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+  .ticket{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0;text-align:start}
+  .ticket .num{font-size:22px;font-weight:800;color:var(--gold);letter-spacing:1px;text-align:center;margin-bottom:12px}
+  .wa{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.4);
+      color:#25D366;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;margin-top:6px}
+  .foot{text-align:center;color:#516074;font-size:11px;margin-top:24px;line-height:1.8}
+  .badge{display:inline-block;background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.35);color:var(--teal-tint);
+      font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="logo">🦷</div>
+    <div><h1>Cliniva<span class="sub">عيادة كلينيفا للأسنان — دبي (نموذج تجريبي)</span></h1></div>
+  </div>
+  <p class="tagline">احجز موعدك في أقل من دقيقة · <span class="badge">نموذج تجريبي — Cliniva Platform</span></p>
+
+  <div class="steps" id="stepper">
+    <div class="step" data-s="1"><div class="dot">1</div><span>القسم</span></div>
+    <div class="step" data-s="2"><div class="dot">2</div><span>الطبيب</span></div>
+    <div class="step" data-s="3"><div class="dot">3</div><span>الموعد</span></div>
+    <div class="step" data-s="4"><div class="dot">4</div><span>التأكيد</span></div>
+  </div>
+
+  <div id="view"></div>
+
+  <p class="foot">
+    🔒 يستحيل حدوث حجز مزدوج — كل موعد يُثبَّت 5 دقائق بقفل مركزي ويُحرَّر تلقائياً لو ما اكتملش.<br>
+    نموذج واجهة تجريبي لتجربة الحجز · أطباء وأسعار وهمية للعرض فقط · © 2026 Cliniva
+  </p>
+</div>
+
+<script>
+"use strict";
+// ---------- tiny safe DOM builder (no innerHTML => no XSS) ----------
+function el(tag, props){
+  const n = document.createElement(tag);
+  if(props){ for(const k in props){
+    if(k==="class") n.className = props[k];
+    else if(k==="onclick") n.addEventListener("click", props[k]);
+    else if(k==="title") n.title = props[k];
+    else if(k==="value") n.value = props[k];
+    else if(k==="placeholder"||k==="inputmode"||k==="id") n.setAttribute(k, props[k]);
+  }}
+  for(let i=2;i<arguments.length;i++){ add(n, arguments[i]); }
+  return n;
+}
+function add(n, kid){
+  if(kid==null||kid===false) return;
+  if(Array.isArray(kid)){ kid.forEach(k=>add(n,k)); return; }
+  n.appendChild(kid.nodeType ? kid : document.createTextNode(String(kid)));
+}
+function txt(t){ return document.createTextNode(String(t)); }
+
+// ---------- data (Cliniva) ----------
+const DEPARTMENTS = [
+  {id:"implant",  name:"زراعة الأسنان",        icon:"🦷", desc:"زراعة سويسرية وألمانية وتعويضات", from:1850},
+  {id:"cosmetic", name:"التركيبات والتجميل",   icon:"✨", desc:"ابتسامة إيماكس ونانو سيراميك وتنظيف", from:400},
+  {id:"ortho",    name:"تقويم الأسنان",         icon:"😁", desc:"تقويم معدني وشفاف بالتقسيط", from:2700},
+];
+const DOCTORS = [
+  {id:1,name:"د. طارق منصور",  title:"استشاري زراعة وتعويضات الأسنان",      dep:"implant", rating:4.9, exp:15, price:4000},
+  {id:2,name:"د. ريما حدّاد",   title:"أخصائية جراحة وزراعة عظام الفكين",   dep:"implant", rating:4.8, exp:11, price:1850},
+  {id:3,name:"د. فيصل كريم",   title:"استشاري تركيبات وتصميم ابتسامة (DSD)",dep:"cosmetic",rating:4.9, exp:14, price:6500},
+  {id:4,name:"د. سارة العلي",  title:"أخصائية طب الأسنان التجميلي",         dep:"cosmetic",rating:4.7, exp:8,  price:400},
+  {id:5,name:"د. وليد ناصر",   title:"أخصائي تركيبات وعلاج جذور الأسنان",   dep:"cosmetic",rating:4.8, exp:10, price:600},
+  {id:6,name:"د. خالد سمير",   title:"استشاري تقويم الأسنان والفكين",       dep:"ortho",   rating:4.9, exp:16, price:2700},
+];
+const TIMES = ["09:00 ص","09:30 ص","10:00 ص","10:30 ص","11:00 ص","11:30 ص","12:00 م","01:00 م","02:00 م"];
+const WD = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+
+const S = {step:1, dep:null, doc:null, date:null, time:null, name:"", phone:"", holdTimer:null, takenMap:{}};
+const view = document.getElementById("view");
+const initials = n => n.replace("د. ","").split(" ").slice(0,2).map(w=>w[0]).join("");
+const money = n => n.toLocaleString("en-US")+" د.إ";
+const dep = () => DEPARTMENTS.find(x=>x.id===S.dep);
+
+function setStep(n){ S.step=n;
+  document.querySelectorAll(".step").forEach(elm=>{const s=+elm.dataset.s;
+    elm.classList.toggle("active", s===n); elm.classList.toggle("done", s<n);});
+  render();
+}
+function nextDays(k){const out=[];const base=new Date(2026,5,1);
+  for(let i=1;i<=k;i++){const d=new Date(base);d.setDate(base.getDate()+i);
+    out.push({key:d.toISOString().slice(0,10), wd:WD[d.getDay()], dn:d.getDate(), mo:d.getMonth()+1});}
+  return out;}
+function takenFor(docId,dateKey){const k=docId+dateKey; if(S.takenMap[k])return S.takenMap[k];
+  let h=0; for(const c of k) h=(h*31+c.charCodeAt(0))>>>0;
+  const t=new Set([h%9,(h>>3)%9]); S.takenMap[k]=t; return t;}
+function fmtDate(k){const d=new Date(k);return WD[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();}
+function row(label,val){ return el("div",{class:"row"}, el("span",null,label), el("b",null,val)); }
+
+// ---------- screens ----------
+function screenDept(){
+  return el("div",{class:"card"},
+    el("h2",null,"اختر القسم"),
+    el("p",{class:"hint"},"أي خدمة تحب تحجز لها؟"),
+    el("div",{class:"grid"}, DEPARTMENTS.map(d=>
+      el("div",{class:"opt"+(S.dep===d.id?" sel":""), onclick:()=>pickDep(d.id)},
+        el("div",{class:"ic"}, d.icon),
+        el("div",null, el("div",{class:"t"},d.name), el("div",{class:"d"},d.desc)),
+        el("div",{class:"meta"}, "يبدأ من", el("br"), el("span",{class:"price"}, money(d.from)))
+      )))
+  );
+}
+function screenDoctor(){
+  const list = DOCTORS.filter(d=>d.dep===S.dep);
+  return el("div",{class:"card"},
+    el("h2",null,"اختر الطبيب"),
+    el("p",{class:"hint"}, dep().name),
+    el("div",{class:"grid"}, list.map(d=>
+      el("div",{class:"opt"+(S.doc&&S.doc.id===d.id?" sel":""), onclick:()=>pickDoc(d.id)},
+        el("div",{class:"av"}, initials(d.name)),
+        el("div",null,
+          el("div",{class:"t"},d.name),
+          el("div",{class:"d"},d.title),
+          el("div",{class:"d"}, "⭐ "+d.rating+" · خبرة "+d.exp+" سنة")),
+        el("div",{class:"meta"}, el("span",{class:"price"}, money(d.price)))
+      ))),
+    el("div",{class:"nav"}, el("button",{class:"btn ghost", onclick:()=>setStep(1)}, "رجوع"))
+  );
+}
+function screenSlot(){
+  const days = nextDays(7);
+  if(!S.date) S.date = days[0].key;
+  const taken = takenFor(S.doc.id, S.date);
+  const slots = el("div",{class:"slots"});
+  TIMES.forEach((t,i)=>{
+    const isTaken = taken.has(i);
+    slots.appendChild(el("div",{
+      class:"slot"+(isTaken?" taken":"")+(S.time===t?" sel":""),
+      title: isTaken ? "محجوز — منع الحجز المزدوج" : "",
+      onclick: isTaken ? ()=>{} : ()=>pickTime(t)
+    }, t));
+  });
+  const hold = S.time ? el("div",{class:"hold"},
+      "⏳ تم تثبيت موعدك مؤقتاً — أكمل الحجز",
+      el("span",{class:"timer", id:"timer"}, "05:00")) : null;
+  const next = el("button",{class:"btn", onclick:()=>setStep(4)}, "التالي");
+  if(!S.time) next.disabled = true;
+  const c = el("div",{class:"card"},
+    el("h2",null,"اختر التاريخ والوقت"),
+    el("p",{class:"hint"}, "مع "+S.doc.name),
+    el("div",{class:"pills"}, days.map(d=>
+      el("div",{class:"pill"+(S.date===d.key?" sel":""), onclick:()=>pickDate(d.key)},
+        el("div",{class:"wd"},d.wd), el("div",{class:"dn"},d.dn), el("div",{class:"wd"},"/"+d.mo)))),
+    slots, hold,
+    el("div",{class:"nav"}, el("button",{class:"btn ghost", onclick:()=>setStep(2)},"رجوع"), next)
+  );
+  return c;
+}
+function screenConfirm(){
+  const nm = el("input",{placeholder:"مثال: أحمد محمد", value:S.name});
+  const ph = el("input",{placeholder:"05XXXXXXXX", inputmode:"tel", value:S.phone});
+  return el("div",{class:"card"},
+    el("h2",null,"تأكيد الحجز"),
+    el("p",{class:"hint"},"راجع بياناتك وأكمل"),
+    el("div",{class:"summary"},
+      row("القسم", dep().name),
+      row("الطبيب", S.doc.name),
+      row("الموعد", fmtDate(S.date)+" · "+S.time),
+      row("السعر التقديري", money(S.doc.price))),
+    el("div",{class:"field"}, el("label",null,"الاسم الكامل"), nm),
+    el("div",{class:"field"}, el("label",null,"رقم الجوال"), ph),
+    el("div",{class:"nav"},
+      el("button",{class:"btn ghost", onclick:()=>setStep(3)},"رجوع"),
+      el("button",{class:"btn", onclick:()=>{
+        S.name=nm.value.trim(); S.phone=ph.value.trim();
+        if(!S.name||!S.phone){alert("من فضلك اكتب الاسم ورقم الجوال");return;}
+        clearInterval(S.holdTimer); setStep(5);
+      }},"تأكيد الحجز ✓"))
+  );
+}
+function screenSuccess(){
+  clearInterval(S.holdTimer);
+  const num = "CLV-"+Math.floor(10000+(Date.now()%89999));
+  const phoneB = el("b",null,S.phone||"—"); phoneB.style.direction="ltr";
+  return el("div",{class:"card success"},
+    el("div",{class:"check"},"✓"),
+    el("h2",null,"تم حجز موعدك بنجاح!"),
+    el("p",{class:"hint"},"في انتظارك في عيادة كلينيفا — دبي، الخليج التجاري"),
+    el("div",{class:"ticket"},
+      el("div",{class:"num"}, num),
+      el("div",{class:"summary", style:""},
+        row("الطبيب", S.doc.name),
+        row("الموعد", fmtDate(S.date)+" · "+S.time),
+        row("المريض", S.name||"—"),
+        el("div",{class:"row"}, el("span",null,"الجوال"), phoneB))),
+    el("div",{class:"wa"},"✅ تم إرسال تأكيد عبر واتساب + تذكير قبل الموعد بـ 24 ساعة"),
+    el("div",{class:"nav"}, el("button",{class:"btn", onclick:reset},"حجز جديد"))
+  );
+}
+
+function render(){
+  let node;
+  if(S.step===1) node=screenDept();
+  else if(S.step===2) node=screenDoctor();
+  else if(S.step===3) node=screenSlot();
+  else if(S.step===4) node=screenConfirm();
+  else node=screenSuccess();
+  view.replaceChildren(node);
+  if(S.step===3 && S.time) startHold();
+}
+
+function pickDep(id){ S.dep=id; S.doc=null; S.time=null; setStep(2); }
+function pickDoc(id){ S.doc=DOCTORS.find(d=>d.id===id); S.time=null; S.date=null; setStep(3); }
+function pickDate(k){ S.date=k; S.time=null; stopHold(); render(); }
+function pickTime(t){ S.time=t; render(); }
+
+function startHold(){ stopHold(); let left=300;
+  const show=()=>{const e=document.getElementById("timer"); if(e){
+    const m=String(Math.floor(left/60)).padStart(2,"0"); const s=String(left%60).padStart(2,"0");
+    e.textContent=m+":"+s;}};
+  show();
+  S.holdTimer=setInterval(()=>{ left--; show();
+    if(left<=0){ stopHold(); S.time=null; alert("انتهى وقت تثبيت الموعد، اختر وقتاً من جديد 🙏"); render(); }
+  },1000);
+}
+function stopHold(){ clearInterval(S.holdTimer); }
+function reset(){ Object.assign(S,{step:1,dep:null,doc:null,date:null,time:null,name:"",phone:"",takenMap:{}}); setStep(1); }
+
+setStep(1);
+</script>
+</body>
+</html>
