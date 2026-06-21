@@ -131,6 +131,7 @@
       <button class="on" data-tab="overview"><span class="dot"></span> <span data-en="Dashboard">لوحة التحكم</span></button>
       <button data-tab="revenue"><span class="dot"></span> <span data-en="Ads & Revenue">الإعلانات والإيرادات</span></button>
       <button data-tab="appts"><span class="dot"></span> <span data-en="Appointments">الحجوزات</span></button>
+      <button data-tab="calendar"><span class="dot"></span> <span data-en="Calendar">التقويم</span></button>
       <button data-tab="ai"><span class="dot"></span> <span data-en="AI Call Center">مركز الاتصال AI</span></button>
       <button data-tab="wa"><span class="dot"></span> <span data-en="WhatsApp Automation">أتمتة واتساب</span></button>
       <button data-tab="crm"><span class="dot"></span> <span data-en="Patients (CRM)">المرضى (CRM)</span></button>
@@ -246,6 +247,99 @@
           </table>
         </div>
       </section>
+
+      <!-- ========== CALENDAR ========== -->
+      <section class="tab" id="calendar">
+        <style>
+          .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+          .cal-month{font-size:18px;font-weight:900}
+          .cal-toggle{display:flex;background:var(--mint);border-radius:10px;padding:3px}
+          .cal-toggle button{border:0;background:none;padding:7px 18px;border-radius:8px;font-weight:800;font-size:13px;cursor:pointer;color:var(--teal-d);font-family:inherit}
+          .cal-toggle button.on{background:var(--teal);color:#fff}
+          .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+          .cal-dow{text-align:center;font-size:11.5px;font-weight:800;color:var(--muted);padding:6px 0}
+          .cal-cell{min-height:86px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:7px;cursor:pointer;transition:.15s;overflow:hidden}
+          .cal-cell:hover{border-color:var(--teal2);box-shadow:0 6px 16px -10px rgba(14,124,123,.5)}
+          .cal-cell.empty{background:transparent;border:0;cursor:default}
+          .cal-cell.today{border:2px solid var(--teal);background:var(--mint)}
+          .cal-dnum{font-size:13px;font-weight:900}.cal-cell.today .cal-dnum{color:var(--teal-d)}
+          .cal-ev{font-size:10px;background:var(--mint);color:var(--teal-d);border-radius:5px;padding:2px 5px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+          .cal-ev.nw{background:#E7F6EC;color:#1A8A44}
+          .cal-more{font-size:9.5px;color:var(--muted);margin-top:2px}
+          .cal-detail{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:14px}
+          .cal-detail h3{font-size:15px;font-weight:900;margin-bottom:10px}
+          .cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+          .cal-col{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;min-height:170px}
+          .cal-col.today{border:2px solid var(--teal)}
+          .cal-col h4{font-size:11.5px;color:var(--muted);text-align:center;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:6px;font-weight:800}
+          .cal-col.today h4{color:var(--teal)}
+          .cal-slot{font-size:10.5px;background:var(--mint);color:var(--teal-d);border-radius:6px;padding:4px 6px;margin-bottom:4px;line-height:1.4}
+          .cal-slot .tt{font-weight:900}
+        </style>
+        <div class="sec-t" data-en="Calendar — all appointments in one place">التقويم — كل المواعيد في مكان واحد</div>
+        <div class="sec-d" data-en="Week / month view across all branches. New bookings from the assistant appear here too.">عرض أسبوعي / شهري لكل الفروع. الحجوزات الجديدة من المساعد بتظهر هنا كمان.</div>
+        <div class="cal-head">
+          <div class="cal-month">يونيو 2026</div>
+          <div class="cal-toggle">
+            <button id="calMonthBtn" class="on" onclick="setCalView('month')" data-en="Month">شهر</button>
+            <button id="calWeekBtn" onclick="setCalView('week')" data-en="Week">أسبوع</button>
+          </div>
+        </div>
+        <div id="calBody"></div>
+        <div class="cal-detail" id="calDetail"></div>
+      </section>
+      <script>
+        var CAL_APPTS={
+          22:[{t:"09:00",n:"سارة المنصوري",s:"تنظيف",b:"جميرا"},{t:"10:30",n:"خالد العتيبي",s:"تقويم",b:"مارينا"},{t:"12:00",n:"ليان الدوسري",s:"زراعة",b:"دبي هيلز"},{t:"01:45",n:"منى حسن",s:"كشف",b:"مارينا"}],
+          23:[{t:"10:00",n:"فهد القحطاني",s:"زراعة",b:"دبي هيلز"},{t:"04:00",n:"نورة الشهري",s:"تبييض",b:"جميرا"}],
+          24:[{t:"11:00",n:"عبدالله ناصر",s:"تبييض",b:"جميرا"}],
+          25:[{t:"09:30",n:"ريم السبيعي",s:"حشو",b:"مارينا"},{t:"12:00",n:"أحمد الزرعوني",s:"تاج",b:"دبي هيلز"},{t:"05:00",n:"هند الكعبي",s:"تنظيف",b:"جميرا"}],
+          26:[{t:"10:00",n:"شيخة المرّي",s:"كشف",b:"جميرا"}],
+          28:[{t:"02:00",n:"سلطان النعيمي",s:"زراعة",b:"دبي هيلز"},{t:"06:00",n:"دانة العامري",s:"تبييض",b:"مارينا"}],
+          29:[{t:"09:00",n:"ماجد الكتبي",s:"خلع",b:"جميرا"}],
+          30:[{t:"11:30",n:"لطيفة الرميثي",s:"عدسات",b:"دبي هيلز"}]
+        };
+        var calView='month', calSel=22, calAdded={};
+        function cEl(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+        function calMerge(){try{var a=JSON.parse(localStorage.getItem('cliniva_bookings')||'[]');a.forEach(function(b){if(b.id&&!calAdded[b.id]){calAdded[b.id]=1;if(!CAL_APPTS[22])CAL_APPTS[22]=[];CAL_APPTS[22].push({t:(b.time||'—'),n:b.name||'مريض',s:b.service||'موعد',b:'—',nw:1});}});}catch(e){}}
+        var DOW=['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
+        function setCalView(v){calView=v;document.getElementById('calMonthBtn').classList.toggle('on',v==='month');document.getElementById('calWeekBtn').classList.toggle('on',v==='week');renderCalendar();}
+        function renderCalendar(){calMerge();if(calView==='month')renderMonth();else renderWeek();renderDetail(calSel);}
+        function renderMonth(){
+          var body=document.getElementById('calBody');while(body.firstChild)body.removeChild(body.firstChild);
+          var grid=cEl('div','cal-grid');DOW.forEach(function(d){grid.appendChild(cEl('div','cal-dow',d));});
+          var lead=(new Date(2026,5,1).getDay()+1)%7;
+          for(var i=0;i<lead;i++)grid.appendChild(cEl('div','cal-cell empty'));
+          for(var d=1;d<=30;d++){(function(day){
+            var cell=cEl('div','cal-cell'+(day===22?' today':''));cell.appendChild(cEl('div','cal-dnum',String(day)));
+            var evs=CAL_APPTS[day]||[];evs.slice(0,2).forEach(function(ev){cell.appendChild(cEl('div','cal-ev'+(ev.nw?' nw':''),ev.t+' '+String(ev.n).split(' ')[0]));});
+            if(evs.length>2)cell.appendChild(cEl('div','cal-more','+'+(evs.length-2)+' آخرين'));
+            cell.onclick=function(){calSel=day;renderDetail(day);};grid.appendChild(cell);
+          })(d);}
+          body.appendChild(grid);
+        }
+        function renderWeek(){
+          var body=document.getElementById('calBody');while(body.firstChild)body.removeChild(body.firstChild);
+          var sat=22-((new Date(2026,5,22).getDay()+1)%7);var wk=cEl('div','cal-week');
+          for(var i=0;i<7;i++){var day=sat+i;var col=cEl('div','cal-col'+(day===22?' today':''));
+            col.appendChild(cEl('h4',null,DOW[i]+(day>=1&&day<=30?' '+day:'')));
+            var evs=(day>=1&&day<=30)?(CAL_APPTS[day]||[]):[];
+            evs.forEach(function(ev){var s=cEl('div','cal-slot');s.appendChild(cEl('span','tt',ev.t+' '));s.appendChild(document.createTextNode(ev.n+' · '+ev.s));col.appendChild(s);});
+            wk.appendChild(col);}
+          body.appendChild(wk);
+        }
+        function renderDetail(day){
+          var d=document.getElementById('calDetail');while(d.firstChild)d.removeChild(d.firstChild);
+          d.appendChild(cEl('h3',null,'مواعيد '+day+' يونيو'));
+          var evs=CAL_APPTS[day]||[];
+          if(!evs.length){d.appendChild(cEl('div','sub','مفيش مواعيد في اليوم ده.'));return;}
+          var tb=cEl('table');var th=cEl('tr');['الوقت','المريض','الخدمة','الفرع'].forEach(function(h){th.appendChild(cEl('th',null,h));});tb.appendChild(th);
+          evs.slice().sort(function(a,b){return a.t>b.t?1:-1;}).forEach(function(ev){var tr=cEl('tr');
+            var t1=cEl('td',null,ev.t);t1.style.fontWeight='900';t1.style.color='var(--teal)';tr.appendChild(t1);
+            tr.appendChild(cEl('td',null,ev.n+(ev.nw?' 🆕':'')));tr.appendChild(cEl('td',null,ev.s));tr.appendChild(cEl('td',null,ev.b));tb.appendChild(tr);});
+          d.appendChild(tb);
+        }
+      </script>
 
       <!-- ========== AI CALL CENTER ========== -->
       <section class="tab" id="ai">
@@ -389,13 +483,14 @@
 
 <script>
   // tab navigation — every sidebar button works
-  const titles = {overview:"لوحة التحكم",revenue:"الإعلانات والإيرادات",appts:"الحجوزات",ai:"مركز الاتصال AI",wa:"أتمتة واتساب",crm:"المرضى (CRM)",reports:"التقارير",import:"استيراد البيانات"};
+  const titles = {overview:"لوحة التحكم",revenue:"الإعلانات والإيرادات",appts:"الحجوزات",ai:"مركز الاتصال AI",wa:"أتمتة واتساب",crm:"المرضى (CRM)",reports:"التقارير",calendar:"التقويم",import:"استيراد البيانات"};
   document.getElementById('nav').addEventListener('click',function(e){
     const b = e.target.closest('button'); if(!b) return;
     const id = b.dataset.tab;
     document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on', x===b));
     document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('on', s.id===id));
     document.getElementById('topTitle').textContent = titles[id]||'';
+    if(id==='calendar' && typeof renderCalendar==='function') renderCalendar();
     // reveal any cards inside the freshly-shown tab (they were display:none so the observer skipped them)
     var shown=document.getElementById(id);
     if(shown) shown.querySelectorAll('.reveal:not(.in)').forEach(function(el){ el.classList.add('in'); });
