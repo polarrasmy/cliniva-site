@@ -20,7 +20,7 @@
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
   .logo{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:900}.logo span{color:var(--teal)}
   .logo svg{vertical-align:middle}
-  .nav-cta{display:flex;gap:9px}
+  .nav-cta{display:flex;gap:9px;align-items:center}
   .hero{background:radial-gradient(800px 420px at 85% -10%,rgba(19,168,164,.13),transparent 60%),linear-gradient(180deg,var(--bg),#fff);padding:50px 0 30px}
   .hero h1{font-size:36px}.hero h1 span{color:var(--teal)}
   .hero .lede{font-size:17px;color:var(--muted);max-width:680px;margin:14px 0 18px}
@@ -52,80 +52,118 @@
   .final{background:var(--ink);color:#fff;border-radius:20px;padding:34px;text-align:center;margin:14px 0}
   .final h2{color:#fff;font-size:24px}.final p{color:#A9C2C1;margin:10px auto 18px;max-width:520px}
   footer{padding:28px 0;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  html[dir=ltr] th,html[dir=ltr] td{text-align:left}
+  html[dir=ltr] .lede,html[dir=ltr] .callout{margin-left:0}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
   @media(max-width:820px){.grid2,.grid4,.vstack,.price{grid-template-columns:1fr}.hero h1{font-size:28px}}
 </style>
 </head>
 <body>
 <nav><div class="wrap">
   <div class="logo"><svg width="22" height="22" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#13A8A4"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg>Cliniva<span>.</span></div>
-  <div class="nav-cta"><a href="./app.html" class="btn ghost">الداشبورد</a><a href="./index.html#demo" class="btn">احجز عرض</a></div>
+  <div class="nav-cta">
+    <select id="cur" onchange="applyCur(this.value)" style="border:1px solid #E2EAEA;border-radius:9px;padding:8px 10px;font-weight:800;font-size:13px">
+      <option value="SAR">﷼ SAR</option>
+      <option value="AED">د.إ AED</option>
+      <option value="USD">$ USD</option>
+      <option value="QAR">ر.ق QAR</option>
+      <option value="KWD">د.ك KWD</option>
+      <option value="BHD">د.ب BHD</option>
+      <option value="EGP">ج.م EGP</option>
+    </select>
+    <button id="lng" onclick="toggleLang()" style="border:1px solid #E2EAEA;border-radius:9px;background:#fff;font-weight:800;font-size:13px;cursor:pointer;padding:8px 10px">EN</button>
+    <a href="./app.html" class="btn ghost" data-en="Dashboard">الداشبورد</a><a href="./index.html#demo" class="btn" data-en="Book a demo">احجز عرض</a>
+  </div>
 </div></nav>
 
-<header class="hero"><div class="wrap">
-  <div class="eyebrow">عرض بناء المنصة الرقمية</div>
-  <h1>منصة موحّدة للحجز، التسويق، <span>والعمليات</span></h1>
-  <p class="lede">منصة رقمية متكاملة بيقدر المريض من خلالها يكتشف، يحجز، يدفع، ويرجع تاني — من أي قناة (موقع، واتساب، تليفون، تطبيق) — بينما الإدارة بتدير العيادات والتسويق من مكان واحد بمصدر بيانات موحّد.</p>
-  <div class="callout">الفلسفة بسيطة: نبدأ بالحاجات اللي <b>بتجيب فلوس فعلاً</b> (الإعلانات، الواتساب، الحجز)، ونبني <b>بالمراحل</b> عشان نثبت العائد قبل ما نوسّع — بدل ما نحرق الميزانية في كل حاجة مرة واحدة.</div>
+<header class="hero reveal"><div class="wrap">
+  <div class="eyebrow" data-en="Digital platform build proposal">عرض بناء المنصة الرقمية</div>
+  <h1 data-en="A unified platform for booking, marketing, &amp; operations">منصة موحّدة للحجز، التسويق، <span data-en="and operations">والعمليات</span></h1>
+  <p class="lede" data-en="An integrated digital platform where the patient can discover, book, pay, and return — from any channel (website, WhatsApp, phone, app) — while management runs the clinics and marketing from one place with a single source of truth.">منصة رقمية متكاملة بيقدر المريض من خلالها يكتشف، يحجز، يدفع، ويرجع تاني — من أي قناة (موقع، واتساب، تليفون، تطبيق) — بينما الإدارة بتدير العيادات والتسويق من مكان واحد بمصدر بيانات موحّد.</p>
+  <div class="callout" data-en="The philosophy is simple: we start with the things that actually bring in money (ads, WhatsApp, booking), and build in phases to prove the return before we expand — instead of burning the budget on everything at once.">الفلسفة بسيطة: نبدأ بالحاجات اللي <b>بتجيب فلوس فعلاً</b> (الإعلانات، الواتساب، الحجز)، ونبني <b>بالمراحل</b> عشان نثبت العائد قبل ما نوسّع — بدل ما نحرق الميزانية في كل حاجة مرة واحدة.</div>
 </div></header>
 
-<section><div class="wrap">
-  <div class="sec-head"><div class="eyebrow">التحدي الحالي</div><h2>فين بتروح الفلوس</h2></div>
+<section class="reveal"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow" data-en="The current challenge">التحدي الحالي</div><h2 data-en="Where the money leaks">فين بتروح الفلوس</h2></div>
   <div class="grid4">
-    <div class="pain"><b>حجوزات مبعثرة</b><span>تليفون + واتساب + حضور → تعارض مواعيد، حجز مزدوج، ومرضى بيضيعوا.</span></div>
-    <div class="pain"><b>إعلانات بلا قياس</b><span>صرف على Meta/Google من غير معرفة أي حملة جابت مريض دافع فعلاً.</span></div>
-    <div class="pain"><b>متابعة ضعيفة</b><span>العملاء المحتملين بيبردوا، ومفيش نظام ولاء أو إحالة يرفع قيمة العميل.</span></div>
-    <div class="pain"><b>غياب الرؤية</b><span>صعب على الإدارة تشوف أداء العيادات والأطباء والإيرادات لحظياً.</span></div>
+    <div class="pain"><b data-en="Scattered bookings">حجوزات مبعثرة</b><span data-en="Phone + WhatsApp + walk-ins → schedule conflicts, double-booking, and lost patients.">تليفون + واتساب + حضور → تعارض مواعيد، حجز مزدوج، ومرضى بيضيعوا.</span></div>
+    <div class="pain"><b data-en="Ads with no measurement">إعلانات بلا قياس</b><span data-en="Spending on Meta/Google without knowing which campaign actually brought a paying patient.">صرف على Meta/Google من غير معرفة أي حملة جابت مريض دافع فعلاً.</span></div>
+    <div class="pain"><b data-en="Weak follow-up">متابعة ضعيفة</b><span data-en="Leads go cold, and there is no loyalty or referral system to raise customer value.">العملاء المحتملين بيبردوا، ومفيش نظام ولاء أو إحالة يرفع قيمة العميل.</span></div>
+    <div class="pain"><b data-en="No visibility">غياب الرؤية</b><span data-en="It is hard for management to see clinic, doctor, and revenue performance in real time.">صعب على الإدارة تشوف أداء العيادات والأطباء والإيرادات لحظياً.</span></div>
   </div>
 </div></section>
 
-<section style="background:var(--bg)"><div class="wrap">
+<section style="background:var(--bg)" class="reveal"><div class="wrap">
   <div class="solution">
-    <div class="eyebrow" style="color:#bfeae9">الحل</div>
-    <h2>منصة موحّدة قلبها محرك حجز مركزي واحد</h2>
-    <p>كل القنوات (موقع، واتساب، استقبال، كول سنتر) بتكلّم محرك حجز واحد — بمصدر بيانات موحّد.</p>
-    <div class="lock">🔒 ضمان تقني صارم: يستحيل الحجز المزدوج — قفل لحظي + قيد فريد في قاعدة البيانات</div>
+    <div class="eyebrow" style="color:#bfeae9" data-en="The solution">الحل</div>
+    <h2 data-en="A unified platform with one central booking engine at its heart">منصة موحّدة قلبها محرك حجز مركزي واحد</h2>
+    <p data-en="Every channel (website, WhatsApp, reception, call center) talks to one booking engine — on a single source of truth.">كل القنوات (موقع، واتساب، استقبال، كول سنتر) بتكلّم محرك حجز واحد — بمصدر بيانات موحّد.</p>
+    <div class="lock" data-en="🔒 Strict technical guarantee: double-booking is impossible — real-time lock + a unique constraint in the database">🔒 ضمان تقني صارم: يستحيل الحجز المزدوج — قفل لحظي + قيد فريد في قاعدة البيانات</div>
   </div>
 </div></section>
 
-<section><div class="wrap">
-  <div class="sec-head"><div class="eyebrow">خارطة الطريق</div><h2>المنصة بثلاث مراحل — تبدأ بأعلى عائد</h2></div>
+<section class="reveal"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow" data-en="Roadmap">خارطة الطريق</div><h2 data-en="The platform in three phases — starting with the highest return">المنصة بثلاث مراحل — تبدأ بأعلى عائد</h2></div>
   <table>
-    <thead><tr><th style="width:90px">المرحلة</th><th>المحتوى</th><th style="width:34%">الناتج</th></tr></thead>
+    <thead><tr><th style="width:90px" data-en="Phase">المرحلة</th><th data-en="What it includes">المحتوى</th><th style="width:34%" data-en="Outcome">الناتج</th></tr></thead>
     <tbody>
-      <tr><td class="ph">1</td><td>موقع إلكتروني + محرك حجز + CRM + لوحة تحكم + أتمتة واتساب + ربط إعلانات Meta</td><td class="out">حجوزات أونلاين مدفوعة + قياس عائد كل حملة</td></tr>
-      <tr><td class="ph">2</td><td>كول سنتر بالذكاء الاصطناعي + مساعد محادثة + نظام نقاط ولاء + نظام إحالة</td><td class="out">رد آلي على المكالمات والرسائل + رفع تكرار الزيارات</td></tr>
-      <tr><td class="ph">3</td><td>تطبيق موبايل (iOS + Android) + حسابات العائلة + المحفظة والتقارير</td><td class="out">تجربة مريض كاملة على الموبايل</td></tr>
+      <tr><td class="ph">1</td><td data-en="Website + booking engine + CRM + dashboard + WhatsApp automation + Meta ads integration">موقع إلكتروني + محرك حجز + CRM + لوحة تحكم + أتمتة واتساب + ربط إعلانات Meta</td><td class="out" data-en="Paid online bookings + return-on-ad-spend measurement per campaign">حجوزات أونلاين مدفوعة + قياس عائد كل حملة</td></tr>
+      <tr><td class="ph">2</td><td data-en="AI call center + chat assistant + loyalty points system + referral system">كول سنتر بالذكاء الاصطناعي + مساعد محادثة + نظام نقاط ولاء + نظام إحالة</td><td class="out" data-en="Automated responses to calls and messages + higher visit frequency">رد آلي على المكالمات والرسائل + رفع تكرار الزيارات</td></tr>
+      <tr><td class="ph">3</td><td data-en="Mobile app (iOS + Android) + family accounts + wallet and reports">تطبيق موبايل (iOS + Android) + حسابات العائلة + المحفظة والتقارير</td><td class="out" data-en="A complete patient experience on mobile">تجربة مريض كاملة على الموبايل</td></tr>
     </tbody>
   </table>
 </div></section>
 
-<section style="background:var(--bg)"><div class="wrap">
-  <div class="sec-head"><div class="eyebrow">طريقتنا في العمل</div><h2>اشترِ بذكاء، وابنِ ما يميّزك</h2>
-    <p>مش هنعيد اختراع العجلة. الحاجات الجاهزة (الدفع، الواتساب، الرسائل، الصوت) نستخدم فيها مزوّدين معتمدين — أأمن وأسرع وأوفر. والبناء المخصص بإيدينا للقطعة اللي بتفرق فعلاً: <b>محرك الحجز والبيانات الموحّدة.</b></p>
+<section style="background:var(--bg)" class="reveal"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow" data-en="How we work">طريقتنا في العمل</div><h2 data-en="Buy smart, and build what sets you apart">اشترِ بذكاء، وابنِ ما يميّزك</h2>
+    <p data-en="We won't reinvent the wheel. For commodity pieces (payments, WhatsApp, SMS, voice) we use certified providers — safer, faster, and cheaper. We custom-build by hand the piece that truly makes the difference: the booking engine and the unified data.">مش هنعيد اختراع العجلة. الحاجات الجاهزة (الدفع، الواتساب، الرسائل، الصوت) نستخدم فيها مزوّدين معتمدين — أأمن وأسرع وأوفر. والبناء المخصص بإيدينا للقطعة اللي بتفرق فعلاً: <b>محرك الحجز والبيانات الموحّدة.</b></p>
   </div>
   <div class="vstack">
-    <div class="vrow"><b>الدفع</b><div>Moyasar / Tap (مدى، أبل باي، بطاقات) + Tamara / Tabby للأقساط</div></div>
-    <div class="vrow"><b>الواتساب</b><div>واتساب بزنس الرسمي عبر مزوّد معتمد (Unifonic / 360dialog)</div></div>
-    <div class="vrow"><b>الرسائل والـ OTP</b><div>Unifonic / Taqnyat</div></div>
-    <div class="vrow"><b>البنية التحتية</b><div>AWS منطقة البحرين/الخليج — التزاماً بأنظمة حماية البيانات (PDPL)</div></div>
+    <div class="vrow"><b data-en="Payments">الدفع</b><div data-en="Moyasar / Tap (mada, Apple Pay, cards) + Tamara / Tabby for installments">Moyasar / Tap (مدى، أبل باي، بطاقات) + Tamara / Tabby للأقساط</div></div>
+    <div class="vrow"><b data-en="WhatsApp">الواتساب</b><div data-en="Official WhatsApp Business via a certified provider (Unifonic / 360dialog)">واتساب بزنس الرسمي عبر مزوّد معتمد (Unifonic / 360dialog)</div></div>
+    <div class="vrow"><b data-en="SMS and OTP">الرسائل والـ OTP</b><div data-en="Unifonic / Taqnyat">Unifonic / Taqnyat</div></div>
+    <div class="vrow"><b data-en="Infrastructure">البنية التحتية</b><div data-en="AWS Bahrain/Gulf region — in compliance with data protection regulations (PDPL)">AWS منطقة البحرين/الخليج — التزاماً بأنظمة حماية البيانات (PDPL)</div></div>
   </div>
 </div></section>
 
-<section><div class="wrap">
-  <div class="sec-head"><div class="eyebrow">الباقات</div><h2>طريقتين للبداية</h2></div>
+<section class="reveal"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow" data-en="Packages">الباقات</div><h2 data-en="Two ways to start">طريقتين للبداية</h2></div>
   <div class="price">
-    <div class="tier"><h3>تنفيذ كامل</h3><div class="amt">من 120,000 ريال</div><p>المرحلة 1 خلال ~8–10 أسابيع + تشغيل شهري. تملّك كامل.</p></div>
-    <div class="tier hi"><h3>اشتراك Cliniva (SaaS)</h3><div class="amt">رسوم تأسيس + شهري / فرع</div><p>نفس المنصة باشتراك — أخف على الكاش‑فلو، وتكبر مع عدد الفروع.</p></div>
+    <div class="tier"><h3 data-en="Full build">تنفيذ كامل</h3><div class="amt"><span data-en="From">من</span> <span data-price data-base="120000" data-plus>﷼ +120,000</span> <span data-en="SAR">ريال</span></div><p data-en="Phase 1 in ~8–10 weeks + monthly operation. Full ownership.">المرحلة 1 خلال ~8–10 أسابيع + تشغيل شهري. تملّك كامل.</p></div>
+    <div class="tier hi"><h3 data-en="Cliniva subscription (SaaS)">اشتراك Cliniva (SaaS)</h3><div class="amt" data-en="Setup fee + monthly / branch">رسوم تأسيس + شهري / فرع</div><p data-en="The same platform on a subscription — lighter on cash flow, and it scales with the number of branches.">نفس المنصة باشتراك — أخف على الكاش‑فلو، وتكبر مع عدد الفروع.</p></div>
   </div>
 </div></section>
 
-<section><div class="wrap"><div class="final">
-  <h2>نبدأ بمكالمة 20 دقيقة</h2>
-  <p>نشوف عيادتك، نحدّد المرحلة 1 بأعلى عائد، ونطلّع عرض سعر مفصّل.</p>
-  <a href="./index.html#demo" class="btn" style="background:var(--teal2)">احجز عرض</a>
-  <a href="./app.html" class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.3);margin-inline-start:8px">شوف الداشبورد</a>
+<section class="reveal"><div class="wrap"><div class="final">
+  <h2 data-en="Let's start with a 20-minute call">نبدأ بمكالمة 20 دقيقة</h2>
+  <p data-en="We look at your clinic, define the highest-return Phase 1, and produce a detailed quote.">نشوف عيادتك، نحدّد المرحلة 1 بأعلى عائد، ونطلّع عرض سعر مفصّل.</p>
+  <a href="./index.html#demo" class="btn" style="background:var(--teal2)" data-en="Book a demo">احجز عرض</a>
+  <a href="./app.html" class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.3);margin-inline-start:8px" data-en="See the dashboard">شوف الداشبورد</a>
 </div></div></section>
 
-<footer><div class="wrap">Cliniva — a RASMY venture · بقيادة Pola Rasmy · hello@cliniva.sa</div></footer>
+<footer><div class="wrap"><span data-en="Cliniva — a RASMY venture · led by Pola Rasmy · hello@cliniva.sa">Cliniva — a RASMY venture · بقيادة Pola Rasmy · hello@cliniva.sa</span></div></footer>
+
+<script>
+  // ===== Bilingual (Arabic default, English opt-in) =====
+  let LANG='ar';
+  function toggleLang(){ applyLang(LANG==='ar'?'en':'ar'); }
+  function applyLang(l){ LANG=l; var en=(l==='en');
+    document.documentElement.lang=l; document.documentElement.dir=en?'ltr':'rtl';
+    var b=document.getElementById('lng'); if(b) b.textContent=en?'ع':'EN';
+    document.querySelectorAll('[data-en]').forEach(function(el){ if(!el.dataset._ar) el.dataset._ar=el.textContent; el.textContent = en?el.getAttribute('data-en'):el.dataset._ar; });
+    document.querySelectorAll('[data-en-ph]').forEach(function(el){ if(!el.dataset._arPh) el.dataset._arPh=el.getAttribute('placeholder')||''; el.setAttribute('placeholder', en?el.getAttribute('data-en-ph'):el.dataset._arPh); });
+  }
+
+  // ===== Currency (base in SAR) =====
+  var RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
+  var SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
+  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');});}
+
+  // ===== Scroll reveal =====
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
+</script>
+<script src="./widget.js" defer></script>
 </body>
 </html>
