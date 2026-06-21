@@ -14,13 +14,17 @@
   +".clv-lh{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid #243042;font-size:12.5px;font-weight:800}"
   +".clv-dot{width:9px;height:9px;border-radius:50%;background:"+EM3+";box-shadow:0 0 0 0 rgba(52,199,181,.6);animation:clvp 1.8s infinite}"
   +"@keyframes clvp{0%{box-shadow:0 0 0 0 rgba(52,199,181,.55)}70%{box-shadow:0 0 0 9px rgba(52,199,181,0)}100%{box-shadow:0 0 0 0 rgba(52,199,181,0)}}"
-  +".clv-mute{margin-inline-start:auto;background:none;border:0;color:#8b97a6;font-size:15px;cursor:pointer}"
-  +".clv-feed{max-height:230px;overflow:hidden;padding:6px}"
+  +".clv-mute{background:none;border:0;color:#8b97a6;font-size:15px;cursor:pointer;padding:0 3px;line-height:1}.clv-mute:hover{color:#fff}"
+  +".clv-feed{max-height:266px;overflow-y:auto;overflow-x:hidden;padding:6px;transition:max-height .32s ease}"
+  +".clv-feed::-webkit-scrollbar{width:4px}.clv-feed::-webkit-scrollbar-thumb{background:#2a3645;border-radius:2px}"
+  +".clv-live.collapsed .clv-feed{max-height:0;padding-top:0;padding-bottom:0}"
   +".clv-ev{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:9px;font-size:12px;margin-bottom:3px;animation:clvin .45s cubic-bezier(.2,.8,.2,1)}"
-  +"@keyframes clvin{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}"
+  +"@keyframes clvin{0%{opacity:0;transform:translateY(-10px) scale(.97);box-shadow:0 0 0 0 transparent}45%{box-shadow:0 0 20px rgba(52,199,181,.5)}100%{opacity:1;transform:none;box-shadow:0 0 0 0 transparent}}"
   +".clv-ev .ci{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}"
-  +".clv-ev.good{background:rgba(26,138,68,.12)}.clv-ev.good .ci{background:rgba(26,138,68,.22);color:#5ecf8f}"
-  +".clv-ev.bad{background:rgba(217,83,79,.12)}.clv-ev.bad .ci{background:rgba(217,83,79,.22);color:#f59a97}"
+  +".clv-ev.good{background:rgba(26,138,68,.12)}.clv-ev.good .ci{background:rgba(26,138,68,.22);color:#5ecf8f;box-shadow:0 0 11px rgba(94,207,143,.65)}"
+  +".clv-ev.bad{background:rgba(217,83,79,.12)}.clv-ev.bad .ci{background:rgba(217,83,79,.22);color:#f59a97;box-shadow:0 0 11px rgba(245,154,151,.65)}"
+  +".clv-ev:first-child .ci{animation:clvglow 2.4s ease-in-out infinite}"
+  +"@keyframes clvglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}"
   +".clv-ev .tx{flex:1;line-height:1.35}.clv-ev .tx small{display:block;color:#8b97a6;font-size:10px}"
   +".clv-ev .tm{font-size:9.5px;color:#6b7785;font-family:Inter}"
   +".clv-flash{animation:clvfl 1s ease}@keyframes clvfl{0%{background:rgba(26,138,68,.35);border-radius:6px}100%{background:transparent}}"
@@ -32,7 +36,10 @@
   var panel=document.createElement("div");panel.className="clv-live";
   var h=document.createElement("div");h.className="clv-lh";
   var dot=document.createElement("span");dot.className="clv-dot";h.appendChild(dot);
-  h.appendChild(document.createTextNode("النشاط المباشر"));
+  var ttl=document.createElement("span");ttl.textContent="النشاط المباشر";ttl.style.flex="1";h.appendChild(ttl);
+  var coll=document.createElement("button");coll.className="clv-mute";coll.textContent="–";coll.title="إخفاء / إظهار";
+  coll.onclick=function(ev){ev.stopPropagation();panel.classList.toggle("collapsed");coll.textContent=panel.classList.contains("collapsed")?"+":"–";};
+  h.appendChild(coll);
   var mute=document.createElement("button");mute.className="clv-mute";mute.textContent="🔊";mute.title="الصوت";h.appendChild(mute);
   var feed=document.createElement("div");feed.className="clv-feed";
   panel.appendChild(h);panel.appendChild(feed);document.body.appendChild(panel);
@@ -80,7 +87,7 @@
     var sm=document.createElement("small");sm.textContent=pick(e.s);tx.appendChild(sm);row.appendChild(tx);
     var tmEl=document.createElement("div");tmEl.className="tm";tmEl.textContent=tm();row.appendChild(tmEl);
     feed.insertBefore(row,feed.firstChild);
-    while(feed.children.length>5)feed.removeChild(feed.lastChild);
+    while(feed.children.length>14)feed.removeChild(feed.lastChild);
     ding(!bad);
     if(!bad) tickKPI();
   }
