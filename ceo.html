@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cliniva — مركز القيادة التنفيذي (CEO)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--em:#0F5F56;--em2:#16857A;--em3:#2BA89B;--em-bright:#34C7B5;
+    --ink:#111827;--ink2:#1b2433;--ink3:#27313f;--bg:#FAFAF8;--white:#fff;
+    --muted:#6B7280;--muted2:#8b97a6;--line:#E9EAE5;--mint:#EAF3F1;--gold:#C99A2E;--red:#D9534F;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Tajawal","Inter",system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+  .num{font-family:"Inter";font-variant-numeric:tabular-nums}
+  .app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+  .side{background:var(--ink);color:#cdd5df;padding:18px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+  .brand{font-size:21px;font-weight:900;color:#fff;padding:6px 10px 16px;display:flex;align-items:center;gap:8px}
+  .brand span{color:var(--em-bright)}
+  .nav{display:flex;flex-direction:column;gap:2px;flex:1}
+  .nav a{color:#8b97a6;font-size:13.5px;font-weight:600;padding:10px 12px;border-radius:9px;display:flex;gap:9px;align-items:center}
+  .nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  .nav a.on{background:rgba(43,168,155,.16);color:#fff}
+  .nav a::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--em3)}
+  .who{display:flex;align-items:center;gap:10px;padding:11px 10px;border-top:1px solid rgba(255,255,255,.08);margin-top:8px}
+  .who .av{width:34px;height:34px;border-radius:50%;background:var(--em);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff}
+  .who b{color:#fff;font-size:13px;display:block}.who small{color:#8b97a6;font-size:11px}
+  .main{padding:22px 26px 50px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+  .top h1{font-size:22px;font-weight:900}.top .sub{color:var(--muted);font-size:13px;margin-top:2px}
+  .badge{font-size:11.5px;background:var(--mint);color:var(--em);border:1px solid #cfe6e2;border-radius:99px;padding:5px 13px;font-weight:800}
+  /* kpi */
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:13px;margin-bottom:16px}
+  .kpi{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:16px}
+  .kpi .l{font-size:11.5px;color:var(--muted);font-weight:600}
+  .kpi .n{font-size:23px;font-weight:900;margin:5px 0 2px;font-family:"Inter"}
+  .kpi .n.em{color:var(--em)}
+  .kpi .d{font-size:11px;font-weight:800}.kpi .d.up{color:var(--em)}.kpi .d.down{color:var(--red)}
+  .row{display:grid;gap:14px;margin-bottom:14px}
+  .row.a{grid-template-columns:1.7fr 1fr}
+  .row.b{grid-template-columns:1fr 1fr 1fr}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card h3{font-size:15px;font-weight:900;margin-bottom:3px}
+  .card .cap{font-size:12px;color:var(--muted);margin-bottom:14px}
+  /* chart */
+  .chart{width:100%;height:200px}
+  .legend{display:flex;gap:16px;font-size:11px;color:var(--muted);margin-top:6px}
+  /* branch leaderboard */
+  .lb .it{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .lb .it:last-child{border:0}
+  .lb .rk{width:24px;height:24px;border-radius:7px;background:var(--mint);color:var(--em);font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;font-family:"Inter"}
+  .lb .nm{flex:1;font-size:13.5px;font-weight:700}.lb .nm small{display:block;color:var(--muted);font-weight:500;font-size:11px}
+  .lb .rev{font-weight:900;color:var(--em);font-family:"Inter";font-size:14px}
+  /* donut */
+  .donut{display:flex;align-items:center;gap:16px}
+  .dleg{flex:1}.dleg .l{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;font-weight:600}
+  .dleg .l i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-inline-end:6px}
+  /* insights */
+  .ins{display:flex;gap:11px;padding:12px;border-radius:12px;background:var(--mint);border:1px solid #cfe6e2;margin-bottom:10px}
+  .ins:last-child{margin:0}
+  .ins .ic{width:30px;height:30px;border-radius:8px;background:var(--em);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+  .ins b{font-size:13px}.ins p{font-size:12.5px;color:var(--ink3);margin-top:2px}
+  .bars{display:grid;gap:9px}
+  .barrow{display:flex;align-items:center;gap:10px;font-size:12.5px}
+  .barrow .nm{width:70px;font-weight:700}
+  .barrow .bar{flex:1;height:9px;border-radius:99px;background:var(--mint);overflow:hidden}
+  .barrow .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--em3),var(--em))}
+  .barrow .v{width:38px;text-align:end;font-weight:900;color:var(--em);font-family:"Inter"}
+  .foot{text-align:center;color:var(--muted);font-size:12px;padding:16px}
+  .foot a{color:var(--em)}
+  @media(max-width:980px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;overflow-x:auto}.nav{flex-direction:row}.kpis{grid-template-columns:repeat(3,1fr)}.row.a,.row.b{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><svg width="22" height="22" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#0F5F56"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg>Cliniva<span>.</span></div>
+    <nav class="nav">
+      <a class="on">القيادة التنفيذية</a>
+      <a href="./app.html">العمليات</a>
+      <a href="./app.html">الفروع</a>
+      <a href="./app.html">التسويق</a>
+      <a href="./app.html">الأطباء</a>
+      <a href="./app.html">التقارير</a>
+      <a href="./app.html">الإعدادات</a>
+    </nav>
+    <div class="who"><div class="av">م</div><div><b>د. منال الشامي</b><small>الرئيس التنفيذي</small></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="top">
+      <div><h1>مركز القيادة التنفيذي</h1><div class="sub">مجموعة المنال للأسنان · 50 فرع · 100 طبيب · يونيو 2026</div></div>
+      <span class="badge">● مباشر</span>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="l">إيراد المجموعة (شهري)</div><div class="n em">﷼7.9M</div><div class="d up">▲ 18.6%</div></div>
+      <div class="kpi"><div class="l">النمو السنوي</div><div class="n">+34%</div><div class="d up">▲ YoY</div></div>
+      <div class="kpi"><div class="l">الفروع النشطة</div><div class="n">50</div><div class="d up">▲ 4 جديدة</div></div>
+      <div class="kpi"><div class="l">الأطباء</div><div class="n">100</div><div class="d up">82% إشغال</div></div>
+      <div class="kpi"><div class="l">مرضى جدد</div><div class="n">4,860</div><div class="d up">▲ 12.4%</div></div>
+      <div class="kpi"><div class="l">متوسط ROAS</div><div class="n em">5.6×</div><div class="d up">▲ 0.4</div></div>
+    </div>
+
+    <div class="row a">
+      <div class="card">
+        <h3>إيراد المجموعة — 12 شهر</h3><div class="cap">كل الفروع (مليون ريال)</div>
+        <svg class="chart" viewBox="0 0 720 200" preserveAspectRatio="none">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2BA89B" stop-opacity=".25"/><stop offset="1" stop-color="#2BA89B" stop-opacity="0"/></linearGradient></defs>
+          <polyline fill="none" stroke="#0F5F56" stroke-width="3" points="0,160 65,150 130,155 195,130 260,135 325,110 390,118 455,90 520,95 585,60 650,52 720,30"/>
+          <polygon fill="url(#g)" points="0,160 65,150 130,155 195,130 260,135 325,110 390,118 455,90 520,95 585,60 650,52 720,30 720,200 0,200"/>
+        </svg>
+        <div class="legend"><span>يوليو</span><span style="flex:1"></span><span>ديسمبر</span><span style="flex:1"></span><span>يونيو</span></div>
+      </div>
+      <div class="card">
+        <h3>🤖 رؤى ذكية (AI Insights)</h3><div class="cap">توصيات تشغيلية تلقائية</div>
+        <div class="ins"><div class="ic">📈</div><div><b>فرع الرياض-1 الأعلى نموًا</b><p>+41% هذا الشهر — كرّر حملة Meta "الابتسامة" على جدة والخبر.</p></div></div>
+        <div class="ins"><div class="ic">⏰</div><div><b>no-show أعلى يوم الأحد</b><p>في 6 فروع — حوّل مكالمات التأكيد للسبت لتقليلها ~9%.</p></div></div>
+        <div class="ins"><div class="ic">💡</div><div><b>طاقة غير مستغلة</b><p>عيادتا الدمام تحت 70% إشغال — أعد توزيع الإعلانات لهم.</p></div></div>
+      </div>
+    </div>
+
+    <div class="row b">
+      <div class="card">
+        <h3>أعلى الفروع أداءً</h3><div class="cap">الإيراد · هذا الشهر</div>
+        <div class="lb">
+          <div class="it"><span class="rk">1</span><span class="nm">الرياض — العليا<small>9 أطباء</small></span><span class="rev">﷼486K</span></div>
+          <div class="it"><span class="rk">2</span><span class="nm">جدة — التحلية<small>8 أطباء</small></span><span class="rev">﷼412K</span></div>
+          <div class="it"><span class="rk">3</span><span class="nm">الرياض — الملقا<small>7 أطباء</small></span><span class="rev">﷼351K</span></div>
+          <div class="it"><span class="rk">4</span><span class="nm">الخبر — الكورنيش<small>6 أطباء</small></span><span class="rev">﷼298K</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>عائد التسويق حسب القناة</h3><div class="cap">ROAS</div>
+        <div class="donut">
+          <svg width="116" height="116" viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.9" fill="none" stroke="#EAF3F1" stroke-width="6"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#0F5F56" stroke-width="6" stroke-dasharray="45 55" stroke-dashoffset="25"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2BA89B" stroke-width="6" stroke-dasharray="30 70" stroke-dashoffset="-20"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#34C7B5" stroke-width="6" stroke-dasharray="15 85" stroke-dashoffset="-50"/>
+          </svg>
+          <div class="dleg">
+            <div class="l"><span><i style="background:#0F5F56"></i>Meta</span><span>45%</span></div>
+            <div class="l"><span><i style="background:#2BA89B"></i>Google</span><span>30%</span></div>
+            <div class="l"><span><i style="background:#34C7B5"></i>TikTok</span><span>15%</span></div>
+            <div class="l"><span><i style="background:#EAF3F1;border:1px solid #ccc"></i>أخرى</span><span>10%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>إنتاجية الأطباء (إشغال)</h3><div class="cap">متوسط أعلى 5 تخصصات</div>
+        <div class="bars">
+          <div class="barrow"><span class="nm">زراعة</span><span class="bar"><i style="width:92%"></i></span><span class="v">92%</span></div>
+          <div class="barrow"><span class="nm">تقويم</span><span class="bar"><i style="width:85%"></i></span><span class="v">85%</span></div>
+          <div class="barrow"><span class="nm">تجميل</span><span class="bar"><i style="width:78%"></i></span><span class="v">78%</span></div>
+          <div class="barrow"><span class="nm">عام</span><span class="bar"><i style="width:71%"></i></span><span class="v">71%</span></div>
+          <div class="barrow"><span class="nm">أطفال</span><span class="bar"><i style="width:64%"></i></span><span class="v">64%</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="foot">Cliniva — a RASMY venture · مركز القيادة التنفيذي (ديمو) · <a href="./app.html">‹ داشبورد العمليات</a> · <a href="./index.html">الموقع</a></div>
+</body>
+</html>
