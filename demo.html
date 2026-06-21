@@ -21,6 +21,9 @@
        radial-gradient(900px 500px at -10% 10%, #0d2b28 0%, transparent 55%), var(--bg);
        color:var(--txt);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
   .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  .topbar{display:flex;align-items:center;gap:8px;justify-content:flex-end;padding:6px 0 0}
+  #lng{border:1px solid #E2EAEA;border-radius:9px;background:#fff;font-weight:800;font-size:13px;cursor:pointer;padding:8px 10px;color:#0A0F1D}
+  #cur{border:1px solid #E2EAEA;border-radius:9px;padding:8px 10px;font-weight:800;font-size:13px;background:#fff;color:#0A0F1D;font-family:inherit}
   .brand{display:flex;align-items:center;gap:12px;justify-content:center;padding:18px 0 6px}
   .logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--teal),#0e766e);
         display:grid;place-items:center;box-shadow:0 6px 18px rgba(13,148,136,.45);font-size:24px}
@@ -66,7 +69,7 @@
   .slot:hover:not(.taken){border-color:var(--teal)}
   .slot.sel{background:var(--teal);border-color:var(--teal);color:#fff}
   .slot.taken{opacity:.45;cursor:not-allowed;border-style:dashed}
-  .slot.taken::after{content:"محجوز";position:absolute;inset-inline-start:6px;top:4px;font-size:9px;color:var(--danger);font-weight:700}
+  .slot.taken::after{content:attr(data-taken-label);position:absolute;inset-inline-start:6px;top:4px;font-size:9px;color:var(--danger);font-weight:700}
   .hold{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(217,119,6,.18),rgba(217,119,6,.05));
         border:1px solid rgba(217,119,6,.4);border-radius:12px;padding:10px 14px;margin-top:14px;font-size:13px;font-weight:700;color:var(--gold-tint)}
   .hold .timer{margin-inline-start:auto;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.3);padding:3px 10px;border-radius:8px;color:#fff}
@@ -96,33 +99,108 @@
   .foot{text-align:center;color:#516074;font-size:11px;margin-top:24px;line-height:1.8}
   .badge{display:inline-block;background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.35);color:var(--teal-tint);
       font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="topbar">
+    <select id="cur" onchange="applyCur(this.value)" aria-label="Currency">
+      <option value="SAR">﷼ SAR</option>
+      <option value="AED" selected>د.إ AED</option>
+      <option value="USD">$ USD</option>
+      <option value="QAR">ر.ق QAR</option>
+      <option value="KWD">د.ك KWD</option>
+      <option value="BHD">د.ب BHD</option>
+      <option value="EGP">ج.م EGP</option>
+    </select>
+    <button id="lng" onclick="toggleLang()">EN</button>
+  </div>
   <div class="brand">
     <div class="logo">🦷</div>
-    <div><h1>Cliniva<span class="sub">عيادة كلينيفا للأسنان — دبي (نموذج تجريبي)</span></h1></div>
+    <div><h1>Cliniva<span class="sub" data-en="Cliniva Dental Clinic — Dubai (demo)">عيادة كلينيفا للأسنان — دبي (نموذج تجريبي)</span></h1></div>
   </div>
-  <p class="tagline">احجز موعدك في أقل من دقيقة · <span class="badge">نموذج تجريبي — Cliniva Platform</span></p>
+  <p class="tagline"><span data-en="Book your appointment in under a minute">احجز موعدك في أقل من دقيقة</span> · <span class="badge" data-en="Demo — Cliniva Platform">نموذج تجريبي — Cliniva Platform</span></p>
 
-  <div class="steps" id="stepper">
-    <div class="step" data-s="1"><div class="dot">1</div><span>القسم</span></div>
-    <div class="step" data-s="2"><div class="dot">2</div><span>الطبيب</span></div>
-    <div class="step" data-s="3"><div class="dot">3</div><span>الموعد</span></div>
-    <div class="step" data-s="4"><div class="dot">4</div><span>التأكيد</span></div>
+  <div class="steps reveal" id="stepper">
+    <div class="step" data-s="1"><div class="dot">1</div><span data-en="Department">القسم</span></div>
+    <div class="step" data-s="2"><div class="dot">2</div><span data-en="Doctor">الطبيب</span></div>
+    <div class="step" data-s="3"><div class="dot">3</div><span data-en="Appointment">الموعد</span></div>
+    <div class="step" data-s="4"><div class="dot">4</div><span data-en="Confirm">التأكيد</span></div>
   </div>
 
   <div id="view"></div>
 
-  <p class="foot">
-    🔒 يستحيل حدوث حجز مزدوج — كل موعد يُثبَّت 5 دقائق بقفل مركزي ويُحرَّر تلقائياً لو ما اكتملش.<br>
-    نموذج واجهة تجريبي لتجربة الحجز · أطباء وأسعار وهمية للعرض فقط · © 2026 Cliniva
+  <p class="foot reveal">
+    <span data-en="🔒 Double-booking is impossible — each slot is held for 5 minutes by a central lock and released automatically if not completed.">🔒 يستحيل حدوث حجز مزدوج — كل موعد يُثبَّت 5 دقائق بقفل مركزي ويُحرَّر تلقائياً لو ما اكتملش.</span><br>
+    <span data-en="Demo booking interface · Doctors and prices are fictitious, for display only · © 2026 Cliniva">نموذج واجهة تجريبي لتجربة الحجز · أطباء وأسعار وهمية للعرض فقط · © 2026 Cliniva</span>
   </p>
 </div>
 
 <script>
 "use strict";
+
+// ---------- i18n ----------
+let LANG='ar';
+function toggleLang(){ applyLang(LANG==='ar'?'en':'ar'); }
+function applyLang(l){ LANG=l; var en=(l==='en');
+  document.documentElement.lang=l; document.documentElement.dir=en?'ltr':'rtl';
+  var b=document.getElementById('lng'); if(b) b.textContent=en?'ع':'EN';
+  document.querySelectorAll('[data-en]').forEach(function(el){ if(!el.dataset._ar) el.dataset._ar=el.textContent; el.textContent = en?el.getAttribute('data-en'):el.dataset._ar; });
+  document.querySelectorAll('[data-en-ph]').forEach(function(el){ if(!el.dataset._arPh) el.dataset._arPh=el.getAttribute('placeholder')||''; el.setAttribute('placeholder', en?el.getAttribute('data-en-ph'):el.dataset._arPh); });
+}
+// JS-string lookups for dynamically built screens
+const T = {
+  pickDept:        ["اختر القسم", "Choose a department"],
+  pickDeptHint:    ["أي خدمة تحب تحجز لها؟", "Which service would you like to book?"],
+  from:            ["يبدأ من", "From"],
+  pickDoctor:      ["اختر الطبيب", "Choose a doctor"],
+  yearsExp:        ["خبرة", "yrs experience"],
+  back:            ["رجوع", "Back"],
+  pickDateTime:    ["اختر التاريخ والوقت", "Choose date & time"],
+  with:            ["مع", "with"],
+  next:            ["التالي", "Next"],
+  booked:          ["محجوز", "Booked"],
+  bookedTitle:     ["محجوز — منع الحجز المزدوج", "Booked — double-booking prevented"],
+  holdMsg:         ["⏳ تم تثبيت موعدك مؤقتاً — أكمل الحجز", "⏳ Your slot is held temporarily — complete your booking"],
+  confirmBooking:  ["تأكيد الحجز", "Confirm booking"],
+  reviewHint:      ["راجع بياناتك وأكمل", "Review your details and continue"],
+  rDept:           ["القسم", "Department"],
+  rDoctor:         ["الطبيب", "Doctor"],
+  rAppt:           ["الموعد", "Appointment"],
+  rPriceEst:       ["السعر التقديري", "Estimated price"],
+  fullName:        ["الاسم الكامل", "Full name"],
+  phone:           ["رقم الجوال", "Mobile number"],
+  namePh:          ["مثال: أحمد محمد", "e.g. Ahmed Mohamed"],
+  confirmBtn:      ["تأكيد الحجز ✓", "Confirm booking ✓"],
+  needNamePhone:   ["من فضلك اكتب الاسم ورقم الجوال", "Please enter your name and mobile number"],
+  holdExpired:     ["انتهى وقت تثبيت الموعد، اختر وقتاً من جديد 🙏", "Your slot hold has expired, please pick a time again 🙏"],
+  successTitle:    ["تم حجز موعدك بنجاح!", "Your appointment is booked!"],
+  successHint:     ["في انتظارك في عيادة كلينيفا — دبي، الخليج التجاري", "See you at Cliniva — Dubai, Business Bay"],
+  rPatient:        ["المريض", "Patient"],
+  waMsg:           ["✅ تم إرسال تأكيد عبر واتساب + تذكير قبل الموعد بـ 24 ساعة", "✅ Confirmation sent via WhatsApp + a reminder 24 hours before"],
+  newBooking:      ["حجز جديد", "New booking"]
+};
+const tr = key => T[key] ? (LANG==='en'?T[key][1]:T[key][0]) : key;
+
+// ---------- currency ----------
+var RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
+var SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
+var CUR='AED';
+function curFmt(base){ // base is in SAR; matches applyCur formatting ("~" = approx estimate)
+  var r=RATE[CUR]||1, s=SYM[CUR]||'';
+  var v=base*r; v = v>=1000 ? Math.round(v/100)*100 : Math.round(v/5)*5;
+  return s+' ~'+v.toLocaleString('en-US');
+}
+function applyCur(c){ CUR=c; var r=RATE[c]||1,s=SYM[c]||'';
+  document.querySelectorAll('[data-price]').forEach(function(el){
+    var v=parseFloat(el.getAttribute('data-base'))*r;
+    v = v>=1000 ? Math.round(v/100)*100 : Math.round(v/5)*5;
+    el.textContent = s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');
+  });
+}
+
 // ---------- tiny safe DOM builder (no innerHTML => no XSS) ----------
 function el(tag, props){
   const n = document.createElement(tag);
@@ -143,28 +221,42 @@ function add(n, kid){
 }
 function txt(t){ return document.createTextNode(String(t)); }
 
-// ---------- data (Cliniva) ----------
+// ---------- data (Cliniva) — prices stored as SAR base for currency-awareness ----------
+const SAR = aed => aed/0.979; // convert original AED figures to SAR base
 const DEPARTMENTS = [
-  {id:"implant",  name:"زراعة الأسنان",        icon:"🦷", desc:"زراعة سويسرية وألمانية وتعويضات", from:1850},
-  {id:"cosmetic", name:"التركيبات والتجميل",   icon:"✨", desc:"ابتسامة إيماكس ونانو سيراميك وتنظيف", from:400},
-  {id:"ortho",    name:"تقويم الأسنان",         icon:"😁", desc:"تقويم معدني وشفاف بالتقسيط", from:2700},
+  {id:"implant",  name:"زراعة الأسنان",        nameEn:"Dental Implants",        icon:"🦷", desc:"زراعة سويسرية وألمانية وتعويضات", descEn:"Swiss & German implants and prosthetics", from:SAR(1850)},
+  {id:"cosmetic", name:"التركيبات والتجميل",   nameEn:"Crowns & Cosmetic",      icon:"✨", desc:"ابتسامة إيماكس ونانو سيراميك وتنظيف", descEn:"E-max smile, nano-ceramic and cleaning", from:SAR(400)},
+  {id:"ortho",    name:"تقويم الأسنان",         nameEn:"Orthodontics",           icon:"😁", desc:"تقويم معدني وشفاف بالتقسيط", descEn:"Metal and clear braces in installments", from:SAR(2700)},
 ];
 const DOCTORS = [
-  {id:1,name:"د. طارق منصور",  title:"استشاري زراعة وتعويضات الأسنان",      dep:"implant", rating:4.9, exp:15, price:4000},
-  {id:2,name:"د. ريما حدّاد",   title:"أخصائية جراحة وزراعة عظام الفكين",   dep:"implant", rating:4.8, exp:11, price:1850},
-  {id:3,name:"د. فيصل كريم",   title:"استشاري تركيبات وتصميم ابتسامة (DSD)",dep:"cosmetic",rating:4.9, exp:14, price:6500},
-  {id:4,name:"د. سارة العلي",  title:"أخصائية طب الأسنان التجميلي",         dep:"cosmetic",rating:4.7, exp:8,  price:400},
-  {id:5,name:"د. وليد ناصر",   title:"أخصائي تركيبات وعلاج جذور الأسنان",   dep:"cosmetic",rating:4.8, exp:10, price:600},
-  {id:6,name:"د. خالد سمير",   title:"استشاري تقويم الأسنان والفكين",       dep:"ortho",   rating:4.9, exp:16, price:2700},
+  {id:1,name:"د. طارق منصور",  nameEn:"Dr. Tarek Mansour", title:"استشاري زراعة وتعويضات الأسنان",      titleEn:"Consultant, Implants & Prosthodontics",       dep:"implant", rating:4.9, exp:15, price:SAR(4000)},
+  {id:2,name:"د. ريما حدّاد",   nameEn:"Dr. Rima Haddad",   title:"أخصائية جراحة وزراعة عظام الفكين",   titleEn:"Specialist, Jaw Bone Surgery & Grafting",     dep:"implant", rating:4.8, exp:11, price:SAR(1850)},
+  {id:3,name:"د. فيصل كريم",   nameEn:"Dr. Faisal Karim",  title:"استشاري تركيبات وتصميم ابتسامة (DSD)",titleEn:"Consultant, Crowns & Smile Design (DSD)",     dep:"cosmetic",rating:4.9, exp:14, price:SAR(6500)},
+  {id:4,name:"د. سارة العلي",  nameEn:"Dr. Sara Al-Ali",   title:"أخصائية طب الأسنان التجميلي",         titleEn:"Specialist, Cosmetic Dentistry",              dep:"cosmetic",rating:4.7, exp:8,  price:SAR(400)},
+  {id:5,name:"د. وليد ناصر",   nameEn:"Dr. Walid Nasser",  title:"أخصائي تركيبات وعلاج جذور الأسنان",   titleEn:"Specialist, Crowns & Root Canal Treatment",   dep:"cosmetic",rating:4.8, exp:10, price:SAR(600)},
+  {id:6,name:"د. خالد سمير",   nameEn:"Dr. Khaled Samir",  title:"استشاري تقويم الأسنان والفكين",       titleEn:"Consultant, Orthodontics & Jaw Alignment",    dep:"ortho",   rating:4.9, exp:16, price:SAR(2700)},
 ];
 const TIMES = ["09:00 ص","09:30 ص","10:00 ص","10:30 ص","11:00 ص","11:30 ص","12:00 م","01:00 م","02:00 م"];
+const TIMES_EN = ["09:00 AM","09:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM","12:00 PM","01:00 PM","02:00 PM"];
 const WD = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const WD_EN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 const S = {step:1, dep:null, doc:null, date:null, time:null, name:"", phone:"", holdTimer:null, takenMap:{}};
 const view = document.getElementById("view");
-const initials = n => n.replace("د. ","").split(" ").slice(0,2).map(w=>w[0]).join("");
-const money = n => n.toLocaleString("en-US")+" د.إ";
+const initials = n => n.replace("د. ","").replace("Dr. ","").split(" ").slice(0,2).map(w=>w[0]).join("");
+// money() now returns a currency-aware DOM <span> tagged for live currency switching
+function money(sarBase){
+  const span = el("span",null);
+  span.setAttribute("data-price","");
+  span.setAttribute("data-base", String(sarBase));
+  span.textContent = curFmt(sarBase);
+  return span;
+}
 const dep = () => DEPARTMENTS.find(x=>x.id===S.dep);
+const depName = d => LANG==='en' ? d.nameEn : d.name;
+const docName = d => LANG==='en' ? d.nameEn : d.name;
+const docTitle = d => LANG==='en' ? d.titleEn : d.title;
+const timeLabel = t => { const i=TIMES.indexOf(t); return (LANG==='en'&&i>-1)?TIMES_EN[i]:t; };
 
 function setStep(n){ S.step=n;
   document.querySelectorAll(".step").forEach(elm=>{const s=+elm.dataset.s;
@@ -173,42 +265,42 @@ function setStep(n){ S.step=n;
 }
 function nextDays(k){const out=[];const base=new Date(2026,5,1);
   for(let i=1;i<=k;i++){const d=new Date(base);d.setDate(base.getDate()+i);
-    out.push({key:d.toISOString().slice(0,10), wd:WD[d.getDay()], dn:d.getDate(), mo:d.getMonth()+1});}
+    out.push({key:d.toISOString().slice(0,10), wd:(LANG==='en'?WD_EN:WD)[d.getDay()], dn:d.getDate(), mo:d.getMonth()+1});}
   return out;}
 function takenFor(docId,dateKey){const k=docId+dateKey; if(S.takenMap[k])return S.takenMap[k];
   let h=0; for(const c of k) h=(h*31+c.charCodeAt(0))>>>0;
   const t=new Set([h%9,(h>>3)%9]); S.takenMap[k]=t; return t;}
-function fmtDate(k){const d=new Date(k);return WD[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();}
+function fmtDate(k){const d=new Date(k);return (LANG==='en'?WD_EN:WD)[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();}
 function row(label,val){ return el("div",{class:"row"}, el("span",null,label), el("b",null,val)); }
 
 // ---------- screens ----------
 function screenDept(){
-  return el("div",{class:"card"},
-    el("h2",null,"اختر القسم"),
-    el("p",{class:"hint"},"أي خدمة تحب تحجز لها؟"),
+  return el("div",{class:"card reveal"},
+    el("h2",null,tr("pickDept")),
+    el("p",{class:"hint"},tr("pickDeptHint")),
     el("div",{class:"grid"}, DEPARTMENTS.map(d=>
       el("div",{class:"opt"+(S.dep===d.id?" sel":""), onclick:()=>pickDep(d.id)},
         el("div",{class:"ic"}, d.icon),
-        el("div",null, el("div",{class:"t"},d.name), el("div",{class:"d"},d.desc)),
-        el("div",{class:"meta"}, "يبدأ من", el("br"), el("span",{class:"price"}, money(d.from)))
+        el("div",null, el("div",{class:"t"},depName(d)), el("div",{class:"d"},LANG==='en'?d.descEn:d.desc)),
+        el("div",{class:"meta"}, tr("from"), el("br"), el("span",{class:"price"}, money(d.from)))
       )))
   );
 }
 function screenDoctor(){
   const list = DOCTORS.filter(d=>d.dep===S.dep);
-  return el("div",{class:"card"},
-    el("h2",null,"اختر الطبيب"),
-    el("p",{class:"hint"}, dep().name),
+  return el("div",{class:"card reveal"},
+    el("h2",null,tr("pickDoctor")),
+    el("p",{class:"hint"}, depName(dep())),
     el("div",{class:"grid"}, list.map(d=>
       el("div",{class:"opt"+(S.doc&&S.doc.id===d.id?" sel":""), onclick:()=>pickDoc(d.id)},
-        el("div",{class:"av"}, initials(d.name)),
+        el("div",{class:"av"}, initials(LANG==='en'?d.nameEn:d.name)),
         el("div",null,
-          el("div",{class:"t"},d.name),
-          el("div",{class:"d"},d.title),
-          el("div",{class:"d"}, "⭐ "+d.rating+" · خبرة "+d.exp+" سنة")),
+          el("div",{class:"t"},docName(d)),
+          el("div",{class:"d"},docTitle(d)),
+          el("div",{class:"d"}, "⭐ "+d.rating+" · "+tr("yearsExp")+" "+d.exp+(LANG==='en'?"":" سنة"))),
         el("div",{class:"meta"}, el("span",{class:"price"}, money(d.price)))
       ))),
-    el("div",{class:"nav"}, el("button",{class:"btn ghost", onclick:()=>setStep(1)}, "رجوع"))
+    el("div",{class:"nav"}, el("button",{class:"btn ghost", onclick:()=>setStep(1)}, tr("back")))
   );
 }
 function screenSlot(){
@@ -218,67 +310,70 @@ function screenSlot(){
   const slots = el("div",{class:"slots"});
   TIMES.forEach((t,i)=>{
     const isTaken = taken.has(i);
-    slots.appendChild(el("div",{
+    const slot = el("div",{
       class:"slot"+(isTaken?" taken":"")+(S.time===t?" sel":""),
-      title: isTaken ? "محجوز — منع الحجز المزدوج" : "",
+      title: isTaken ? tr("bookedTitle") : "",
       onclick: isTaken ? ()=>{} : ()=>pickTime(t)
-    }, t));
+    }, timeLabel(t));
+    if(isTaken) slot.setAttribute("data-taken-label", tr("booked"));
+    slots.appendChild(slot);
   });
   const hold = S.time ? el("div",{class:"hold"},
-      "⏳ تم تثبيت موعدك مؤقتاً — أكمل الحجز",
+      tr("holdMsg"),
       el("span",{class:"timer", id:"timer"}, "05:00")) : null;
-  const next = el("button",{class:"btn", onclick:()=>setStep(4)}, "التالي");
+  const next = el("button",{class:"btn", onclick:()=>setStep(4)}, tr("next"));
   if(!S.time) next.disabled = true;
-  const c = el("div",{class:"card"},
-    el("h2",null,"اختر التاريخ والوقت"),
-    el("p",{class:"hint"}, "مع "+S.doc.name),
+  const c = el("div",{class:"card reveal"},
+    el("h2",null,tr("pickDateTime")),
+    el("p",{class:"hint"}, tr("with")+" "+docName(S.doc)),
     el("div",{class:"pills"}, days.map(d=>
       el("div",{class:"pill"+(S.date===d.key?" sel":""), onclick:()=>pickDate(d.key)},
         el("div",{class:"wd"},d.wd), el("div",{class:"dn"},d.dn), el("div",{class:"wd"},"/"+d.mo)))),
     slots, hold,
-    el("div",{class:"nav"}, el("button",{class:"btn ghost", onclick:()=>setStep(2)},"رجوع"), next)
+    el("div",{class:"nav"}, el("button",{class:"btn ghost", onclick:()=>setStep(2)},tr("back")), next)
   );
   return c;
 }
 function screenConfirm(){
-  const nm = el("input",{placeholder:"مثال: أحمد محمد", value:S.name});
+  const nm = el("input",{placeholder:tr("namePh"), value:S.name});
+  nm.setAttribute("data-en-ph", T.namePh[1]);
   const ph = el("input",{placeholder:"05XXXXXXXX", inputmode:"tel", value:S.phone});
-  return el("div",{class:"card"},
-    el("h2",null,"تأكيد الحجز"),
-    el("p",{class:"hint"},"راجع بياناتك وأكمل"),
+  return el("div",{class:"card reveal"},
+    el("h2",null,tr("confirmBooking")),
+    el("p",{class:"hint"},tr("reviewHint")),
     el("div",{class:"summary"},
-      row("القسم", dep().name),
-      row("الطبيب", S.doc.name),
-      row("الموعد", fmtDate(S.date)+" · "+S.time),
-      row("السعر التقديري", money(S.doc.price))),
-    el("div",{class:"field"}, el("label",null,"الاسم الكامل"), nm),
-    el("div",{class:"field"}, el("label",null,"رقم الجوال"), ph),
+      row(tr("rDept"), depName(dep())),
+      row(tr("rDoctor"), docName(S.doc)),
+      row(tr("rAppt"), fmtDate(S.date)+" · "+timeLabel(S.time)),
+      row(tr("rPriceEst"), money(S.doc.price))),
+    el("div",{class:"field"}, el("label",null,tr("fullName")), nm),
+    el("div",{class:"field"}, el("label",null,tr("phone")), ph),
     el("div",{class:"nav"},
-      el("button",{class:"btn ghost", onclick:()=>setStep(3)},"رجوع"),
+      el("button",{class:"btn ghost", onclick:()=>setStep(3)},tr("back")),
       el("button",{class:"btn", onclick:()=>{
         S.name=nm.value.trim(); S.phone=ph.value.trim();
-        if(!S.name||!S.phone){alert("من فضلك اكتب الاسم ورقم الجوال");return;}
+        if(!S.name||!S.phone){alert(tr("needNamePhone"));return;}
         clearInterval(S.holdTimer); setStep(5);
-      }},"تأكيد الحجز ✓"))
+      }},tr("confirmBtn")))
   );
 }
 function screenSuccess(){
   clearInterval(S.holdTimer);
   const num = "CLV-"+Math.floor(10000+(Date.now()%89999));
   const phoneB = el("b",null,S.phone||"—"); phoneB.style.direction="ltr";
-  return el("div",{class:"card success"},
+  return el("div",{class:"card success reveal"},
     el("div",{class:"check"},"✓"),
-    el("h2",null,"تم حجز موعدك بنجاح!"),
-    el("p",{class:"hint"},"في انتظارك في عيادة كلينيفا — دبي، الخليج التجاري"),
+    el("h2",null,tr("successTitle")),
+    el("p",{class:"hint"},tr("successHint")),
     el("div",{class:"ticket"},
       el("div",{class:"num"}, num),
       el("div",{class:"summary", style:""},
-        row("الطبيب", S.doc.name),
-        row("الموعد", fmtDate(S.date)+" · "+S.time),
-        row("المريض", S.name||"—"),
-        el("div",{class:"row"}, el("span",null,"الجوال"), phoneB))),
-    el("div",{class:"wa"},"✅ تم إرسال تأكيد عبر واتساب + تذكير قبل الموعد بـ 24 ساعة"),
-    el("div",{class:"nav"}, el("button",{class:"btn", onclick:reset},"حجز جديد"))
+        row(tr("rDoctor"), docName(S.doc)),
+        row(tr("rAppt"), fmtDate(S.date)+" · "+timeLabel(S.time)),
+        row(tr("rPatient"), S.name||"—"),
+        el("div",{class:"row"}, el("span",null,tr("phone")), phoneB))),
+    el("div",{class:"wa"},tr("waMsg")),
+    el("div",{class:"nav"}, el("button",{class:"btn", onclick:reset},tr("newBooking")))
   );
 }
 
@@ -291,6 +386,7 @@ function render(){
   else node=screenSuccess();
   view.replaceChildren(node);
   if(S.step===3 && S.time) startHold();
+  observeReveals();
 }
 
 function pickDep(id){ S.dep=id; S.doc=null; S.time=null; setStep(2); }
@@ -304,13 +400,18 @@ function startHold(){ stopHold(); let left=300;
     e.textContent=m+":"+s;}};
   show();
   S.holdTimer=setInterval(()=>{ left--; show();
-    if(left<=0){ stopHold(); S.time=null; alert("انتهى وقت تثبيت الموعد، اختر وقتاً من جديد 🙏"); render(); }
+    if(left<=0){ stopHold(); S.time=null; alert(tr("holdExpired")); render(); }
   },1000);
 }
 function stopHold(){ clearInterval(S.holdTimer); }
 function reset(){ Object.assign(S,{step:1,dep:null,doc:null,date:null,time:null,name:"",phone:"",takenMap:{}}); setStep(1); }
 
+// ---------- scroll reveal ----------
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+function observeReveals(){ document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);}); }
+
 setStep(1);
+observeReveals();
 </script>
 </body>
 </html>
