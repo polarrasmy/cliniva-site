@@ -143,7 +143,7 @@
     <div class="top">
       <h1 id="topTitle">لوحة التحكم</h1>
       <div class="right">
-        <select id="branch" onchange="void 0">
+        <select id="branch" onchange="selectBranch(this.value)">
           <option>كل الفروع (3)</option><option>فرع جميرا</option><option>فرع مارينا</option><option>فرع دبي هيلز</option>
         </select>
         <span class="pill p-done">● مباشر</span>
@@ -159,10 +159,10 @@
           <div style="font-size:12.5px;opacity:.93;max-width:360px;line-height:1.6">من <b>استرجاع المكالمات الفائتة</b> + <b>تقليل عدم الحضور</b> + <b>ربط كل ريال إعلان بالإيراد</b> — ونثبتها بأرقام عيادتك نفسها.</div>
         </div>
         <div class="kpis">
-          <div class="kpi"><div class="l">حجوزات النهاردة</div><div class="n teal">38</div><div class="d up">▲ 12% عن أمس</div></div>
-          <div class="kpi"><div class="l">مكالمات تم الرد عليها</div><div class="n">100%</div><div class="d up">▲ كانت 71% قبل Cliniva</div></div>
-          <div class="kpi"><div class="l">إيراد الأسبوع</div><div class="n">312,400﷼</div><div class="d up">▲ 18.6%</div></div>
-          <div class="kpi"><div class="l">نسبة عدم الحضور</div><div class="n">4.2%</div><div class="d up">▼ كانت 14%</div></div>
+          <div class="kpi"><div class="l">حجوزات النهاردة</div><div class="n teal" id="k_book">38</div><div class="d up">▲ 12% عن أمس</div></div>
+          <div class="kpi"><div class="l">مكالمات تم الرد عليها</div><div class="n" id="k_ans">100%</div><div class="d up">▲ كانت 71% قبل Cliniva</div></div>
+          <div class="kpi"><div class="l" id="k_revl">إيراد الأسبوع — كل الفروع</div><div class="n" id="k_rev">312,400﷼</div><div class="d up">▲ 18.6%</div></div>
+          <div class="kpi"><div class="l">نسبة عدم الحضور</div><div class="n" id="k_noshow">4.2%</div><div class="d up">▼ كانت 14%</div></div>
         </div>
         <div class="row c2">
           <div class="card">
@@ -391,6 +391,21 @@
     document.getElementById('topTitle').textContent = titles[id]||'';
     window.scrollTo({top:0,behavior:'smooth'});
   });
+  // branch filter — كل عيادة بتطلع كام + الكل بيطلع كام
+  var BRANCHES={
+    'كل الفروع (3)':{book:'38',ans:'100%',rev:'312,400﷼',noshow:'4.2%',l:'إيراد الأسبوع — كل الفروع (المجموع)'},
+    'فرع جميرا':{book:'16',ans:'100%',rev:'138,000﷼',noshow:'3.8%',l:'إيراد الأسبوع — فرع جميرا'},
+    'فرع مارينا':{book:'13',ans:'100%',rev:'102,000﷼',noshow:'4.5%',l:'إيراد الأسبوع — فرع مارينا'},
+    'فرع دبي هيلز':{book:'9',ans:'100%',rev:'72,400﷼',noshow:'4.6%',l:'إيراد الأسبوع — فرع دبي هيلز'}
+  };
+  function selectBranch(name){
+    var b=BRANCHES[name]||BRANCHES['كل الفروع (3)'];
+    document.getElementById('k_book').textContent=b.book;
+    document.getElementById('k_ans').textContent=b.ans;
+    document.getElementById('k_rev').textContent=b.rev;
+    document.getElementById('k_noshow').textContent=b.noshow;
+    document.getElementById('k_revl').textContent=b.l;
+  }
   function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
   // receptionist check-in (safe DOM)
   function checkIn(btn,present){
