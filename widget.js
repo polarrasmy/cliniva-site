@@ -9,6 +9,8 @@
   var SERVICES=["كشف","تنظيف","تقويم","زراعة","تجميل"];
   var DAYS=["النهاردة","بكرة","بعد بكرة"];
   var TIMES=["10:00 ص","12:00 م","4:00 م","7:00 م"];
+  function takenTimes(day){var tk={};try{(JSON.parse(localStorage.getItem("cliniva_bookings")||"[]")).forEach(function(b){if(b&&b.day===day&&b.time)tk[b.time]=1;});}catch(e){}return tk;}
+  function freeTimes(day){var tk=takenTimes(day);return TIMES.filter(function(t){return !tk[t];});}
   var PRICE={ "كشف":"150 درهم","تنظيف":"من 400 درهم","تقويم":"من 9,000 درهم","زراعة":"من 6,500 درهم","تجميل":"من 1,200 درهم" };
 
   // ---------- styles ----------
@@ -79,8 +81,8 @@
     var t=(raw||"").trim(); if(!t) return; addMsg("me",t); var low=t.toLowerCase();
     // contextual steps first
     if(step==="service"){ var s=has(t,SERVICES)||t; bk.service=s; step="day"; return botSay("تمام، "+s+" ✨ أنهي يوم يناسبك؟",DAYS); }
-    if(step==="day"){ bk.day=has(t,DAYS)||t; step="time"; return botSay("وأنهي وقت؟",TIMES); }
-    if(step==="time"){ bk.time=t; step="name"; return botSay("آخر حاجة — اسمك الكريم؟"); setChips([]); }
+    if(step==="day"){ bk.day=has(t,DAYS)||t; var fr=freeTimes(bk.day); if(!fr.length){ step="day"; return botSay("معلش، كل المواعيد محجوزة يوم "+bk.day+" 🙏 جرّب يوم تاني؟",DAYS); } step="time"; return botSay("وأنهي وقت؟ (المتاح بس)",fr); }
+    if(step==="time"){ var tkn=takenTimes(bk.day); if(tkn[t]){ var fr2=freeTimes(bk.day); return botSay("للأسف "+t+" اتحجز خلاص — Cliniva بيمنع الحجز المزدوج ✋ اختار من المتاح:",fr2.length?fr2:DAYS); } bk.time=t; step="name"; return botSay("آخر حاجة — اسمك الكريم؟"); }
     if(step==="name"){ bk.name=t; step="done"; bk.id=genId(); bk.via="مساعد AI"; saveBooking(bk);
       setChips([]);
       return botSay("تم الحجز ✅",[]) , setTimeout(function(){
