@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cliniva — دخول نظام العيادة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#14202E;--teal:#0E7C7B;--teal2:#13A8A4;--teal-d:#0A5D5C;--line:#E2EAEA;--muted:#5C6B72;--mint:#E8F3F2}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Tajawal",system-ui,Tahoma,sans-serif;color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:radial-gradient(900px 500px at 80% -10%,rgba(19,168,164,.18),transparent 60%),linear-gradient(160deg,#0c1a22,#103e3b)}
+  .wrap{width:100%;max-width:420px;animation:rise .5s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .brand{display:flex;align-items:center;justify-content:center;gap:9px;color:#fff;font-weight:900;font-size:26px;margin-bottom:18px}
+  .brand span{color:var(--teal2)}
+  .card{background:#fff;border-radius:20px;padding:30px 28px;box-shadow:0 30px 70px -24px rgba(0,0,0,.5)}
+  .hi{font-size:22px;font-weight:900}
+  .sub{color:var(--muted);font-size:14px;margin:4px 0 22px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+  .field input{width:100%;border:1px solid var(--line);border-radius:11px;padding:13px 14px;font-size:15px;font-family:inherit;color:var(--ink);background:#FAFDFD;transition:.2s}
+  .field input:focus{outline:none;border-color:var(--teal);background:#fff}
+  .btn{width:100%;background:var(--teal);color:#fff;border:0;border-radius:12px;padding:15px;font-weight:800;font-size:16px;cursor:pointer;font-family:inherit;transition:.2s;margin-top:6px}
+  .btn:hover{background:var(--teal-d)}
+  .btn:disabled{opacity:.7;cursor:default}
+  .demo{text-align:center;font-size:12px;color:var(--muted);margin-top:14px}
+  .demo b{color:var(--teal-d)}
+  .pw{text-align:center;font-size:12.5px;color:var(--muted);margin-top:10px}
+  .pw a{color:var(--teal);text-decoration:none}
+  .foot{text-align:center;color:#9fc2c0;font-size:12px;margin-top:18px}
+  .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-3px;margin-inline-start:8px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><svg width="26" height="26" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#13A8A4"/><path d="M28 13.5a10 10 0 1 0 0 13" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/><circle cx="29" cy="20" r="2.7" fill="#fff"/></svg>Cliniva<span>.</span></div>
+  <div class="card">
+    <div class="hi">أهلاً بعودتك 👋</div>
+    <div class="sub">ادخل لنظام تشغيل عيادتك</div>
+    <form onsubmit="return enter(event)">
+      <div class="field"><label>اسم العيادة</label><input id="clinic" value="عيادة المنال للأسنان"></div>
+      <div class="field"><label>البريد الإلكتروني</label><input id="email" value="manal@almanal.clinic"></div>
+      <div class="field"><label>كلمة المرور</label><input id="pw" type="password" value="cliniva2026"></div>
+      <button class="btn" id="go" type="submit">دخول للنظام →</button>
+    </form>
+    <div class="demo">🔓 <b>ديمو</b> — البيانات متعبّأة، اضغط دخول على طول</div>
+    <div class="pw"><a href="./index.html">‹ رجوع لموقع Cliniva</a></div>
+  </div>
+  <div class="foot">Cliniva — a RASMY venture · نظام تشغيل عيادات الأسنان</div>
+</div>
+<script>
+  function enter(e){
+    e.preventDefault();
+    var clinic=(document.getElementById('clinic').value||'عيادة المنال للأسنان').trim();
+    try{localStorage.setItem('cliniva_clinic',clinic);}catch(_){}
+    var b=document.getElementById('go');
+    b.disabled=true;
+    while(b.firstChild)b.removeChild(b.firstChild);
+    b.appendChild(document.createTextNode('جاري الدخول لنظام عيادتك'));
+    var s=document.createElement('span'); s.className='spin'; b.appendChild(s);
+    setTimeout(function(){ window.location.href='./app.html'; }, 1100);
+    return false;
+  }
+</script>
+</body>
+</html>
