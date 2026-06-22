@@ -732,7 +732,7 @@
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
 
   // render prices once on load — honour the currency chosen elsewhere (localStorage)
-  (function(){var c='SAR';try{c=localStorage.getItem('cliniva_cur')||'SAR';}catch(e){}var sel=document.getElementById('cur');if(sel)sel.value=c;applyCur(c);})();
+  (function(){var c='AED';try{c=localStorage.getItem('cliniva_cur')||'AED';}catch(e){}var sel=document.getElementById('cur');if(sel)sel.value=c;applyCur(c);})();
 </script>
 <script src="./widget.js" defer></script>
 <script>
