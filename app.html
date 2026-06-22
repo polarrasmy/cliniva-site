@@ -185,7 +185,7 @@
           </div>
         </div>
         <script>
-          var PERIODS={today:{r:"22 يونيو 2026",cust:38,book:38,rev:10400},week:{r:"20–26 يونيو",cust:242,book:266,rev:73000},month:{r:"يونيو 2026 · 1–30",cust:1980,book:2140,rev:312400},last:{r:"مايو 2026 · 1–31",cust:1840,book:1980,rev:286000},next:{r:"يوليو 2026 (متوقع)",cust:2120,book:2300,rev:338000},year:{r:"السنة كلها · 2026",cust:12480,book:23600,rev:3410000}};
+          var PERIODS={today:{r:"22 يونيو 2026",cust:38,book:38,rev:44600},week:{r:"20–26 يونيو",cust:242,book:266,rev:312400},month:{r:"يونيو 2026 · 1–30",cust:1980,book:2140,rev:1340000},last:{r:"مايو 2026 · 1–31",cust:1840,book:1980,rev:1240000},next:{r:"يوليو 2026 (متوقع)",cust:2120,book:2300,rev:1460000},year:{r:"السنة كلها · 2026",cust:12480,book:23600,rev:16000000}};
           function setPeriod(p){var d=PERIODS[p]||PERIODS.month;
             var cur=(document.getElementById('cur')||{}).value||'SAR';
             var sym=(typeof SYM!=='undefined'&&SYM[cur])?SYM[cur]:'﷼';
@@ -214,7 +214,7 @@
               <div><h3 style="margin:0">الإيراد — آخر 7 أيام</h3><div class="sub">حسب اليوم</div></div>
               <div style="text-align:left">
                 <div style="font-size:10.5px;color:#16a34a;font-weight:900">🟢 إيراد النهاردة — مباشر</div>
-                <div id="liveRev" style="font-size:27px;font-weight:900;color:var(--teal);line-height:1.05">﷼312,400</div>
+                <div id="liveRev" style="font-size:27px;font-weight:900;color:var(--teal);line-height:1.05">﷼44,600</div>
                 <div style="font-size:10px;color:var(--muted);font-weight:700">السعة الواقعية ~180 موعد/يوم · 3 فروع</div>
               </div>
             </div>
@@ -725,7 +725,7 @@
   // ===== currency (base amounts stored in SAR) =====
   var RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
   var SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
-  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');});document.querySelectorAll('.money').forEach(function(el){if(el.textContent.indexOf(':')>=0&&!el.dataset.base)return;if(!el.dataset.base){var raw=el.textContent.replace(/[^\d.]/g,'');el.dataset.base=raw||'0';}var v=parseFloat(el.dataset.base)*r;v=v>=1000?Math.round(v/100)*100:Math.round(v);el.textContent=s+v.toLocaleString('en-US');});try{localStorage.setItem('cliniva_cur',c);}catch(e){}}
+  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'')+v.toLocaleString('en-US');});document.querySelectorAll('.money').forEach(function(el){if(el.textContent.indexOf(':')>=0&&!el.dataset.base)return;if(!el.dataset.base){var raw=el.textContent.replace(/[^\d.]/g,'');el.dataset.base=raw||'0';}var v=parseFloat(el.dataset.base)*r;v=v>=1000?Math.round(v/100)*100:Math.round(v);el.textContent=s+v.toLocaleString('en-US');});try{localStorage.setItem('cliniva_cur',c);}catch(e){}}
 
   // ===== smooth scroll reveal =====
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
