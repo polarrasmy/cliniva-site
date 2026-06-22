@@ -40,6 +40,8 @@
   .tab{display:none;animation:fade .25s}
   .tab.on{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}50%{box-shadow:0 0 10px 1px rgba(22,163,74,.6)}}
+  .live-badge{animation:livepulse 1.7s ease-in-out infinite}
   .eyebrow{color:var(--teal);font-weight:800;font-size:12px;letter-spacing:.4px;margin-bottom:3px}
   .sec-t{font-size:18px;font-weight:900;margin-bottom:2px}
   .sec-d{color:var(--muted);font-size:13.5px;margin-bottom:16px}
@@ -154,7 +156,7 @@
           <option value="SAR">﷼ SAR</option><option value="AED">د.إ AED</option><option value="USD">$ USD</option><option value="QAR">ر.ق QAR</option><option value="KWD">د.ك KWD</option><option value="BHD">د.ب BHD</option><option value="EGP">ج.م EGP</option>
         </select>
         <button id="lng" onclick="toggleLang()" style="border:1px solid #E2EAEA;border-radius:9px;background:#fff;font-weight:800;font-size:13px;cursor:pointer;padding:8px 10px">EN</button>
-        <span class="pill p-done" data-en="● Live">● مباشر</span>
+        <span class="pill p-done live-badge" data-en="● Live">● مباشر</span>
       </div>
     </div>
 
@@ -212,6 +214,7 @@
               <div style="text-align:left">
                 <div style="font-size:10.5px;color:#16a34a;font-weight:900">🟢 إيراد النهاردة — مباشر</div>
                 <div id="liveRev" style="font-size:27px;font-weight:900;color:var(--teal);line-height:1.05">﷼312,400</div>
+                <div style="font-size:10px;color:var(--muted);font-weight:700">السعة الواقعية ~180 موعد/يوم · 3 فروع</div>
               </div>
             </div>
             <svg class="chart" viewBox="0 0 640 150" preserveAspectRatio="none">
