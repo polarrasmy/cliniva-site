@@ -626,14 +626,14 @@
   // ===== currency (base amounts stored in SAR) =====
   var RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
   var SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
-  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');});}
+  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');});document.querySelectorAll('.money').forEach(function(el){if(!el.dataset.base){var raw=el.textContent.replace(/[^\d.]/g,'');el.dataset.base=raw||'0';}var v=parseFloat(el.dataset.base)*r;v=v>=1000?Math.round(v/100)*100:Math.round(v);el.textContent=s+v.toLocaleString('en-US');});try{localStorage.setItem('cliniva_cur',c);}catch(e){}}
 
   // ===== smooth scroll reveal =====
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
 
-  // render prices once on load in the default currency (SAR)
-  applyCur(document.getElementById('cur').value);
+  // render prices once on load — honour the currency chosen elsewhere (localStorage)
+  (function(){var c='SAR';try{c=localStorage.getItem('cliniva_cur')||'SAR';}catch(e){}var sel=document.getElementById('cur');if(sel)sel.value=c;applyCur(c);})();
 </script>
 <script src="./widget.js" defer></script>
 <script>
