@@ -266,7 +266,7 @@
           <div class="kpi"><div class="l">من مركز الاتصال AI</div><div class="n">7</div><div class="d up">18%</div></div>
         </div>
         <div class="card reveal">
-          <h3>جدول اليوم — كل الفروع</h3><div class="sub">👩‍⚕️ موظفة الاستقبال بتأكد الحضور بضغطة — والنظام يحدّث الإيراد ونسبة الحضور فورًا</div>
+          <h3 id="apptsCap">جدول اليوم — كل الفروع</h3><div class="sub">👩‍⚕️ موظفة الاستقبال بتأكد الحضور بضغطة — والنظام يحدّث الإيراد ونسبة الحضور فورًا</div>
           <table>
             <thead><tr><th>الوقت</th><th>المريض</th><th>الخدمة</th><th>الطبيب</th><th>الفرع</th><th>المصدر</th><th>تأكيد الحضور</th></tr></thead>
             <tbody>
@@ -455,18 +455,80 @@
       <section class="tab" id="crm">
         <div class="sec-t" data-en="Patients (CRM)">المرضى (CRM)</div><div class="sec-d" data-en="Every patient, their history, value and source — in one place across branches.">كل مريض، تاريخه، قيمته، ومصدره — في مكان واحد عبر الفروع.</div>
         <div class="card reveal">
-          <h3>قاعدة المرضى</h3><div class="sub">12,480 مريض · بحث وفلترة</div>
+          <h3>قاعدة المرضى</h3><div class="sub" id="crmSub">—</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 14px">
+            <input id="crmSearch" placeholder="🔍 ابحث باسم المريض…" oninput="crmPage=1;renderCRM()" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-family:inherit;font-size:14px;color:var(--ink)">
+            <select id="crmSort" onchange="crmPage=1;renderCRM()" style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-weight:700;font-size:13.5px">
+              <option value="spend">💰 الأعلى إنفاقًا</option>
+              <option value="recent">🕒 الأحدث زيارة</option>
+              <option value="name">🔤 الاسم</option>
+            </select>
+          </div>
           <table>
-            <thead><tr><th>المريض</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>المصدر الأصلي</th><th>الولاء</th><th>الحالة</th></tr></thead>
-            <tbody>
-              <tr><td><span class="avatar">س</span>سارة المنصوري</td><td>اليوم</td><td class="money">31,200﷼</td><td><span class="pill p-meta">Meta</span></td><td>🥇 ذهبي</td><td><span class="pill p-done">نشط</span></td></tr>
-              <tr><td><span class="avatar">خ</span>خالد العتيبي</td><td>قبل 3 أيام</td><td class="money">22,500﷼</td><td><span class="pill p-google">Google</span></td><td>🥈 فضي</td><td><span class="pill p-done">نشط</span></td></tr>
-              <tr><td><span class="avatar">ل</span>ليان الدوسري</td><td>اليوم</td><td class="money">48,000﷼</td><td><span class="pill p-wa">إحالة</span></td><td>🥇 ذهبي</td><td><span class="pill p-done">نشط</span></td></tr>
-              <tr><td><span class="avatar">ن</span>نورة الشهري</td><td>قبل شهر</td><td class="money">3,400﷼</td><td><span class="pill p-snap">Snapchat</span></td><td>🥉 برونزي</td><td><span class="pill p-wait">متابعة</span></td></tr>
-              <tr><td><span class="avatar">ف</span>فهد القحطاني</td><td>غدًا (محجوز)</td><td class="money">0﷼</td><td><span class="pill p-google">Google</span></td><td>جديد</td><td><span class="pill p-wait">أول زيارة</span></td></tr>
-            </tbody>
+            <thead><tr><th>المريض</th><th>الفرع</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>المصدر</th><th>الولاء</th><th>الحالة</th></tr></thead>
+            <tbody id="crmBody"></tbody>
           </table>
+          <div id="crmPager" style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px;font-size:13.5px"></div>
         </div>
+        <script>
+        var PATIENTS=[
+          {n:'سارة المنصوري',b:'جميرا',v:'اليوم',r:1,sp:31200,src:'Meta',sc:'p-meta',ty:'🥇 ذهبي',st:'نشط',stc:'p-done'},
+          {n:'عبدالعزيز الدوسري',b:'جميرا',v:'أمس',r:2,sp:41000,src:'إحالة',sc:'p-wa',ty:'🥇 ذهبي',st:'نشط',stc:'p-done'},
+          {n:'هند الكعبي',b:'جميرا',v:'قبل 5 أيام',r:5,sp:15800,src:'AI Call',sc:'p-tiktok',ty:'🥈 فضي',st:'نشط',stc:'p-done'},
+          {n:'منيرة السبيعي',b:'جميرا',v:'قبل أسبوع',r:7,sp:27600,src:'Meta',sc:'p-meta',ty:'🥈 فضي',st:'نشط',stc:'p-done'},
+          {n:'سلطان القاسمي',b:'جميرا',v:'قبل أسبوعين',r:14,sp:18900,src:'Google',sc:'p-google',ty:'🥈 فضي',st:'متابعة',stc:'p-wait'},
+          {n:'طارق المهيري',b:'جميرا',v:'قبل شهر',r:30,sp:9400,src:'واتساب',sc:'p-wa',ty:'🥉 برونزي',st:'متابعة',stc:'p-wait'},
+          {n:'لطيفة النعيمي',b:'جميرا',v:'قبل شهرين',r:60,sp:6200,src:'زيارة مباشرة',sc:'p-walk',ty:'🥉 برونزي',st:'متابعة',stc:'p-wait'},
+          {n:'ماجد العامري',b:'مارينا',v:'اليوم',r:1,sp:35200,src:'Meta',sc:'p-meta',ty:'🥇 ذهبي',st:'نشط',stc:'p-done'},
+          {n:'خالد العتيبي',b:'مارينا',v:'قبل 3 أيام',r:3,sp:22500,src:'Google',sc:'p-google',ty:'🥈 فضي',st:'نشط',stc:'p-done'},
+          {n:'أحمد الزرعوني',b:'مارينا',v:'قبل 4 أيام',r:4,sp:12300,src:'Snapchat',sc:'p-snap',ty:'🥈 فضي',st:'نشط',stc:'p-done'},
+          {n:'دانة الفلاسي',b:'مارينا',v:'قبل 10 أيام',r:10,sp:8700,src:'واتساب',sc:'p-wa',ty:'🥉 برونزي',st:'نشط',stc:'p-done'},
+          {n:'ريم السبيعي',b:'مارينا',v:'قبل أسبوعين',r:15,sp:14600,src:'AI Call',sc:'p-tiktok',ty:'🥈 فضي',st:'متابعة',stc:'p-wait'},
+          {n:'نورة الشهري',b:'مارينا',v:'قبل شهر',r:30,sp:3400,src:'Snapchat',sc:'p-snap',ty:'🥉 برونزي',st:'متابعة',stc:'p-wait'},
+          {n:'شيخة المرّي',b:'مارينا',v:'قبل شهرين',r:60,sp:5100,src:'زيارة مباشرة',sc:'p-walk',ty:'🥉 برونزي',st:'متابعة',stc:'p-wait'},
+          {n:'ليان الدوسري',b:'دبي هيلز',v:'اليوم',r:1,sp:48000,src:'إحالة',sc:'p-wa',ty:'🥇 ذهبي',st:'نشط',stc:'p-done'},
+          {n:'وليد بن سعيد',b:'دبي هيلز',v:'أمس',r:2,sp:29300,src:'Google',sc:'p-google',ty:'🥇 ذهبي',st:'نشط',stc:'p-done'},
+          {n:'شذى الكتبي',b:'دبي هيلز',v:'قبل 6 أيام',r:6,sp:19500,src:'Meta',sc:'p-meta',ty:'🥈 فضي',st:'نشط',stc:'p-done'},
+          {n:'غيداء الحمادي',b:'دبي هيلز',v:'قبل 9 أيام',r:9,sp:11200,src:'واتساب',sc:'p-wa',ty:'🥉 برونزي',st:'نشط',stc:'p-done'},
+          {n:'عبدالله ناصر',b:'دبي هيلز',v:'قبل 3 أسابيع',r:21,sp:7800,src:'Meta',sc:'p-meta',ty:'🥉 برونزي',st:'متابعة',stc:'p-wait'},
+          {n:'منى حسن',b:'دبي هيلز',v:'قبل شهر',r:30,sp:2400,src:'Snapchat',sc:'p-snap',ty:'🥉 برونزي',st:'متابعة',stc:'p-wait'},
+          {n:'فهد القحطاني',b:'دبي هيلز',v:'غدًا (محجوز)',r:0,sp:0,src:'Google',sc:'p-google',ty:'جديد',st:'أول زيارة',stc:'p-wait'}
+        ];
+        var crmPage=1;
+        function renderCRM(){
+          var q=(document.getElementById('crmSearch').value||'').trim();
+          var sort=document.getElementById('crmSort').value;
+          var br=window._branch||'كل الفروع (3)';
+          var all=/كل الفروع/.test(br), bare=br.replace('فرع','').replace(/\(\d+\)/,'').trim();
+          var list=PATIENTS.filter(function(p){return (all||p.b===bare)&&(!q||p.n.indexOf(q)>=0);});
+          if(sort==='spend')list.sort(function(a,b){return b.sp-a.sp;});
+          else if(sort==='name')list.sort(function(a,b){return a.n.localeCompare(b.n,'ar');});
+          else list.sort(function(a,b){return (a.r||999)-(b.r||999);});
+          var per=8, pages=Math.max(1,Math.ceil(list.length/per));
+          if(crmPage>pages)crmPage=pages; if(crmPage<1)crmPage=1;
+          var slice=list.slice((crmPage-1)*per,crmPage*per);
+          var tb=document.getElementById('crmBody'); while(tb.firstChild)tb.removeChild(tb.firstChild);
+          slice.forEach(function(p){
+            var tr=document.createElement('tr');
+            var c1=document.createElement('td');var av=document.createElement('span');av.className='avatar';av.textContent=p.n.charAt(0);c1.appendChild(av);c1.appendChild(document.createTextNode(p.n));tr.appendChild(c1);
+            var c2=document.createElement('td');c2.textContent=p.b;tr.appendChild(c2);
+            var c3=document.createElement('td');c3.textContent=p.v;tr.appendChild(c3);
+            var c4=document.createElement('td');c4.className='money';c4.dataset.base=p.sp;tr.appendChild(c4);
+            var c5=document.createElement('td');var sp=document.createElement('span');sp.className='pill '+p.sc;sp.textContent=p.src;c5.appendChild(sp);tr.appendChild(c5);
+            var c6=document.createElement('td');c6.textContent=p.ty;tr.appendChild(c6);
+            var c7=document.createElement('td');var stt=document.createElement('span');stt.className='pill '+p.stc;stt.textContent=p.st;c7.appendChild(stt);tr.appendChild(c7);
+            tb.appendChild(tr);
+          });
+          var pg=document.getElementById('crmPager'); while(pg.firstChild)pg.removeChild(pg.firstChild);
+          function mk(t,dis,fn){var b=document.createElement('button');b.textContent=t;b.style.cssText='border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 15px;font-family:inherit;font-weight:800;font-size:13px;'+(dis?'opacity:.35':'cursor:pointer');if(!dis)b.onclick=fn;return b;}
+          pg.appendChild(mk('‹ السابق',crmPage<=1,function(){crmPage--;renderCRM();}));
+          var info=document.createElement('span');info.style.cssText='color:var(--muted);font-weight:800';info.textContent='صفحة '+crmPage+' / '+pages;pg.appendChild(info);
+          pg.appendChild(mk('التالي ›',crmPage>=pages,function(){crmPage++;renderCRM();}));
+          document.getElementById('crmSub').textContent=(all?'كل الفروع':bare)+' · '+list.length+' نتيجة'+(q?(' لـ«'+q+'»'):'')+' · مرتّبة حسب '+(sort==='spend'?'الإنفاق':(sort==='name'?'الاسم':'الأحدث'));
+          if(typeof applyCur==='function')applyCur((document.getElementById('cur')||{}).value||'SAR');
+        }
+        if(document.readyState!=='loading')renderCRM();else document.addEventListener('DOMContentLoaded',renderCRM);
+        </script>
       </section>
 
       <!-- ========== REPORTS ========== -->
@@ -567,6 +629,12 @@
     revl.textContent=(LANG==='en')?b.l_en:b.l;
     document.getElementById('k_noshow').textContent=b.noshow;
     applyCur(document.getElementById('cur').value); // re-render the revenue figure in the chosen currency
+    // === isolate ALL data by branch (not just KPIs) ===
+    window._branch=name;
+    var all=/كل الفروع/.test(name), bare=name.replace('فرع','').replace(/\(\d+\)/,'').trim();
+    document.querySelectorAll('#appts tbody tr, #revenue tbody tr').forEach(function(tr){tr.style.display=(all||tr.textContent.indexOf(bare)>=0)?'':'none';});
+    var cap=document.getElementById('apptsCap'); if(cap)cap.textContent=all?'جدول اليوم — كل الفروع':('جدول اليوم — '+name);
+    if(typeof renderCRM==='function')renderCRM();
   }
   function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
   // receptionist check-in (safe DOM)
@@ -626,7 +694,7 @@
   // ===== currency (base amounts stored in SAR) =====
   var RATE={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07};
   var SYM={SAR:'﷼',AED:'د.إ',USD:'$',QAR:'ر.ق',KWD:'د.ك',BHD:'د.ب',EGP:'ج.م'};
-  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');});document.querySelectorAll('.money').forEach(function(el){if(!el.dataset.base){var raw=el.textContent.replace(/[^\d.]/g,'');el.dataset.base=raw||'0';}var v=parseFloat(el.dataset.base)*r;v=v>=1000?Math.round(v/100)*100:Math.round(v);el.textContent=s+v.toLocaleString('en-US');});try{localStorage.setItem('cliniva_cur',c);}catch(e){}}
+  function applyCur(c){var r=RATE[c]||1,s=SYM[c]||'';document.querySelectorAll('[data-price]').forEach(function(el){var v=parseFloat(el.getAttribute('data-base'))*r;v=v>=1000?Math.round(v/100)*100:Math.round(v/5)*5;el.textContent=s+' '+(el.getAttribute('data-plus')?'+':'~')+v.toLocaleString('en-US');});document.querySelectorAll('.money').forEach(function(el){if(el.textContent.indexOf(':')>=0&&!el.dataset.base)return;if(!el.dataset.base){var raw=el.textContent.replace(/[^\d.]/g,'');el.dataset.base=raw||'0';}var v=parseFloat(el.dataset.base)*r;v=v>=1000?Math.round(v/100)*100:Math.round(v);el.textContent=s+v.toLocaleString('en-US');});try{localStorage.setItem('cliniva_cur',c);}catch(e){}}
 
   // ===== smooth scroll reveal =====
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
