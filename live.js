@@ -66,7 +66,7 @@
   var GOOD=[
     {i:"🆕",t:"حجز جديد",s:["فرع جميرا","فرع مارينا","فرع دبي هيلز","الرياض — العليا"]},
     {i:"📞",t:"مكالمة تم الرد",s:["مركز الاتصال AI","استقبال جميرا"]},
-    {i:"💰",t:"دفعة وصلت",s:["﷼2,400 · Mada","﷼450 · Apple Pay","﷼14,500 · Tamara"]},
+    {i:"💰",t:"دفعة وصلت",s:["﷼2,400 · Mada","﷼450 · Apple Pay","﷼14,500 · Tamara","﷼1,200 · Mada","﷼8,000 · Tabby","﷼600 · Apple Pay","﷼26,000 · Tamara","﷼3,400 · Mada"]},
     {i:"⭐",t:"تقييم 5 نجوم",s:["د. أحمد","د. طارق","د. سارة"]},
     {i:"✅",t:"تأكيد موعد",s:["واتساب آلي","المساعد الذكي"]},
     {i:"🤝",t:"إحالة جديدة",s:["سفير: سارة","سفير: خالد"]}
@@ -78,18 +78,41 @@
   var now=14*3600;
   function tm(){ now+=Math.floor(40+Math.random()*200); var hh=Math.floor(now/3600)%24, mm=Math.floor(now/60)%60; return ("0"+(hh%12||12)).slice(-2)+":"+("0"+mm).slice(-2)+(hh<12?" ص":" م"); }
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+  /* ---------- LIVE REVENUE — the money the owner gets addicted to (persists, never resets to 0) ---------- */
+  var REV_KEY="cliniva_rev_live";
+  function dayKey(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+  function loadRev(){try{var o=JSON.parse(localStorage.getItem(REV_KEY)||"null");if(o&&o.day===dayKey())return o.total;}catch(e){}return 312400;}
+  function saveRev(t){try{localStorage.setItem(REV_KEY,JSON.stringify({day:dayKey(),total:t}));}catch(e){}}
+  var revTotal=loadRev();
+  function curRS(){var c=(document.getElementById("cur")||{}).value||"SAR";var R={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07},S={SAR:"﷼",AED:"د.إ",USD:"$",QAR:"ر.ق",KWD:"د.ك",BHD:"د.ب",EGP:"ج.م"};return {r:R[c]||1,s:S[c]||"﷼"};}
+  function fmtRev(n){var ci=curRS();return ci.s+Math.round(n*ci.r).toLocaleString("en-US");}
+  function paintRev(){var el=document.getElementById("liveRev");if(el)el.textContent=fmtRev(revTotal);}
+  function addRevenue(amount){
+    var el=document.getElementById("liveRev");
+    var from=revTotal,to=revTotal+amount;revTotal=to;saveRev(to);
+    if(!el)return;
+    var t0=null,dur=850;
+    function step(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/dur);var v=from+(to-from)*(1-Math.pow(1-p,3));el.textContent=fmtRev(v);if(p<1)requestAnimationFrame(step);else el.textContent=fmtRev(to);}
+    requestAnimationFrame(step);
+    el.style.transition="color .3s";el.style.color="#16a34a";setTimeout(function(){el.style.color="";},650);
+    try{var r=el.getBoundingClientRect();var f=document.createElement("div");f.textContent="+"+fmtRev(amount);f.style.cssText="position:fixed;left:"+(r.left+8)+"px;top:"+(r.top-2)+"px;color:#16a34a;font-weight:900;font-size:16px;font-family:Tajawal,sans-serif;z-index:99999;pointer-events:none;transition:1.2s cubic-bezier(.2,.8,.2,1);opacity:1";document.body.appendChild(f);requestAnimationFrame(function(){f.style.transform="translateY(-40px)";f.style.opacity="0";});setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},1250);}catch(e){}
+  }
+  paintRev();
+
   function pushEvent(){
     var bad=Math.random()<0.14;
     var e=bad?pick(BAD):pick(GOOD);
     var row=document.createElement("div");row.className="clv-ev "+(bad?"bad":"good");
     var ci=document.createElement("div");ci.className="ci";ci.textContent=e.i;row.appendChild(ci);
     var tx=document.createElement("div");tx.className="tx";tx.appendChild(document.createTextNode(e.t));
-    var sm=document.createElement("small");sm.textContent=pick(e.s);tx.appendChild(sm);row.appendChild(tx);
+    var sub=pick(e.s);var sm=document.createElement("small");sm.textContent=sub;tx.appendChild(sm);row.appendChild(tx);
     var tmEl=document.createElement("div");tmEl.className="tm";tmEl.textContent=tm();row.appendChild(tmEl);
     feed.insertBefore(row,feed.firstChild);
     while(feed.children.length>14)feed.removeChild(feed.lastChild);
     ding(!bad);
     if(!bad) tickKPI();
+    if(e.t==="دفعة وصلت"){var amt=parseInt(sub.replace(/[^\d]/g,''),10)||0;if(amt)addRevenue(amt);}
   }
 
   /* ---------- ticking KPI (the "stock market" number going up) ---------- */
