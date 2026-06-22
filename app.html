@@ -161,6 +161,39 @@
 
       <!-- ========== OVERVIEW ========== -->
       <section class="tab on" id="overview">
+        <div class="card reveal" style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:14px 18px">
+          <div style="display:flex;align-items:center;gap:11px;flex-wrap:wrap">
+            <select id="period" onchange="setPeriod(this.value)" style="border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-weight:800;font-size:14px;font-family:inherit;color:var(--ink);background:#fff;cursor:pointer">
+              <option value="today">اليوم</option>
+              <option value="week">هذا الأسبوع</option>
+              <option value="month" selected>هذا الشهر</option>
+              <option value="last">الشهر الماضي</option>
+              <option value="next">الشهر الجاي (متوقع)</option>
+              <option value="year">السنة كلها · 2026</option>
+            </select>
+            <span id="periodRange" style="color:var(--muted);font-size:13px;font-weight:700"></span>
+          </div>
+          <div style="display:flex;gap:24px;flex-wrap:wrap">
+            <div><div style="font-size:11px;color:var(--muted);font-weight:700">العملاء</div><div id="pCust" style="font-size:21px;font-weight:900;color:var(--teal)">—</div></div>
+            <div><div style="font-size:11px;color:var(--muted);font-weight:700">الحجوزات</div><div id="pBook" style="font-size:21px;font-weight:900">—</div></div>
+            <div><div style="font-size:11px;color:var(--muted);font-weight:700">الإيراد</div><div id="pRev" style="font-size:21px;font-weight:900;color:var(--teal)">—</div></div>
+            <div><div style="font-size:11px;color:var(--muted);font-weight:700">متوسط الدفع</div><div id="pAvg" style="font-size:21px;font-weight:900">—</div></div>
+          </div>
+        </div>
+        <script>
+          var PERIODS={today:{r:"22 يونيو 2026",cust:38,book:38,rev:10400},week:{r:"20–26 يونيو",cust:242,book:266,rev:73000},month:{r:"يونيو 2026 · 1–30",cust:1980,book:2140,rev:312400},last:{r:"مايو 2026 · 1–31",cust:1840,book:1980,rev:286000},next:{r:"يوليو 2026 (متوقع)",cust:2120,book:2300,rev:338000},year:{r:"السنة كلها · 2026",cust:12480,book:23600,rev:3410000}};
+          function setPeriod(p){var d=PERIODS[p]||PERIODS.month;
+            var cur=(document.getElementById('cur')||{}).value||'SAR';
+            var sym=(typeof SYM!=='undefined'&&SYM[cur])?SYM[cur]:'﷼';
+            var rate=(typeof RATE!=='undefined'&&RATE[cur])?RATE[cur]:1;
+            document.getElementById('periodRange').textContent='· '+d.r;
+            document.getElementById('pCust').textContent=d.cust.toLocaleString('en-US');
+            document.getElementById('pBook').textContent=d.book.toLocaleString('en-US');
+            document.getElementById('pRev').textContent=sym+(Math.round(d.rev*rate/100)*100).toLocaleString('en-US');
+            document.getElementById('pAvg').textContent=sym+(Math.round(d.rev*rate/d.book)).toLocaleString('en-US');
+          }
+          if(document.readyState!=='loading')setPeriod('month');else document.addEventListener('DOMContentLoaded',function(){setPeriod('month');});
+        </script>
         <div class="reveal" style="background:linear-gradient(110deg,var(--teal-d),var(--teal));color:#fff;border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
           <div><div style="font-size:12.5px;opacity:.9;font-weight:700" data-en="Cliniva's impact on revenue">أثر Cliniva على الإيراد</div><div style="font-size:23px;font-weight:900" data-en="Your revenue grows 15–30% monthly">إيرادك بيزيد 15–30% شهريًا</div></div>
           <div style="font-size:12.5px;opacity:.93;max-width:360px;line-height:1.6" data-en="From recovering missed calls + cutting no-shows + tying every ad riyal to revenue — proven on your own clinic's numbers.">من <b>استرجاع المكالمات الفائتة</b> + <b>تقليل عدم الحضور</b> + <b>ربط كل ريال إعلان بالإيراد</b> — ونثبتها بأرقام عيادتك نفسها.</div>
@@ -355,12 +388,31 @@
         <div class="row c2">
           <div class="card reveal">
             <h3>سجل المكالمات</h3><div class="sub">لحظي</div>
-            <div class="calllog">
+            <div class="calllog" id="calllog">
               <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 21</b> — حجزت موعد تنظيف</div><small style="color:var(--muted)">22:14 · بعد العمل</small></div>
               <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 88</b> — استفسار أسعار تقويم → حجز</div><small style="color:var(--muted)">21:02</small></div>
               <div class="it"><div class="ic t">↻</div><div style="flex:1"><b>+971 5• ••• 03</b> — حوّلها لموظف (حالة طارئة)</div><small style="color:var(--muted)">19:47</small></div>
               <div class="it"><div class="ic g">✓</div><div style="flex:1"><b>+971 5• ••• 45</b> — أعادت جدولة موعدها</div><small style="color:var(--muted)">18:30</small></div>
             </div>
+            <script>
+            (function(){var log=document.getElementById('calllog');if(!log)return;
+              var acts=[{t:'حجزت موعد تنظيف',c:'g',i:'✓'},{t:'استفسار أسعار تقويم → حجز',c:'g',i:'✓'},{t:'أكدت موعد بكرة',c:'g',i:'✓'},{t:'سؤال عن زراعة → حجز كشف',c:'g',i:'✓'},{t:'حوّلها لموظف (حالة طارئة)',c:'t',i:'↻'},{t:'أعادت جدولة موعدها',c:'g',i:'✓'},{t:'استفسار تبييض بالليزر → حجز',c:'g',i:'✓'},{t:'مكالمة بعد العمل — تم الرد',c:'g',i:'✓'},{t:'طلبت عنوان فرع جميرا',c:'g',i:'✓'},{t:'شكوى → حُلّت + متابعة',c:'t',i:'↻'}];
+              function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+              function phone(){return '+971 5• ••• '+(10+Math.floor(Math.random()*89));}
+              function stamp(){var d=new Date(),h=d.getHours(),m=d.getMinutes();return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;}
+              function add(){var a=rnd(acts);
+                var it=document.createElement('div');it.className='it';it.style.animation='clvin .5s ease';
+                var ic=document.createElement('div');ic.className='ic '+a.c;ic.textContent=a.i;it.appendChild(ic);
+                var mid=document.createElement('div');mid.style.flex='1';
+                var b=document.createElement('b');b.textContent=phone();mid.appendChild(b);
+                mid.appendChild(document.createTextNode(' — '+a.t));it.appendChild(mid);
+                var sm=document.createElement('small');sm.style.color='var(--muted)';sm.textContent=stamp();it.appendChild(sm);
+                log.insertBefore(it,log.firstChild);
+                while(log.children.length>9)log.removeChild(log.lastChild);
+              }
+              setInterval(add,6000+Math.floor(Math.random()*4000));
+            })();
+            </script>
           </div>
           <div class="card reveal">
             <h3>عيّنة محادثة</h3><div class="sub">رد آلي بالعربي</div>
