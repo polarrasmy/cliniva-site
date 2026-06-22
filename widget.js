@@ -5,7 +5,7 @@
   "use strict";
   if (window.__clinivaWidget) return; window.__clinivaWidget = true;
 
-  var TEAL="#0E7C7B", TEAL2="#13A8A4", INK="#14202E";
+  var TEAL="#0F5F56", TEAL2="#2BA89B", INK="#14202E";
   var SERVICES=["كشف","تنظيف","تقويم","زراعة","تجميل"];
   var DAYS=["النهاردة","بكرة","بعد بكرة"];
   var TIMES=["10:00 ص","12:00 م","4:00 م","7:00 م"];
