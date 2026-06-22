@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cliniva — حاسبة العائد (ROI)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--em:#0F5F56;--em-d:#0a463f;--ink:#111827;--bg:#FAFAF8;--line:#E6E9E6;--muted:#5b6b66;--card:#fff;--good:#10B981}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  header{background:linear-gradient(150deg,var(--em-d),var(--em));color:#fff;padding:40px 0 46px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:900;font-size:19px;margin-bottom:22px}
+  .brand .dot{width:25px;height:25px;border-radius:8px;background:#fff;color:var(--em);display:grid;place-items:center;font-size:14px;font-weight:900}
+  h1{font-size:31px;font-weight:900;margin-bottom:8px;line-height:1.2}
+  header p{opacity:.93;font-size:15px;max-width:600px}
+  main{padding:36px 0 50px}
+  .panel{display:grid;grid-template-columns:1fr 1.15fr;gap:22px}
+  @media(max-width:760px){.panel{grid-template-columns:1fr}h1{font-size:25px}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 12px 34px -26px rgba(0,0,0,.45)}
+  .card h2{font-size:16px;font-weight:900;margin-bottom:4px}
+  .card .sub{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+  .fld{margin-bottom:15px}
+  .fld label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+  .fld input{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:15px;font-weight:700;color:var(--ink);background:#fff}
+  .fld input:focus{outline:none;border-color:var(--em);box-shadow:0 0 0 3px rgba(15,95,86,.12)}
+  .res{background:var(--ink);color:#fff;border-radius:16px;padding:26px;display:flex;flex-direction:column}
+  .big{text-align:center;padding:10px 0 18px;border-bottom:1px solid #2a3645;margin-bottom:18px}
+  .big .l{font-size:13px;opacity:.8;font-weight:700}
+  .big .n{font-size:42px;font-weight:900;color:#5fd0c2;line-height:1.1;margin-top:4px}
+  .big .x{font-size:13px;opacity:.75;margin-top:6px}
+  .line{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:14px;border-bottom:1px dashed #2a3645}
+  .line:last-of-type{border-bottom:0}
+  .line .v{font-weight:900}
+  .line .v.g{color:#5fd0c2}
+  .line .v.r{color:#fda4a4}
+  .tot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:2px solid #2a3645;font-size:16px;font-weight:900}
+  .tot .v{color:var(--good);font-size:22px}
+  .ratio{margin-top:16px;background:rgba(95,208,194,.12);border:1px solid rgba(95,208,194,.3);border-radius:11px;padding:12px 14px;text-align:center;font-size:13.5px}
+  .ratio b{color:#5fd0c2;font-size:17px}
+  .note{background:#FFF8EC;border:1px solid #F0D9A8;border-radius:13px;padding:15px 18px;font-size:12.5px;color:#7a5a16;margin-top:24px;line-height:1.7}
+  .note b{color:#8a5a00}
+  .cta{display:inline-flex;align-items:center;gap:8px;background:var(--em);color:#fff;text-decoration:none;font-weight:800;padding:13px 24px;border-radius:11px;font-size:15px}
+  .footer{text-align:center;color:var(--muted);font-size:13px;margin-top:34px}
+  .footer a{color:var(--em)}
+  .assume{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.7}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand"><span class="dot">C</span> Cliniva</div>
+    <h1>كل ريال بتدفعه لـ Cliniva بيرجّعلك كام؟</h1>
+    <p>احسبها بأرقام عيادتك إنت — مش وعود. غيّر الأرقام تحت وشوف الأثر فورًا. كل التقديرات تحفّظية وقابلة للنقاش مع فريقك.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="panel">
+      <div class="card">
+        <h2>أرقام عيادتك</h2>
+        <div class="sub">حُط الأرقام الحقيقية — لو مش متأكد، سيب الافتراضي</div>
+        <div class="fld"><label>عدد الفروع</label><input id="br" type="number" min="1" value="3"></div>
+        <div class="fld"><label>متوسط الحجوزات في اليوم (للفرع الواحد)</label><input id="bpd" type="number" min="1" value="28"></div>
+        <div class="fld"><label>متوسط قيمة الزيارة (ريال)</label><input id="val" type="number" min="1" value="320"></div>
+        <div class="fld"><label>أيام العمل في الشهر</label><input id="days" type="number" min="1" value="26"></div>
+        <div class="fld"><label>الإنفاق الإعلاني الشهري (ريال)</label><input id="ad" type="number" min="0" value="8000"></div>
+        <div class="fld"><label>نسبة عدم الحضور الحالية (%)</label><input id="ns" type="number" min="0" max="60" value="18"></div>
+        <div class="assume" id="assume"></div>
+      </div>
+
+      <div class="res">
+        <div class="big">
+          <div class="l">صافي المكسب الشهري بعد تكلفة Cliniva</div>
+          <div class="n" id="rNet">—</div>
+          <div class="x" id="rNetYr"></div>
+        </div>
+        <div class="line"><span>↩︎ إيراد مسترجَع من تقليل عدم الحضور</span><span class="v g" id="rNs">—</span></div>
+        <div class="line"><span>📞 حجوزات إضافية من الرد 24/7</span><span class="v g" id="rCall">—</span></div>
+        <div class="line"><span>🎯 توفير من ترشيد الإعلانات</span><span class="v g" id="rMkt">—</span></div>
+        <div class="line"><span>💳 تكلفة Cliniva الشهرية</span><span class="v r" id="rCost">—</span></div>
+        <div class="tot"><span>القيمة الشهرية المُولّدة</span><span class="v" id="rGain">—</span></div>
+        <div class="ratio">كل <b>1 ريال</b> بتدفعه لـ Cliniva بيرجّعلك <b id="rRatio">—</b> ريال قيمة · يدفع تكلفته في <b id="rPay">—</b></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>الافتراضات (تحفّظية وقابلة للتعديل):</b> تقليل عدم الحضور من نسبتك الحالية إلى 7% (تذكيرات واتساب آلية)، واسترجاع ~70% من المواعيد دي · زيادة ~8% حجوزات من الرد على المكالمات الفائتة بعد ساعات العمل · توفير ~20% من الإنفاق الإعلاني عبر معرفة المصدر الحقيقي. <b>دي تقديرات لإرشاد القرار — مش ضمانات.</b> الأرقام الفعلية بتتحدد بعد التشغيل التجريبي بأرقام عيادتك.
+    </div>
+
+    <div style="text-align:center;margin-top:30px">
+      <a class="cta" href="https://wa.me/8619859039183" target="_blank" rel="noopener">عايز نطبّقها على أرقامك الحقيقية؟ كلّمنا ←</a>
+    </div>
+
+    <div class="footer">Cliniva — a RASMY venture · <a href="./index.html">رجوع للموقع</a></div>
+  </div>
+</main>
+
+<script>
+  function n(id){return Math.max(0, parseFloat(document.getElementById(id).value)||0);}
+  function money(x){return Math.round(x).toLocaleString('en-US')+' ﷼';}
+  function tier(br){return br>=10?12999:(br>=2?5999:2499);}
+  function calc(){
+    var br=n('br'),bpd=n('bpd'),val=n('val'),days=n('days'),ad=n('ad'),ns=n('ns');
+    var mb=br*bpd*days;                                   // monthly bookings
+    var nsRec=mb*Math.max(0,(ns-7))/100*val*0.7;          // no-show recovery (70% recoverable)
+    var callRec=mb*0.08*val;                              // +8% from 24/7 answering
+    var mktSave=ad*0.20;                                  // 20% ad waste saved
+    var gain=nsRec+callRec+mktSave;
+    var cost=tier(br);
+    var net=gain-cost;
+    var ratio=cost>0?(gain/cost):0;
+    document.getElementById('rNs').textContent=money(nsRec);
+    document.getElementById('rCall').textContent=money(callRec);
+    document.getElementById('rMkt').textContent=money(mktSave);
+    document.getElementById('rCost').textContent='− '+money(cost);
+    document.getElementById('rGain').textContent=money(gain);
+    document.getElementById('rNet').textContent=money(net);
+    document.getElementById('rNetYr').textContent='≈ '+money(net*12)+' في السنة';
+    document.getElementById('rRatio').textContent=ratio.toFixed(1);
+    var payDays=gain>0?Math.max(1,Math.round(cost/gain*30)):0;
+    document.getElementById('rPay').textContent=gain>0?(payDays+' يوم'):'—';
+    document.getElementById('assume').textContent='إجمالي حجوزاتك الشهرية بالأرقام دي ≈ '+mb.toLocaleString('en-US')+' حجز · باقة '+(br>=10?'Scale':(br>=2?'Growth':'Starter'));
+  }
+  ['br','bpd','val','days','ad','ns'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});
+  calc();
+</script>
+</body>
+</html>
