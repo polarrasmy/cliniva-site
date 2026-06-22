@@ -85,7 +85,7 @@
   function loadRev(){try{var o=JSON.parse(localStorage.getItem(REV_KEY)||"null");if(o&&o.day===dayKey())return o.total;}catch(e){}return 44600;}
   function saveRev(t){try{localStorage.setItem(REV_KEY,JSON.stringify({day:dayKey(),total:t}));}catch(e){}}
   var revTotal=loadRev();
-  function curRS(){var c=(document.getElementById("cur")||{}).value||"SAR";var R={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07},S={SAR:"﷼",AED:"د.إ",USD:"$",QAR:"ر.ق",KWD:"د.ك",BHD:"د.ب",EGP:"ج.م"};return {r:R[c]||1,s:S[c]||"﷼"};}
+  function curRS(){var c=(document.getElementById("cur")||{}).value||"AED";var R={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07},S={SAR:"﷼",AED:"د.إ",USD:"$",QAR:"ر.ق",KWD:"د.ك",BHD:"د.ب",EGP:"ج.م"};return {r:R[c]||1,s:S[c]||"﷼"};}
   function fmtRev(n){var ci=curRS();return ci.s+Math.round(n*ci.r).toLocaleString("en-US");}
   function paintRev(){var el=document.getElementById("liveRev");if(el)el.textContent=fmtRev(revTotal);}
   var REV_CEIL=520000; /* realistic daily ceiling (~3 branches × doctors × slots) — no fantasy numbers */
