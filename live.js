@@ -88,9 +88,11 @@
   function curRS(){var c=(document.getElementById("cur")||{}).value||"SAR";var R={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07},S={SAR:"﷼",AED:"د.إ",USD:"$",QAR:"ر.ق",KWD:"د.ك",BHD:"د.ب",EGP:"ج.م"};return {r:R[c]||1,s:S[c]||"﷼"};}
   function fmtRev(n){var ci=curRS();return ci.s+Math.round(n*ci.r).toLocaleString("en-US");}
   function paintRev(){var el=document.getElementById("liveRev");if(el)el.textContent=fmtRev(revTotal);}
+  var REV_CEIL=520000; /* realistic daily ceiling (~3 branches × doctors × slots) — no fantasy numbers */
   function addRevenue(amount){
+    if(revTotal>=REV_CEIL)return; /* clinic hit its real daily capacity */
     var el=document.getElementById("liveRev");
-    var from=revTotal,to=revTotal+amount;revTotal=to;saveRev(to);
+    var from=revTotal,to=Math.min(REV_CEIL,revTotal+amount);revTotal=to;saveRev(to);
     if(!el)return;
     var t0=null,dur=850;
     function step(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/dur);var v=from+(to-from)*(1-Math.pow(1-p,3));el.textContent=fmtRev(v);if(p<1)requestAnimationFrame(step);else el.textContent=fmtRev(to);}
@@ -117,11 +119,12 @@
 
   /* ---------- ticking KPI (the "stock market" number going up) ---------- */
   function tickKPI(){
-    if(Math.random()<0.45) return;
+    if(Math.random()<0.55) return;
     var el=document.getElementById("k_book")||document.querySelector(".kpi .n.teal,.kpi .n.em,.mk .n.em,.kpi .n");
     if(!el)return;
     var raw=(el.textContent||"").replace(/[^\d]/g,"");
     if(!raw)return;
+    if(parseInt(raw,10)>=240)return; /* daily patient capacity — can't exceed doctors×slots */
     el.textContent=String(parseInt(raw,10)+1);
     el.classList.remove("clv-flash");void el.offsetWidth;el.classList.add("clv-flash");
   }
