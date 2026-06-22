@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <title>Cliniva — الداشبورد (ديمو)</title>
 <meta name="description" content="ديمو تفاعلي لمنصة Cliniva — حجوزات بلا تعارض، مركز اتصال AI، واتساب، وربط كل ريال إعلان بالمريض والإيراد.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -460,12 +461,14 @@
             <input id="crmSearch" placeholder="🔍 ابحث باسم المريض…" oninput="crmPage=1;renderCRM()" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-family:inherit;font-size:14px;color:var(--ink)">
             <select id="crmSort" onchange="crmPage=1;renderCRM()" style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-weight:700;font-size:13.5px">
               <option value="spend">💰 الأعلى إنفاقًا</option>
+              <option value="low">📉 الأقل إنفاقًا</option>
+              <option value="absent">🔴 الأطول غيابًا</option>
               <option value="recent">🕒 الأحدث زيارة</option>
               <option value="name">🔤 الاسم</option>
             </select>
           </div>
           <table>
-            <thead><tr><th>المريض</th><th>الفرع</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>المصدر</th><th>الولاء</th><th>الحالة</th></tr></thead>
+            <thead><tr><th>المريض</th><th>الفرع</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>المصدر</th><th>الولاء</th><th>الحالة</th><th>إجراء</th></tr></thead>
             <tbody id="crmBody"></tbody>
           </table>
           <div id="crmPager" style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px;font-size:13.5px"></div>
@@ -502,6 +505,8 @@
           var all=/كل الفروع/.test(br), bare=br.replace('فرع','').replace(/\(\d+\)/,'').trim();
           var list=PATIENTS.filter(function(p){return (all||p.b===bare)&&(!q||p.n.indexOf(q)>=0);});
           if(sort==='spend')list.sort(function(a,b){return b.sp-a.sp;});
+          else if(sort==='low')list.sort(function(a,b){return a.sp-b.sp;});
+          else if(sort==='absent')list.sort(function(a,b){return (b.r||0)-(a.r||0);});
           else if(sort==='name')list.sort(function(a,b){return a.n.localeCompare(b.n,'ar');});
           else list.sort(function(a,b){return (a.r||999)-(b.r||999);});
           var per=8, pages=Math.max(1,Math.ceil(list.length/per));
@@ -512,11 +517,12 @@
             var tr=document.createElement('tr');
             var c1=document.createElement('td');var av=document.createElement('span');av.className='avatar';av.textContent=p.n.charAt(0);c1.appendChild(av);c1.appendChild(document.createTextNode(p.n));tr.appendChild(c1);
             var c2=document.createElement('td');c2.textContent=p.b;tr.appendChild(c2);
-            var c3=document.createElement('td');c3.textContent=p.v;tr.appendChild(c3);
+            var c3=document.createElement('td');c3.textContent=p.v;if((p.r||0)>=30&&p.sp>0){var od=document.createElement('span');od.textContent=' · متأخر';od.style.cssText='color:#d9534f;font-weight:800;font-size:11px';c3.appendChild(od);}tr.appendChild(c3);
             var c4=document.createElement('td');c4.className='money';c4.dataset.base=p.sp;tr.appendChild(c4);
             var c5=document.createElement('td');var sp=document.createElement('span');sp.className='pill '+p.sc;sp.textContent=p.src;c5.appendChild(sp);tr.appendChild(c5);
             var c6=document.createElement('td');c6.textContent=p.ty;tr.appendChild(c6);
             var c7=document.createElement('td');var stt=document.createElement('span');stt.className='pill '+p.stc;stt.textContent=p.st;c7.appendChild(stt);tr.appendChild(c7);
+            var c8=document.createElement('td');var od2=((p.r||0)>=30&&p.sp>0),vip=/ذهبي|فضي/.test(p.ty);var act=document.createElement('button');act.textContent=od2?'📲 متابعة':(vip?'🎁 عرض':'تواصل');act.style.cssText='border:1px solid '+(od2?'#d9534f':'#0F5F56')+';color:'+(od2?'#d9534f':'#0F5F56')+';background:#fff;border-radius:8px;padding:5px 11px;font-family:inherit;font-weight:800;font-size:12px;cursor:pointer';act.onclick=function(){alert((od2?'📲 اتبعتت رسالة متابعة واتساب لـ':'🎁 اتبعت عرض «عميل مميز» لـ')+p.n+' ✅');};c8.appendChild(act);tr.appendChild(c8);
             tb.appendChild(tr);
           });
           var pg=document.getElementById('crmPager'); while(pg.firstChild)pg.removeChild(pg.firstChild);
