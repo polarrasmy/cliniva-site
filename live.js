@@ -82,7 +82,7 @@
   /* ---------- LIVE REVENUE — the money the owner gets addicted to (persists, never resets to 0) ---------- */
   var REV_KEY="cliniva_rev_live";
   function dayKey(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
-  function loadRev(){try{var o=JSON.parse(localStorage.getItem(REV_KEY)||"null");if(o&&o.day===dayKey())return o.total;}catch(e){}return 312400;}
+  function loadRev(){try{var o=JSON.parse(localStorage.getItem(REV_KEY)||"null");if(o&&o.day===dayKey())return o.total;}catch(e){}return 44600;}
   function saveRev(t){try{localStorage.setItem(REV_KEY,JSON.stringify({day:dayKey(),total:t}));}catch(e){}}
   var revTotal=loadRev();
   function curRS(){var c=(document.getElementById("cur")||{}).value||"SAR";var R={SAR:1,AED:0.979,USD:0.2667,QAR:0.971,KWD:0.0819,BHD:0.1003,EGP:13.07},S={SAR:"﷼",AED:"د.إ",USD:"$",QAR:"ر.ق",KWD:"د.ك",BHD:"د.ب",EGP:"ج.م"};return {r:R[c]||1,s:S[c]||"﷼"};}
@@ -101,6 +101,7 @@
     try{var r=el.getBoundingClientRect();var f=document.createElement("div");f.textContent="+"+fmtRev(amount);f.style.cssText="position:fixed;left:"+(r.left+8)+"px;top:"+(r.top-2)+"px;color:#16a34a;font-weight:900;font-size:16px;font-family:Tajawal,sans-serif;z-index:99999;pointer-events:none;transition:1.2s cubic-bezier(.2,.8,.2,1);opacity:1";document.body.appendChild(f);requestAnimationFrame(function(){f.style.transform="translateY(-40px)";f.style.opacity="0";});setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},1250);}catch(e){}
   }
   paintRev();
+  try{var _cs=document.getElementById("cur");if(_cs)_cs.addEventListener("change",function(){paintRev();});}catch(e){}
 
   function pushEvent(){
     var bad=Math.random()<0.14;
