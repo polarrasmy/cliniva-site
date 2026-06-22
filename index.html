@@ -148,7 +148,7 @@
       <option value="SAR">﷼ SAR</option><option value="AED">د.إ AED</option><option value="USD">$ USD</option><option value="QAR">ر.ق QAR</option><option value="KWD">د.ك KWD</option><option value="BHD">د.ب BHD</option><option value="EGP">ج.م EGP</option>
     </select>
     <button class="lng" id="lng" onclick="toggleLang()">EN</button>
-    <a href="#demo" class="btn" data-en="Book Demo">احجز عرض</a>
+    <a href="https://calendly.com/polarasmy/30min" target="_blank" rel="noopener" class="btn" data-en="Book Demo">احجز عرض</a>
   </div>
 </div></nav>
 
@@ -159,7 +159,7 @@
     <h1 data-en="Run every branch. Delight every patient."><span data-en="Run every branch.">شغّل كل فرع.</span> <span class="g" data-en="Delight every patient.">أبهر كل مريض.</span></h1>
     <p class="lede" data-en="One operations platform for dental groups — centralized booking, AI call center, WhatsApp automation, and marketing that ties every riyal of ad spend to real patient revenue.">منصة تشغيل واحدة لمجموعات العيادات — حجز مركزي، مركز اتصال بالذكاء الاصطناعي، أتمتة واتساب، وتسويق بيربط كل ريال إعلان بإيراد مريض حقيقي.</p>
     <div class="cta">
-      <a href="#demo" class="btn" data-en="Book a 20-min demo">احجز عرض 20 دقيقة</a>
+      <a href="https://calendly.com/polarasmy/30min" target="_blank" rel="noopener" class="btn" data-en="Book a 20-min demo">احجز عرض 20 دقيقة</a>
       <a href="./login.html" class="btn ghost" data-en="Open the platform">ادخل النظام</a>
     </div>
     <div class="tl">
@@ -243,7 +243,7 @@
     </ul>
   </div>
   <div class="vcard dk reveal d1">
-    <div style="font-size:11px;color:#8b97a6;font-weight:600">📞 <span data-en="Incoming · Riyadh — Branch 1">مكالمة واردة · الرياض — فرع 1</span></div>
+    <div style="font-size:11px;color:#8b97a6;font-weight:600">📞 <span data-en="Incoming · Dubai — Jumeirah">مكالمة واردة · دبي — جميرا</span></div>
     <div style="background:rgba(43,168,155,.12);border:1px solid rgba(43,168,155,.25);border-radius:12px;padding:11px 13px;margin:11px 0;font-size:13px">أهلاً بك في عيادات Cliniva، كيف أقدر أساعدك؟</div>
     <div style="background:#141d2c;border:1px solid #1f2a37;border-radius:12px;padding:11px 13px;margin-bottom:11px;font-size:13px;color:#cbd3dd">عايز أحجز تنظيف بكرة بعد الـ6 المسا</div>
     <div style="background:rgba(43,168,155,.12);border:1px solid rgba(43,168,155,.25);border-radius:12px;padding:11px 13px;font-size:13px">تمام ✅ حجزتلك بكرة 6:30 م — فرع جميرا. هتوصلك رسالة واتساب.</div>
@@ -255,10 +255,10 @@
 <section id="branches"><div class="wrap"><div class="split">
   <div class="vcard reveal">
     <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px" data-en="All branches · this month">كل الفروع · هذا الشهر</div>
-    <div class="branch"><span>الرياض — فرع 1</span><span class="rev"><span data-price data-base="245000">﷼245,000</span></span></div>
-    <div class="branch"><span>جدة — فرع 2</span><span class="rev"><span data-price data-base="180000">﷼180,000</span></span></div>
-    <div class="branch"><span>الدمام — فرع 1</span><span class="rev"><span data-price data-base="150000">﷼150,000</span></span></div>
-    <div class="branch"><span>الخبر — فرع 2</span><span class="rev"><span data-price data-base="120000">﷼120,000</span></span></div>
+    <div class="branch"><span>دبي — جميرا</span><span class="rev"><span data-price data-base="245000">﷼245,000</span></span></div>
+    <div class="branch"><span>دبي — مارينا</span><span class="rev"><span data-price data-base="180000">﷼180,000</span></span></div>
+    <div class="branch"><span>دبي — دبي هيلز</span><span class="rev"><span data-price data-base="150000">﷼150,000</span></span></div>
+    <div class="branch"><span>دبي — الخليج التجاري</span><span class="rev"><span data-price data-base="120000">﷼120,000</span></span></div>
   </div>
   <div class="reveal d1">
     <div class="eyebrow" data-en="Multi-branch operations">تشغيل متعدد الفروع</div>
@@ -356,7 +356,7 @@
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
   /* init */
-  (function(){var l='ar',c='SAR';try{l=localStorage.getItem('cliniva_lang')||'ar';c=localStorage.getItem('cliniva_cur')||'SAR';}catch(_){}document.getElementById('cur').value=c;applyCur(c);if(l==='en')applyLang('en');})();
+  (function(){var l='ar',c='AED';try{l=localStorage.getItem('cliniva_lang')||'ar';c=localStorage.getItem('cliniva_cur')||'AED';}catch(_){}document.getElementById('cur').value=c;applyCur(c);if(l==='en')applyLang('en');})();
 </script>
 <script src="./widget.js" defer></script>
 </body>
